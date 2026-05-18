@@ -2669,7 +2669,7 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Carlisle",
     "venue": "Carlisle Fairgrounds",
     "address": "Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA, 17013",
-    "description": "Carlisle Chrysler Nationals July 10 - 12, 2026 July 9 - 11, 2027 Gate-n-Go Deadline May 18, 2026 | More Gate-n-Go Details | Event Hours Thursday*: 7 AM - 4 PM | *Early-Bird Shopping & Set-Up | Fri- Sat: 7 AM - 6 PM | Sunday: 7 AM - 12 PM | | Add to Calendar | | View Vendor List | Admission Daily Admission: $15 | Sunday: $7 ( Free with Event Ticket ) | Event Pass: $30 | Kids 12 & Under: Free | Student & Military Discounts Available | General Parking: $10 | | Location Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA, 17013 Buy Vendor Space Show a Vehicle Event Details Buy Vendor Space Show a Vehicle Event Details &raquo;",
+    "description": "Carlisle Chrysler Nationals July 10 - 12, 2026 July 9 - 11, 2027 Event Hours Thursday*: 7 AM - 4 PM | *Early-Bird Shopping & Set-Up | Fri- Sat: 7 AM - 6 PM | Sunday: 7 AM - 12 PM | | Add to Calendar | | View Vendor List | Admission Daily Admission: $15 | Sunday: $7 ( Free with Event Ticket ) | Event Pass: $30 | Kids 12 & Under: Free | Student & Military Discounts Available | General Parking: $10 | | Location Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA, 17013 Buy Vendor Space Show a Vehicle Event Details Buy Vendor Space Show a Vehicle Event Details &raquo;",
     "sourceUrl": "https://carlisleevents.com/docs/default-source/resources-documents/calendar-documents/2026-dates/2026_chrysler.ics?sfvrsn=912dbb5c_2&download=true",
     "url": "https://carlisleevents.com/events/events-detail/index?id=chrysler+nationals",
     "calendarUrl": "https://carlisleevents.com/docs/default-source/resources-documents/calendar-documents/2026-dates/2026_chrysler.ics?sfvrsn=912dbb5c_2&download=true",
@@ -3232,7 +3232,7 @@ window.CCCHR_METADATA = {
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "year": 2026,
-  "refreshedAt": "2026-05-18T03:27:08.817Z",
+  "refreshedAt": "2026-05-18T16:51:43.550Z",
   "totalEvents": 168,
   "sourceCounts": {
     "CCCHR": 146,
