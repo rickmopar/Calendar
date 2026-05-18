@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "refresh": "node scripts/refresh-events.js"
+  }
+}

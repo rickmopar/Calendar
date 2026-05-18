@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111820">
+    <meta name="description" content="A mobile-friendly calendar of CCCHR, AACA, and Carlisle car events.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Car Shows">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Car Show Calendar</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="manifest" href="manifest.webmanifest?v=2">
+    <link rel="stylesheet" href="styles.css?v=2">
+  </head>
+  <body>
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">2026 Auto Events</p>
+        <h1>Car Show Calendar</h1>
+        <p class="lede">A searchable calendar of CCCHR, AACA, and Carlisle events, grouped by month, city, and event type.</p>
+        <div class="status-line" aria-label="Dashboard freshness">
+          <span id="currentDate">Today: -</span>
+          <span id="refreshDate">Last refreshed: -</span>
+        </div>
+      </div>
+      <a class="source-link" href="https://www.ccchr.org/calendar" target="_blank" rel="noreferrer">Source calendar</a>
+    </header>
+
+    <main>
+      <section class="stats" aria-label="Calendar summary">
+        <div>
+          <span id="totalEvents">0</span>
+          <p>Upcoming events</p>
+        </div>
+        <div>
+          <span id="activeCities">0</span>
+          <p>Cities</p>
+        </div>
+        <div>
+          <span id="topMonth">-</span>
+          <p>Busiest month</p>
+        </div>
+        <div>
+          <span id="dateRange">-</span>
+          <p>Date range</p>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Dashboard controls">
+        <label>
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="Event, venue, city, keyword">
+        </label>
+        <label>
+          <span>Month</span>
+          <select id="monthSelect"></select>
+        </label>
+        <label>
+          <span>Type</span>
+          <select id="typeSelect"></select>
+        </label>
+        <div class="field">
+          <span>City</span>
+          <details id="cityFilter" class="multi-filter">
+            <summary>
+              <span id="citySummary">All cities</span>
+            </summary>
+            <div id="cityOptions" class="multi-options" aria-label="City filter options"></div>
+          </details>
+        </div>
+        <label>
+          <span>Sort</span>
+          <select id="sortSelect">
+            <option value="date-asc">Date, earliest first</option>
+            <option value="date-desc">Date, latest first</option>
+            <option value="city">City</option>
+            <option value="type">Type</option>
+          </select>
+        </label>
+        <button id="resetButton" type="button">Reset</button>
+      </section>
+
+      <section class="chart-panel" aria-label="Events by month">
+        <div class="section-heading">
+          <h2>Events by Month</h2>
+          <div class="chart-meta">
+            <p id="resultCount">0 matching events</p>
+            <div class="legend" aria-label="Bar color legend">
+              <span><i class="legend-ccchr"></i>CCCHR</span>
+              <span><i class="legend-aaca"></i>AACA</span>
+              <span><i class="legend-carlisle"></i>Carlisle</span>
+            </div>
+          </div>
+        </div>
+        <div id="monthChart" class="month-chart"></div>
+      </section>
+
+      <section class="dashboard-grid">
+        <aside class="insights" aria-label="Quick insights">
+          <h2>Quick Scan</h2>
+          <div id="insightsList"></div>
+        </aside>
+
+        <section aria-label="Event list">
+          <div id="eventList" class="event-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="data/events-2026.js?v=2"></script>
+    <script src="app.js?v=2"></script>
+  </body>
+</html>
