@@ -153,6 +153,25 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
+    "id": "699d0b665ffc66230eae6edb",
+    "title": "Topless Tuesdays | Feb. 24th",
+    "startDate": "2026-02-24T22:30:00.463Z",
+    "endDate": "2026-02-25T02:00:00.463Z",
+    "month": "February",
+    "weekday": "Tue",
+    "dateLabel": "Feb 24, 2026",
+    "timeLabel": "5:30 PM",
+    "type": "Jeep",
+    "source": "CCCHR",
+    "city": "Chesapeake",
+    "venue": "Garage Brewery",
+    "address": "1011 Eden Way North, Chesapeake, VA, 23320",
+    "description": "(Every other tues) Topless Tuesdays Tuesday, February 24th | 5:30p-9p Located at Garage Brewery | 1011 Eden Way, Chesapeake Calling all Jeep owners & lovers! (O|||||||O) This event is FREE & open to the public! | Every other Tuesday from 5:30-9pm | Jeepers get 10% OFF their tab! | Rotating Jeeps get entered to win an opportunity to park INSIDE our taproom! | Line up on our grass along Eden Way; overflow can go into a parking space. | Food Trucks rotate weekly, check our “Weekly Lineup” on IG or FB, our surrounding events here on FB, or on garage-brewery.com under “EVENTS” Rain or Shine! | We won't judge if you aren't.. Topless",
+    "sourceUrl": "https://www.facebook.com/events/1133824687793529/",
+    "url": "https://www.ccchr.org/events/topless-tuesdays-feb-24",
+    "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1716139493850-P8W60FQQQB2WU2DN994Z/Topless+Tuesday+Jeeps.jpeg"
+  },
+  {
     "id": "699a00fa22936363d24e4872",
     "title": "Southern Chesapeake Tuesday Night Cruz-in | Mar. 3rd",
     "startDate": "2026-03-03T21:00:00.282Z",
@@ -189,6 +208,25 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "https://www.facebook.com/groups/277456353510653/",
     "url": "https://www.ccchr.org/events/nk-cruisers-cruise-in-march-7",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
+  },
+  {
+    "id": "699d0bd27dc1667bdb043d2b",
+    "title": "Topless Tuesdays | March 10th",
+    "startDate": "2026-03-10T21:30:00.863Z",
+    "endDate": "2026-03-11T01:00:00.863Z",
+    "month": "March",
+    "weekday": "Tue",
+    "dateLabel": "Mar 10, 2026",
+    "timeLabel": "5:30 PM",
+    "type": "Jeep",
+    "source": "CCCHR",
+    "city": "Chesapeake",
+    "venue": "Garage Brewery",
+    "address": "1011 Eden Way North, Chesapeake, VA, 23320",
+    "description": "(Every other tues) Topless Tuesdays Tuesday, March 10th | 5:30p-9p Located at Garage Brewery | 1011 Eden Way, Chesapeake Calling all Jeep owners & lovers! (O|||||||O) This event is FREE & open to the public! | Every other Tuesday from 5:30-9pm | Jeepers get 10% OFF their tab! | Rotating Jeeps get entered to win an opportunity to park INSIDE our taproom! | Line up on our grass along Eden Way; overflow can go into a parking space. | Food Trucks rotate weekly, check our “Weekly Lineup” on IG or FB, our surrounding events here on FB, or on garage-brewery.com under “EVENTS” Rain or Shine! | We won't judge if you aren't.. Topless",
+    "sourceUrl": "https://www.facebook.com/events/1133824687793529/",
+    "url": "https://www.ccchr.org/events/topless-tuesdays-march-10",
+    "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1716139493850-P8W60FQQQB2WU2DN994Z/Topless+Tuesday+Jeeps.jpeg"
   },
   {
     "id": "697d5a12393ebc61b4eb3f6a",
@@ -287,6 +325,25 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
+    "id": "699d0c0ba861db2a9b84decf",
+    "title": "Topless Tuesdays | March 24th",
+    "startDate": "2026-03-24T21:30:00.982Z",
+    "endDate": "2026-03-25T01:00:00.982Z",
+    "month": "March",
+    "weekday": "Tue",
+    "dateLabel": "Mar 24, 2026",
+    "timeLabel": "5:30 PM",
+    "type": "Jeep",
+    "source": "CCCHR",
+    "city": "Chesapeake",
+    "venue": "Garage Brewery",
+    "address": "1011 Eden Way North, Chesapeake, VA, 23320",
+    "description": "(Every other tues) Topless Tuesdays Tuesday, March 24th | 5:30p-9p Located at Garage Brewery | 1011 Eden Way, Chesapeake Calling all Jeep owners & lovers! (O|||||||O) This event is FREE & open to the public! | Every other Tuesday from 5:30-9pm | Jeepers get 10% OFF their tab! | Rotating Jeeps get entered to win an opportunity to park INSIDE our taproom! | Line up on our grass along Eden Way; overflow can go into a parking space. | Food Trucks rotate weekly, check our “Weekly Lineup” on IG or FB, our surrounding events here on FB, or on garage-brewery.com under “EVENTS” Rain or Shine! | We won't judge if you aren't.. Topless",
+    "sourceUrl": "https://www.facebook.com/events/1133824687793529/",
+    "url": "https://www.ccchr.org/events/topless-tuesdays-march-24",
+    "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1716139493850-P8W60FQQQB2WU2DN994Z/Topless+Tuesday+Jeeps.jpeg"
+  },
+  {
     "id": "aaca-2026-3-26-2",
     "title": "Winter Nationals",
     "startDate": "2026-03-26T00:00:00.000Z",
@@ -362,6 +419,25 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "",
     "url": "https://www.ccchr.org/events/southern-chesapeake-tuesday-night-cruz-in-april-7",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
+  },
+  {
+    "id": "699d0c298cc0e063018ee8a6",
+    "title": "Topless Tuesdays | April 7th",
+    "startDate": "2026-04-07T21:30:00.640Z",
+    "endDate": "2026-04-08T01:00:00.640Z",
+    "month": "April",
+    "weekday": "Tue",
+    "dateLabel": "Apr 7, 2026",
+    "timeLabel": "5:30 PM",
+    "type": "Jeep",
+    "source": "CCCHR",
+    "city": "Chesapeake",
+    "venue": "Garage Brewery",
+    "address": "1011 Eden Way North, Chesapeake, VA, 23320",
+    "description": "(Every other tues) Topless Tuesdays Tuesday, April 7th | 5:30p-9p Located at Garage Brewery | 1011 Eden Way, Chesapeake Calling all Jeep owners & lovers! (O|||||||O) This event is FREE & open to the public! | Every other Tuesday from 5:30-9pm | Jeepers get 10% OFF their tab! | Rotating Jeeps get entered to win an opportunity to park INSIDE our taproom! | Line up on our grass along Eden Way; overflow can go into a parking space. | Food Trucks rotate weekly, check our “Weekly Lineup” on IG or FB, our surrounding events here on FB, or on garage-brewery.com under “EVENTS” Rain or Shine! | We won't judge if you aren't.. Topless",
+    "sourceUrl": "https://www.facebook.com/events/1133824687793529/",
+    "url": "https://www.ccchr.org/events/topless-tuesdays-april-7",
+    "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1716139493850-P8W60FQQQB2WU2DN994Z/Topless+Tuesday+Jeeps.jpeg"
   },
   {
     "id": "aaca-2026-4-9-3",
@@ -458,6 +534,25 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "",
     "url": "https://www.ccchr.org/events/southern-chesapeake-tuesday-night-cruz-in-april-21",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
+  },
+  {
+    "id": "699d0c506daaed1a70fcc4c3",
+    "title": "Topless Tuesdays | April 21st",
+    "startDate": "2026-04-21T21:30:00.121Z",
+    "endDate": "2026-04-22T01:00:00.121Z",
+    "month": "April",
+    "weekday": "Tue",
+    "dateLabel": "Apr 21, 2026",
+    "timeLabel": "5:30 PM",
+    "type": "Jeep",
+    "source": "CCCHR",
+    "city": "Chesapeake",
+    "venue": "Garage Brewery",
+    "address": "1011 Eden Way North, Chesapeake, VA, 23320",
+    "description": "(Every other tues) Topless Tuesdays Tuesday, April 21st | 5:30p-9p Located at Garage Brewery | 1011 Eden Way, Chesapeake Calling all Jeep owners & lovers! (O|||||||O) This event is FREE & open to the public! | Every other Tuesday from 5:30-9pm | Jeepers get 10% OFF their tab! | Rotating Jeeps get entered to win an opportunity to park INSIDE our taproom! | Line up on our grass along Eden Way; overflow can go into a parking space. | Food Trucks rotate weekly, check our “Weekly Lineup” on IG or FB, our surrounding events here on FB, or on garage-brewery.com under “EVENTS” Rain or Shine! | We won't judge if you aren't.. Topless",
+    "sourceUrl": "https://www.facebook.com/events/1133824687793529/",
+    "url": "https://www.ccchr.org/events/topless-tuesdays-april-21",
+    "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1716139493850-P8W60FQQQB2WU2DN994Z/Topless+Tuesday+Jeeps.jpeg"
   },
   {
     "id": "aaca-2026-4-23-4",
@@ -3439,10 +3534,10 @@ window.CCCHR_METADATA = {
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "year": 2026,
-  "refreshedAt": "2026-05-20T12:39:19.965Z",
-  "totalEvents": 179,
+  "refreshedAt": "2026-05-21T13:33:02.057Z",
+  "totalEvents": 184,
   "sourceCounts": {
-    "CCCHR": 158,
+    "CCCHR": 163,
     "AACA": 14,
     "Carlisle": 7
   }
