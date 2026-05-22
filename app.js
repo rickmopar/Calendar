@@ -20,8 +20,12 @@ const els = {
   search: document.querySelector("#searchInput"),
   currentDate: document.querySelector("#currentDate"),
   refreshDate: document.querySelector("#refreshDate"),
-  month: document.querySelector("#monthSelect"),
-  type: document.querySelector("#typeSelect"),
+  monthFilter: document.querySelector("#monthFilter"),
+  monthOptions: document.querySelector("#monthOptions"),
+  monthSummary: document.querySelector("#monthSummary"),
+  typeFilter: document.querySelector("#typeFilter"),
+  typeOptions: document.querySelector("#typeOptions"),
+  typeSummary: document.querySelector("#typeSummary"),
   cityFilter: document.querySelector("#cityFilter"),
   cityOptions: document.querySelector("#cityOptions"),
   citySummary: document.querySelector("#citySummary"),
@@ -59,27 +63,55 @@ function unique(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
 }
 
-function fillSelect(select, label, values) {
-  select.replaceChildren(new Option(label, "all"), ...values.map((value) => new Option(value, value)));
+function slug(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-function fillCityOptions(values) {
-  els.cityOptions.replaceChildren(
-    ...values.map((city) => {
-      const id = `city-${city.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+function fillCheckboxOptions(container, group, values, { checked = false } = {}) {
+  container.replaceChildren(
+    ...values.map((value) => {
+      const id = `${group}-${slug(value)}`;
       const label = document.createElement("label");
       label.setAttribute("for", id);
       label.innerHTML = `
-        <input id="${id}" type="checkbox" value="${escapeHtml(city)}">
-        <span>${escapeHtml(city)}</span>
+        <input id="${id}" type="checkbox" value="${escapeHtml(value)}"${checked ? " checked" : ""}>
+        <span>${escapeHtml(value)}</span>
       `;
       return label;
     }),
   );
 }
 
+function fillCityOptions(values) {
+  fillCheckboxOptions(els.cityOptions, "city", values);
+}
+
+function selectedValues(container) {
+  return [...container.querySelectorAll("input:checked")].map((input) => input.value);
+}
+
 function selectedCities() {
-  return [...els.cityOptions.querySelectorAll("input:checked")].map((input) => input.value);
+  return selectedValues(els.cityOptions);
+}
+
+function updateMultiSummary(summaryEl, selected, allValues, label) {
+  if (!selected.length) {
+    summaryEl.textContent = `No ${label} selected`;
+  } else if (selected.length === allValues.length) {
+    summaryEl.textContent = `All ${label}`;
+  } else if (selected.length === 1) {
+    summaryEl.textContent = selected[0];
+  } else {
+    summaryEl.textContent = `${selected.length} ${label} selected`;
+  }
+}
+
+function updateMonthSummary() {
+  updateMultiSummary(els.monthSummary, selectedValues(els.monthOptions), monthValues, "months");
+}
+
+function updateTypeSummary() {
+  updateMultiSummary(els.typeSummary, selectedValues(els.typeOptions), typeValues, "types");
 }
 
 function updateCitySummary() {
@@ -101,14 +133,20 @@ function eventText(event) {
 
 function getFilteredEvents() {
   const query = els.search.value.trim().toLowerCase();
-  const month = els.month.value;
-  const type = els.type.value;
+  const months = selectedValues(els.monthOptions);
+  const selectedTypes = selectedValues(els.typeOptions);
+  const selectedEventTypes = selectedTypes.filter((value) => value !== "Recurring");
+  const includeRecurring = selectedTypes.includes("Recurring");
   const cities = selectedCities();
 
   const filtered = events.filter((event) => {
+    const recurrence = detectRecurrence(event);
+    const hasSelectedEventTypes = selectedEventTypes.length > 0;
     const matchesQuery = !query || eventText(event).includes(query);
-    const matchesMonth = month === "all" || event.month === month;
-    const matchesType = type === "all" || event.type === type;
+    const matchesMonth = months.includes(event.month);
+    const matchesType = hasSelectedEventTypes
+      ? selectedEventTypes.includes(event.type) && (includeRecurring || !recurrence)
+      : includeRecurring && recurrence;
     const matchesCity = !cities.length || cities.includes(event.city);
     return matchesQuery && matchesMonth && matchesType && matchesCity;
   });
@@ -554,17 +592,28 @@ function render() {
 
 renderFreshness();
 
-fillSelect(
-  els.month,
-  "All months",
-  monthOrder.filter((month) => events.some((event) => event.month === month)),
-);
-fillSelect(els.type, "All types", unique(events.map((event) => event.type)));
+const monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
+const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
+
+fillCheckboxOptions(els.monthOptions, "month", monthValues, { checked: true });
+fillCheckboxOptions(els.typeOptions, "type", typeValues, { checked: true });
 fillCityOptions(unique(events.map((event) => event.city)));
+updateMonthSummary();
+updateTypeSummary();
 updateCitySummary();
 
-[els.search, els.month, els.type, els.sort].forEach((control) => {
+[els.search, els.sort].forEach((control) => {
   control.addEventListener("input", render);
+});
+
+els.monthOptions.addEventListener("change", () => {
+  updateMonthSummary();
+  render();
+});
+
+els.typeOptions.addEventListener("change", () => {
+  updateTypeSummary();
+  render();
 });
 
 els.cityOptions.addEventListener("change", () => {
@@ -574,12 +623,20 @@ els.cityOptions.addEventListener("change", () => {
 
 els.reset.addEventListener("click", () => {
   els.search.value = "";
-  els.month.value = "all";
-  els.type.value = "all";
+  els.monthOptions.querySelectorAll("input").forEach((input) => {
+    input.checked = true;
+  });
+  els.typeOptions.querySelectorAll("input").forEach((input) => {
+    input.checked = true;
+  });
   els.cityOptions.querySelectorAll("input:checked").forEach((input) => {
     input.checked = false;
   });
+  els.monthFilter.open = false;
+  els.typeFilter.open = false;
   els.cityFilter.open = false;
+  updateMonthSummary();
+  updateTypeSummary();
   updateCitySummary();
   els.sort.value = "date-asc";
   render();

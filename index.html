@@ -11,8 +11,8 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=2">
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="manifest" href="manifest.webmanifest?v=3">
+    <link rel="stylesheet" href="styles.css?v=3">
   </head>
   <body>
     <header class="masthead">
@@ -53,14 +53,24 @@
           <span>Search</span>
           <input id="searchInput" type="search" placeholder="Event, venue, city, keyword">
         </label>
-        <label>
+        <div class="field">
           <span>Month</span>
-          <select id="monthSelect"></select>
-        </label>
-        <label>
+          <details id="monthFilter" class="multi-filter">
+            <summary>
+              <span id="monthSummary">All months</span>
+            </summary>
+            <div id="monthOptions" class="multi-options" aria-label="Month filter options"></div>
+          </details>
+        </div>
+        <div class="field">
           <span>Type</span>
-          <select id="typeSelect"></select>
-        </label>
+          <details id="typeFilter" class="multi-filter">
+            <summary>
+              <span id="typeSummary">All types</span>
+            </summary>
+            <div id="typeOptions" class="multi-options" aria-label="Type filter options"></div>
+          </details>
+        </div>
         <div class="field">
           <span>City</span>
           <details id="cityFilter" class="multi-filter">
@@ -109,7 +119,7 @@
       </section>
     </main>
 
-    <script src="data/events-2026.js?v=2"></script>
-    <script src="app.js?v=2"></script>
+    <script src="data/events-2026.js?v=3"></script>
+    <script src="app.js?v=3"></script>
   </body>
 </html>
