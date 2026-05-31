@@ -8,10 +8,10 @@
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "year": 2026,
-  "refreshedAt": "2026-05-30T11:45:04.618Z",
-  "totalEvents": 182,
+  "refreshedAt": "2026-05-31T11:51:02.385Z",
+  "totalEvents": 136,
   "sourceCounts": {
-    "CCCHR": 161,
+    "CCCHR": 115,
     "AACA": 14,
     "Carlisle": 7
   }
