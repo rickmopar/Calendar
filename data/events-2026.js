@@ -1640,27 +1640,6 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "carlisle-2026-06-05-0",
-    "title": "Carlisle Ford Nationals",
-    "startDate": "2026-06-05T00:00:00.000Z",
-    "endDate": "2026-06-07T00:00:00.000Z",
-    "allDay": true,
-    "month": "June",
-    "weekday": "Fri",
-    "dateLabel": "Jun 5, 2026",
-    "timeLabel": "All day",
-    "type": "National show",
-    "source": "Carlisle",
-    "city": "Carlisle",
-    "venue": "Carlisle Fairgrounds",
-    "address": "Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA 17013 | | Schedule/Map",
-    "description": "Carlisle Ford Nationals June 5 - 7, 2026 June 4 - 6, 2027 Event Hours Thursday*: 7 AM - 4 PM | *Early-Bird Shopping & Set-Up | Fri- Sat: 7 AM - 6 PM | Sunday: 7 AM - 12 PM | | Add to Calendar | | View Vendor List | Admission Daily Admission: $15 | Sunday: $7 (Free with Event Ticket) | Event Pass: $30 | Kids 12 & Under: Free | Student & Military Discounts Available | General Parking: $10 | Location Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA 17013 | | Schedule/Map Buy Vendor Space Show a Vehicle Event Details Buy Vendor Space Show a Vehicle Event Details &raquo;",
-    "sourceUrl": "https://carlisleevents.com/docs/default-source/resources-documents/calendar-documents/2026-dates/2026_ford.ics?sfvrsn=5bc7d66b_2&download=true",
-    "url": "https://carlisleevents.com/events/events-detail/index?id=ford+nationals",
-    "calendarUrl": "https://carlisleevents.com/docs/default-source/resources-documents/calendar-documents/2026-dates/2026_ford.ics?sfvrsn=5bc7d66b_2&download=true",
-    "image": ""
-  },
-  {
     "id": "69a1dea4f3a4a11cad328529",
     "title": "Friday Night Hardee's Cruise-Ins | June 5th",
     "startDate": "2026-06-05T20:00:00.544Z",
@@ -2233,7 +2212,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "carlisle-2026-06-19-1",
+    "id": "carlisle-2026-06-19-0",
     "title": "Carlisle GM Nationals",
     "startDate": "2026-06-19T00:00:00.000Z",
     "endDate": "2026-06-20T00:00:00.000Z",
@@ -2881,7 +2860,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1704398886108-VZVIBIDC858BVNCGMO3K/NVUS.jpeg"
   },
   {
-    "id": "carlisle-2026-07-10-2",
+    "id": "carlisle-2026-07-10-1",
     "title": "Carlisle Chrysler Nationals",
     "startDate": "2026-07-10T00:00:00.000Z",
     "endDate": "2026-07-12T00:00:00.000Z",
@@ -3037,7 +3016,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": ""
   },
   {
-    "id": "carlisle-2026-08-07-3",
+    "id": "carlisle-2026-08-07-2",
     "title": "Carlisle Truck Nationals",
     "startDate": "2026-08-07T00:00:00.000Z",
     "endDate": "2026-08-09T00:00:00.000Z",
@@ -3154,7 +3133,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/85ba21ad-9ae8-4d07-b923-deaaf91d32c9/Hepcat+Honeys+Car+Show.jpg"
   },
   {
-    "id": "carlisle-2026-08-27-4",
+    "id": "carlisle-2026-08-27-3",
     "title": "Corvettes at Carlisle",
     "startDate": "2026-08-27T00:00:00.000Z",
     "endDate": "2026-08-29T00:00:00.000Z",
@@ -3291,7 +3270,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": ""
   },
   {
-    "id": "carlisle-2026-09-30-5",
+    "id": "carlisle-2026-09-30-4",
     "title": "Fall Carlisle Collector Car Flea Market, Corral & Auction",
     "startDate": "2026-09-30T00:00:00.000Z",
     "endDate": "2026-10-04T00:00:00.000Z",
@@ -3312,7 +3291,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": ""
   },
   {
-    "id": "carlisle-2026-10-01-6",
+    "id": "carlisle-2026-10-01-5",
     "title": "Fall Carlisle Collector Car Auction",
     "startDate": "2026-10-01T00:00:00.000Z",
     "endDate": "2026-10-02T00:00:00.000Z",
@@ -3458,11 +3437,11 @@ window.CCCHR_METADATA = {
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "year": 2026,
-  "refreshedAt": "2026-06-08T14:31:14.787Z",
-  "totalEvents": 180,
+  "refreshedAt": "2026-06-09T12:50:54.877Z",
+  "totalEvents": 179,
   "sourceCounts": {
     "CCCHR": 159,
     "AACA": 14,
-    "Carlisle": 7
+    "Carlisle": 6
   }
 };
