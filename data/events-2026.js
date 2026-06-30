@@ -4826,8 +4826,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Hershey, PA",
     "description": "October 6-9, 2026 - Eastern Fall Nationals - Hershey, PA - hosted by Hershey Region | hosted by Hershey Region",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/wp-content/uploads/2026/06/2026_Hershey_brochure.pdf",
+    "url": "https://aaca.org/wp-content/uploads/2026/06/2026_Hershey_brochure.pdf",
     "image": ""
   },
   {
@@ -5658,7 +5658,7 @@ window.CCCHR_METADATA = {
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "year": 2026,
-  "refreshedAt": "2026-06-29T14:19:18.494Z",
+  "refreshedAt": "2026-06-30T12:24:00.893Z",
   "totalEvents": 296,
   "sourceCounts": {
     "CCCHR": 277,
