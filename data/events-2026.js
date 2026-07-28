@@ -2464,7 +2464,7 @@ window.CCCHR_EVENTS_2026 = [
   },
   {
     "id": "6994a589b582091ed9816778",
-    "title": "MTC presents Summer Sizzle Car Show | Aug 8th",
+    "title": "MCT presents Summer Sizzle Car Show | Aug 8th",
     "startDate": "2026-08-08T13:00:00.948Z",
     "endDate": "2026-08-08T18:00:00.948Z",
     "month": "August",
@@ -2476,9 +2476,9 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Chesapeake",
     "venue": "Cavalier Ford",
     "address": "4021 Portsmouth Boulevard, Chesapeake, VA, 23321",
-    "description": "MTC presents Summer Sizzle Car Show Saturday, August 8th | 9a-2p Located at Cavalier Ford | 4021 Portsmouth Boulevard, Chesapeake VA 23321 This show is hosted by Cavalier Ford Chesapeake Square, a sponsor of the Mustang Club of Tidewater, and held in support of Trails of Purpose equine-assisted therapies and mental health counseling. The MCT happily welcomes all years, makes and models of passenger cars, trucks, and motorcycles to participate in this show. This is a family friendly event, so feel free to bring the kids (or parents) so they can enjoy the show!! Registration will be onsite only. There is no charge for spectators, who will be directed to parking adjacent to the show vehicle parking area. Please only park in the designated areas for show and spectator parking, as directed by parking staff. There will be people who will post that they are taking online registrations. They are scammers and not in any way authorized to do online registrations. DO NOT register with anyone online, as we will only do registration and accept payments (check/cash) at the show site. This is a Judged Classes show, with multiple Class awards, and 4 top awards for Best in Show, Dealer’s Choice, VFW Choice, and Club Participation. There will also be a 50/50 drawing at the conclusion of the show. Schedule: 9:00A | Registration Opens. Clubs wishing to park together should arrive together to facilitate easier parking. Parking will be as directed by show staff. All entrant vehicles parked in the show vehicle area must pay the registration fee. Please do not arrive prior to 8:30 a.m. to allow for vendor and lot setup to occur. 10:00A | Driver's Meeting / Judging Begins. This is a Judged Classes show. 12:00P | Registration Closed. No further judged entries after this time. 1:00P | Judging Ends 1:30P | Car Show Awards Presented and 50/50 Drawing held. Good Luck!! 2:00P | Show Complete. Please exit safely and have a great day!! The show schedule is subject to modification should the weather dictate we change it. We are actively looking for Vendors to advertise and/or sell their products/services at this show. Vendor spaces are available for $25.00 + two (or more) cans/boxes of non-perishable food for donation. This allows you space for a 10x10 shelter and table setup, adjacent to the show vehicle parking area. If you need additional space, please let us know. Email mustangcluboftidewater67@yahoo.com for more information. Trails of Purpose ( https://www.trailsofpurpose.com ) will also be attending, providing information on the services they offer to support service members and their families in their fight to overcome the negative effects of trauma, transition, and trials that result from their service in the military. Please visit them at the show! Event Contact: Michael Marushia, President, MCT. 757-969-2038, MustangPilot55@gmail.com",
+    "description": "MCT presents Summer Sizzle Car Show Saturday, August 8th | 9a-2p Located at Cavalier Ford | 4021 Portsmouth Boulevard, Chesapeake VA 23321 This show is hosted by Cavalier Ford Chesapeake Square, a sponsor of the Mustang Club of Tidewater, and held in support of Trails of Purpose equine-assisted therapies and mental health counseling. The MCT happily welcomes all years, makes and models of passenger cars, trucks, and motorcycles to participate in this show. This is a family friendly event, so feel free to bring the kids (or parents) so they can enjoy the show!! Registration will be onsite only. There is no charge for spectators, who will be directed to parking adjacent to the show vehicle parking area. Please only park in the designated areas for show and spectator parking, as directed by parking staff. There will be people who will post that they are taking online registrations. They are scammers and not in any way authorized to do online registrations. DO NOT register with anyone online, as we will only do registration and accept payments (check/cash) at the show site. This is a Judged Classes show, with multiple Class awards, and 4 top awards for Best in Show, Dealer’s Choice, VFW Choice, and Club Participation. There will also be a 50/50 drawing at the conclusion of the show. Schedule: 9:00A | Registration Opens. Clubs wishing to park together should arrive together to facilitate easier parking. Parking will be as directed by show staff. All entrant vehicles parked in the show vehicle area must pay the registration fee. Please do not arrive prior to 8:30 a.m. to allow for vendor and lot setup to occur. 10:00A | Driver's Meeting / Judging Begins. This is a Judged Classes show. 12:00P | Registration Closed. No further judged entries after this time. 1:00P | Judging Ends 1:30P | Car Show Awards Presented and 50/50 Drawing held. Good Luck!! 2:00P | Show Complete. Please exit safely and have a great day!! The show schedule is subject to modification should the weather dictate we change it. We are actively looking for Vendors to advertise and/or sell their products/services at this show. Vendor spaces are available for $25.00 + two (or more) cans/boxes of non-perishable food for donation. This allows you space for a 10x10 shelter and table setup, adjacent to the show vehicle parking area. If you need additional space, please let us know. Email mustangcluboftidewater67@yahoo.com for more information. Trails of Purpose ( https://www.trailsofpurpose.com ) will also be attending, providing information on the services they offer to support service members and their families in their fight to overcome the negative effects of trauma, transition, and trials that result from their service in the military. Please visit them at the show! Event Contact: Michael Marushia, President, MCT. 757-969-2038, MustangPilot55@gmail.com",
     "sourceUrl": "",
-    "url": "https://www.ccchr.org/events/mtc-presents-summer-sizzle-car-show-aug-8",
+    "url": "https://www.ccchr.org/events/mct-presents-summer-sizzle-car-show-aug-8",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/8d99b367-e12c-4b36-ac58-d01b72c18d88/MCT+Summer+Sizzle+2026+Car+Show+Flyer.jpg"
   },
   {
@@ -2959,7 +2959,7 @@ window.CCCHR_EVENTS_2026 = [
   },
   {
     "id": "6a2d92575a3dba7ae56cc0e6",
-    "title": "Airfield 4-H Center Car Show | Aug. 22nd",
+    "title": "CANCELED Airfield 4-H Center Car Show | Aug. 22nd",
     "startDate": "2026-08-22T16:00:00.772Z",
     "endDate": "2026-08-22T22:00:00.772Z",
     "month": "August",
@@ -2971,9 +2971,9 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Wakefield",
     "venue": "",
     "address": "15189 Airfield Road, Wakefield, VA, 23888",
-    "description": "Airfield 4-H Center Car Show Saturday, August 22, 2026 | 12-6 PM Located 15189 Airfield Rd. Wakefield, VA 23888 Come enjoy beautiful Airfield Lake with scheduled outdoor activities Aug. 22 (canoes, archery class, challenge course), & fishing all day (with VA fishing license). Concessions available 12-6! Overnight lodging available! Call to book a room and make a weekend of it! 1st, 2nd, and 3rd place prizes equal over $1,000 value!!! Registration Fee (if any): $30 pre-registration is required for each car to be eligible for prizes. $50 Vendor Fee - Pre-registration required! Call 757-899-4901 Register Here",
+    "description": "this show has been Canceled. Reach out to promotor for more details! Airfield 4-H Center Car Show Saturday, August 22, 2026 | 12-6 PM Located 15189 Airfield Rd. Wakefield, VA 23888 Come enjoy beautiful Airfield Lake with scheduled outdoor activities Aug. 22 (canoes, archery class, challenge course), & fishing all day (with VA fishing license). Concessions available 12-6! Overnight lodging available! Call to book a room and make a weekend of it! 1st, 2nd, and 3rd place prizes equal over $1,000 value!!! Registration Fee (if any): $30 pre-registration is required for each car to be eligible for prizes. $50 Vendor Fee - Pre-registration required! Call 757-899-4901 Register Here",
     "sourceUrl": "https://www.airfield4hcenter.org/about/upcoming-events/special-events/car-show-2026",
-    "url": "https://www.ccchr.org/events/airfield-4-h-center-car-show-aug-22",
+    "url": "https://www.ccchr.org/events/canceled-airfield-4-h-center-car-show-aug-22",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/870bbde9-8039-46c0-aee5-1af6e56d60f5/Car_Show_2026_jpg_2.jpg"
   },
   {
@@ -3129,6 +3129,25 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "",
     "url": "https://www.ccchr.org/events/lets-talk-cars-friday-night-cruise-in-aug-28",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782324253735-BYUJYAFS6DSI6WTPFJ8W/Middle+Pinisula+Classic+Cruisers.jpg"
+  },
+  {
+    "id": "6a67ed6d982e3d62e7df0f59",
+    "title": "ACCA Shrine Car Club Car Show | Aug 29th",
+    "startDate": "2026-08-29T12:00:00.530Z",
+    "endDate": "2026-08-29T17:00:00.530Z",
+    "month": "August",
+    "weekday": "Sat",
+    "dateLabel": "Aug 29, 2026",
+    "timeLabel": "8:00 AM",
+    "type": "Car show",
+    "source": "CCCHR",
+    "city": "Richmond",
+    "venue": "Acca Shrine",
+    "address": "1712 Bellevue Avenue, Richmond, VA, 23227",
+    "description": "ACCA Shrine Car Club Car Show Saturday, August 29th | 8a-1p Located at Acca Shrine located at 1712 Bellevue Ave, Richmond, VA 23227 The Acca Shrine Car Club is holding its annual Car Show & Swap Meet on August 29th from 8AM till 1 PM at the Acca Shrine located at 1712 Bellevue Ave, Richmond, VA 23227. I would appreciate it if you would place our poster on your Lodge Bulletin Board until August 29th. | | CHECKS: ACCA SHRINE CAR CLUB | 1712 BELLEVUE AVE. RICHMOND, VA 23227 | ACCA SHRINE OFFICE: 804-264-0509 | SHOW INFORMATION: 804-647-6850 | WEB: https://www.prospectingforwealth.com/ | - | See website for Paid Ads in our “Show Handout”",
+    "sourceUrl": "",
+    "url": "https://www.ccchr.org/events/acca-shrine-car-club-car-show-aug-29",
+    "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/7dac7c30-329e-45cc-8ebc-02820812e1c8/IMG_2705.jpeg"
   },
   {
     "id": "6a3c45e9f0290f3139dbd625",
@@ -5238,10 +5257,10 @@ window.CCCHR_METADATA = {
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "year": 2026,
-  "refreshedAt": "2026-07-27T13:21:52.385Z",
-  "totalEvents": 274,
+  "refreshedAt": "2026-07-28T12:13:53.579Z",
+  "totalEvents": 275,
   "sourceCounts": {
-    "CCCHR": 256,
+    "CCCHR": 257,
     "AACA": 14,
     "Carlisle": 4
   }
