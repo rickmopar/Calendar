@@ -5257,7 +5257,7 @@ window.CCCHR_METADATA = {
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "year": 2026,
-  "refreshedAt": "2026-07-28T12:13:53.579Z",
+  "refreshedAt": "2026-07-29T12:20:53.822Z",
   "totalEvents": 275,
   "sourceCounts": {
     "CCCHR": 257,
