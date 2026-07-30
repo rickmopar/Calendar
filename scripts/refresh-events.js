@@ -7,6 +7,7 @@ const rawDir = path.join(root, "raw");
 const sourceUrl = "https://www.ccchr.org/events?format=json";
 const aacaSourceUrl = "https://aaca.org/aacanationalshowsandtourscalendar/";
 const carlisleSourceUrl = "https://carlisleevents.com/events";
+const facebookSourceUrl = "https://www.facebook.com/ccchr/events";
 const year = 2026;
 
 function decodeHtml(value) {
@@ -346,10 +347,15 @@ async function main() {
       "https://www.ccchr.org/events",
       aacaSourceUrl,
       carlisleSourceUrl,
+      facebookSourceUrl,
     ],
     sourceCalendar: "https://www.ccchr.org/calendar",
     aacaSourceCalendar: aacaSourceUrl,
     carlisleSourceCalendar: carlisleSourceUrl,
+    facebookSourceCalendar: facebookSourceUrl,
+    sourceNotes: {
+      Facebook: "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session.",
+    },
     year,
     refreshedAt: new Date().toISOString(),
     totalEvents: events.length,

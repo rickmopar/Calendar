@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#111820">
-    <meta name="description" content="A mobile-friendly calendar of CCCHR, AACA, and Carlisle car events.">
+    <meta name="description" content="A mobile-friendly calendar of CCCHR, Facebook, AACA, and Carlisle car events.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Car Shows">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -125,6 +125,19 @@ button {
 .source-link {
   flex: 0 0 auto;
   padding: 12px 16px;
+}
+
+.source-links {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.source-link-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 main {
@@ -560,9 +573,13 @@ button {
     display: block;
   }
 
+  .source-links {
+    justify-content: flex-start;
+    margin-top: 22px;
+  }
+
   .source-link {
     display: inline-block;
-    margin-top: 22px;
   }
 
   .controls,
@@ -747,13 +764,16 @@ button {
       <div>
         <p class="eyebrow">2026 Auto Events</p>
         <h1>Car Show Calendar</h1>
-        <p class="lede">A searchable calendar of CCCHR, AACA, and Carlisle events, grouped by month, city, and event type.</p>
+        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, and Carlisle events, grouped by month, city, and event type.</p>
         <div class="status-line" aria-label="Dashboard freshness">
           <span id="currentDate">Today: -</span>
           <span id="refreshDate">Last refreshed: -</span>
         </div>
       </div>
-      <a class="source-link" href="https://www.ccchr.org/calendar" target="_blank" rel="noreferrer">Source calendar</a>
+      <nav class="source-links" aria-label="Source calendars">
+        <a class="source-link" href="https://www.ccchr.org/calendar" target="_blank" rel="noreferrer">CCCHR calendar</a>
+        <a class="source-link source-link-secondary" href="https://www.facebook.com/ccchr/events" target="_blank" rel="noreferrer">Facebook events</a>
+      </nav>
     </header>
 
     <main>
@@ -6424,7 +6444,8 @@ window.CCCHR_METADATA = {
   "sources": [
     "https://www.ccchr.org/events",
     "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "https://carlisleevents.com/events"
+    "https://carlisleevents.com/events",
+    "https://www.facebook.com/ccchr/events"
   ],
   "sourceCalendar": "https://www.ccchr.org/calendar",
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
@@ -6436,6 +6457,10 @@ window.CCCHR_METADATA = {
     "CCCHR": 274,
     "AACA": 14,
     "Carlisle": 4
+  },
+  "facebookSourceCalendar": "https://www.facebook.com/ccchr/events",
+  "sourceNotes": {
+    "Facebook": "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session."
   }
 };
 

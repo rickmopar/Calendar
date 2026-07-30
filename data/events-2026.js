@@ -5574,7 +5574,8 @@ window.CCCHR_METADATA = {
   "sources": [
     "https://www.ccchr.org/events",
     "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "https://carlisleevents.com/events"
+    "https://carlisleevents.com/events",
+    "https://www.facebook.com/ccchr/events"
   ],
   "sourceCalendar": "https://www.ccchr.org/calendar",
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
@@ -5586,5 +5587,9 @@ window.CCCHR_METADATA = {
     "CCCHR": 274,
     "AACA": 14,
     "Carlisle": 4
+  },
+  "facebookSourceCalendar": "https://www.facebook.com/ccchr/events",
+  "sourceNotes": {
+    "Facebook": "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session."
   }
 };
