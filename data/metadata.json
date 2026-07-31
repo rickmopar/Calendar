@@ -2,22 +2,25 @@
   "sources": [
     "https://www.ccchr.org/events",
     "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "https://www.traaca.com/calendar.htm",
     "https://carlisleevents.com/events",
     "https://www.facebook.com/ccchr/events"
   ],
   "sourceCalendar": "https://www.ccchr.org/calendar",
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
+  "traacaSourceCalendar": "https://www.traaca.com/calendar.htm",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "facebookSourceCalendar": "https://www.facebook.com/ccchr/events",
   "sourceNotes": {
     "Facebook": "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session."
   },
   "year": 2026,
-  "refreshedAt": "2026-07-31T12:16:51.302Z",
-  "totalEvents": 292,
+  "refreshedAt": "2026-08-01T01:10:55.233Z",
+  "totalEvents": 297,
   "sourceCounts": {
     "CCCHR": 274,
     "AACA": 14,
+    "TRAACA": 5,
     "Carlisle": 4
   }
 }

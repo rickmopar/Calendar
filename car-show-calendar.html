@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#111820">
-    <meta name="description" content="A mobile-friendly calendar of CCCHR, Facebook, AACA, and Carlisle car events.">
+    <meta name="description" content="A mobile-friendly calendar of CCCHR, Facebook, AACA, TRAACA, and Carlisle car events.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Car Shows">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=5">
+    <link rel="manifest" href="manifest.webmanifest?v=6">
     <style>
 :root {
   color-scheme: light;
@@ -23,6 +23,7 @@
   --accent: #b8302f;
   --accent-dark: #76201f;
   --aaca: #168146;
+  --traaca: #0f7f95;
   --carlisle: #7143b8;
   --facebook: #1877f2;
   --facebook-dark: #0b4aa0;
@@ -366,6 +367,10 @@ button {
   background: var(--aaca);
 }
 
+.legend-traaca {
+  background: var(--traaca);
+}
+
 .legend-carlisle {
   background: var(--carlisle);
 }
@@ -405,6 +410,10 @@ button {
 
 .bar-aaca {
   background: var(--aaca);
+}
+
+.bar-traaca {
+  background: var(--traaca);
 }
 
 .bar-carlisle {
@@ -533,6 +542,11 @@ button {
   color: #0e6635;
 }
 
+.pill.source-traaca {
+  background: #def2f5;
+  color: #075868;
+}
+
 .pill.source-carlisle {
   background: #eee7fb;
   color: #56309a;
@@ -551,6 +565,10 @@ button {
 
 .event-title-aaca {
   color: var(--aaca);
+}
+
+.event-title-traaca {
+  color: var(--traaca);
 }
 
 .event-title-carlisle {
@@ -795,7 +813,7 @@ button {
       <div>
         <p class="eyebrow">2026 Auto Events</p>
         <h1>Car Show Calendar</h1>
-        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, and Carlisle events, grouped by month, city, and event type.</p>
+        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
         <div class="status-line" aria-label="Dashboard freshness">
           <span id="currentDate">Today: -</span>
           <span id="refreshDate">Last refreshed: -</span>
@@ -804,6 +822,7 @@ button {
       <nav class="source-links" aria-label="Source calendars">
         <a class="source-link" href="https://www.ccchr.org/calendar" target="_blank" rel="noreferrer">CCCHR calendar</a>
         <a class="source-link source-link-secondary" href="https://www.facebook.com/ccchr/events" target="_blank" rel="noreferrer">Facebook events</a>
+        <a class="source-link source-link-secondary" href="https://www.traaca.com/calendar.htm" target="_blank" rel="noreferrer">TRAACA calendar</a>
       </nav>
     </header>
 
@@ -879,6 +898,7 @@ button {
             <div class="legend" aria-label="Bar color legend">
               <span><i class="legend-ccchr"></i>CCCHR</span>
               <span><i class="legend-aaca"></i>AACA</span>
+              <span><i class="legend-traaca"></i>TRAACA</span>
               <span><i class="legend-carlisle"></i>Carlisle</span>
             </div>
           </div>
@@ -3915,6 +3935,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
+    "id": "traaca-2026-8-15-0",
+    "title": "Khedive Fun-N-Shine Car Show",
+    "startDate": "2026-08-15T14:00:00.000Z",
+    "endDate": "2026-08-15T19:00:00.000Z",
+    "allDay": false,
+    "month": "August",
+    "weekday": "Sat",
+    "dateLabel": "Aug 15, 2026",
+    "timeLabel": "10 AM",
+    "type": "Car show",
+    "source": "TRAACA",
+    "city": "Chesapeake",
+    "venue": "Shrine Center, 645 Woodlake Drive, Chesapeake VA",
+    "address": "Shrine Center, 645 Woodlake Drive, Chesapeake VA",
+    "description": "15 - Khedive Fun-N-Shine Car Show - 10 AM until 3 PM (Shrine Center, 645 Woodlake Drive, Chesapeake VA) (TRAACA Group to leave from the Kroger Parking Lot at 1653 Sentinel Drive, Chesapeake VA 23320 with a 9:45 AM departure)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "69b840beb29a044be79445ee",
     "title": "33rd Fun & Shine Car Show | Aug. 15th",
     "startDate": "2026-08-15T14:00:00.701Z",
@@ -4983,6 +5023,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
+    "id": "traaca-2026-9-17-1",
+    "title": "TRAACA Dinner Meeting",
+    "startDate": "2026-09-17T22:00:00.000Z",
+    "endDate": "2026-09-18T00:00:00.000Z",
+    "allDay": false,
+    "month": "September",
+    "weekday": "Thu",
+    "dateLabel": "Sep 17, 2026",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "17 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "6a3c20649adc524e558fd3be",
     "title": "Let's Talk Cars Friday Night Cruise-in | Sept 18th",
     "startDate": "2026-09-18T21:00:00.230Z",
@@ -5787,6 +5847,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1710190301938-47XZH8M5JFGMPH30ZK45/Doumar+Cruise+In+2024.jpeg"
   },
   {
+    "id": "traaca-2026-10-15-2",
+    "title": "TRAACA Chili Cookoff",
+    "startDate": "2026-10-15T13:00:00.000Z",
+    "endDate": "2026-10-15T13:00:00.000Z",
+    "allDay": true,
+    "month": "October",
+    "weekday": "Thu",
+    "dateLabel": "Oct 15, 2026",
+    "timeLabel": "All day",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Chesapeake",
+    "venue": "2006 Saint Brides Rd. W. Chesapeake, VA 23322",
+    "address": "2006 Saint Brides Rd. W. Chesapeake, VA 23322",
+    "description": "15 - TRAACA Chili Cookoff - Hosted by Bruce Sedel (2006 Saint Brides Rd. W. Chesapeake, VA 23322)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "6a3c20e4a12e755b322c22db",
     "title": "Let's Talk Cars Friday Night Cruise-in | Oct 16th",
     "startDate": "2026-10-16T21:00:00.223Z",
@@ -6319,6 +6399,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://static1.squarespace.com/static/6162287958ee4e2159a4807d/6162288958ee4e2159a48171/6987c827fa7754741e8d84d4/1770506412700/"
   },
   {
+    "id": "traaca-2026-11-15-3",
+    "title": "TRAACA Dinner Meeting & Silent Auction",
+    "startDate": "2026-11-15T23:00:00.000Z",
+    "endDate": "2026-11-16T01:00:00.000Z",
+    "allDay": false,
+    "month": "November",
+    "weekday": "Sun",
+    "dateLabel": "Nov 15, 2026",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "15 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "6a3c41d960c0fa64f6d2041d",
     "title": "Cars & Coffee Williamsburg | Nov 21st",
     "startDate": "2026-11-21T14:00:00.531Z",
@@ -6414,6 +6514,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
+    "id": "traaca-2026-12-5-4",
+    "title": "TRAACA Holiday Brunch",
+    "startDate": "2026-12-05T16:00:00.000Z",
+    "endDate": "2026-12-05T18:00:00.000Z",
+    "allDay": false,
+    "month": "December",
+    "weekday": "Sat",
+    "dateLabel": "Dec 5, 2026",
+    "timeLabel": "11 AM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "3800 Pacific Ave, Virginia Beach, VA 23451",
+    "address": "3800 Pacific Ave, Virginia Beach, VA 23451",
+    "description": "5 - TRAACA Holiday Brunch - 11 AM at the Princess Anne Country Club (3800 Pacific Ave, Virginia Beach, VA 23451)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "6a3c4bc13addd647fa16b4b8",
     "title": "Cheeseburgers & Classic Car Cruise In (Smithfield) | Dec 6th",
     "startDate": "2026-12-06T19:00:00.470Z",
@@ -6475,22 +6595,25 @@ window.CCCHR_METADATA = {
   "sources": [
     "https://www.ccchr.org/events",
     "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "https://www.traaca.com/calendar.htm",
     "https://carlisleevents.com/events",
     "https://www.facebook.com/ccchr/events"
   ],
   "sourceCalendar": "https://www.ccchr.org/calendar",
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
+  "traacaSourceCalendar": "https://www.traaca.com/calendar.htm",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "facebookSourceCalendar": "https://www.facebook.com/ccchr/events",
   "sourceNotes": {
     "Facebook": "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session."
   },
   "year": 2026,
-  "refreshedAt": "2026-07-31T12:16:51.302Z",
-  "totalEvents": 292,
+  "refreshedAt": "2026-08-01T01:10:55.233Z",
+  "totalEvents": 297,
   "sourceCounts": {
     "CCCHR": 274,
     "AACA": 14,
+    "TRAACA": 5,
     "Carlisle": 4
   }
 };
@@ -7031,16 +7154,19 @@ function renderChart(items) {
       const ccchrCount = countsBySource[month]?.CCCHR || 0;
       const aacaCount = countsBySource[month]?.AACA || 0;
       const carlisleCount = countsBySource[month]?.Carlisle || 0;
+      const traacaCount = countsBySource[month]?.TRAACA || 0;
       const totalHeight = Math.max(8, (count / max) * 140);
       const ccchrHeight = count ? (ccchrCount / count) * totalHeight : 0;
       const aacaHeight = count ? (aacaCount / count) * totalHeight : 0;
       const carlisleHeight = count ? (carlisleCount / count) * totalHeight : 0;
+      const traacaHeight = count ? (traacaCount / count) * totalHeight : 0;
       const wrapper = document.createElement("div");
       wrapper.className = "month-bar";
       wrapper.innerHTML = `
         <div class="bar-count">${count}</div>
-        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${carlisleCount} Carlisle">
+        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
           ${carlisleCount ? `<span class="bar-segment bar-carlisle" style="height:${carlisleHeight}px"></span>` : ""}
+          ${traacaCount ? `<span class="bar-segment bar-traaca" style="height:${traacaHeight}px"></span>` : ""}
           ${aacaCount ? `<span class="bar-segment bar-aaca" style="height:${aacaHeight}px"></span>` : ""}
           ${ccchrCount ? `<span class="bar-segment bar-ccchr" style="height:${ccchrHeight}px"></span>` : ""}
         </div>
@@ -7096,7 +7222,7 @@ function renderEvents(items) {
       const source = escapeHtml(event.source || "CCCHR");
       const sourceClass = source.toLowerCase();
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
-      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
+      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
       card.innerHTML = `
@@ -7205,7 +7331,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=5").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=6").catch(() => {});
   });
 }
 

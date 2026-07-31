@@ -532,16 +532,19 @@ function renderChart(items) {
       const ccchrCount = countsBySource[month]?.CCCHR || 0;
       const aacaCount = countsBySource[month]?.AACA || 0;
       const carlisleCount = countsBySource[month]?.Carlisle || 0;
+      const traacaCount = countsBySource[month]?.TRAACA || 0;
       const totalHeight = Math.max(8, (count / max) * 140);
       const ccchrHeight = count ? (ccchrCount / count) * totalHeight : 0;
       const aacaHeight = count ? (aacaCount / count) * totalHeight : 0;
       const carlisleHeight = count ? (carlisleCount / count) * totalHeight : 0;
+      const traacaHeight = count ? (traacaCount / count) * totalHeight : 0;
       const wrapper = document.createElement("div");
       wrapper.className = "month-bar";
       wrapper.innerHTML = `
         <div class="bar-count">${count}</div>
-        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${carlisleCount} Carlisle">
+        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
           ${carlisleCount ? `<span class="bar-segment bar-carlisle" style="height:${carlisleHeight}px"></span>` : ""}
+          ${traacaCount ? `<span class="bar-segment bar-traaca" style="height:${traacaHeight}px"></span>` : ""}
           ${aacaCount ? `<span class="bar-segment bar-aaca" style="height:${aacaHeight}px"></span>` : ""}
           ${ccchrCount ? `<span class="bar-segment bar-ccchr" style="height:${ccchrHeight}px"></span>` : ""}
         </div>
@@ -597,7 +600,7 @@ function renderEvents(items) {
       const source = escapeHtml(event.source || "CCCHR");
       const sourceClass = source.toLowerCase();
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
-      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
+      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
       card.innerHTML = `
@@ -706,6 +709,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=5").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=6").catch(() => {});
   });
 }

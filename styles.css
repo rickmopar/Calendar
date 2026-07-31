@@ -8,6 +8,7 @@
   --accent: #b8302f;
   --accent-dark: #76201f;
   --aaca: #168146;
+  --traaca: #0f7f95;
   --carlisle: #7143b8;
   --facebook: #1877f2;
   --facebook-dark: #0b4aa0;
@@ -351,6 +352,10 @@ button {
   background: var(--aaca);
 }
 
+.legend-traaca {
+  background: var(--traaca);
+}
+
 .legend-carlisle {
   background: var(--carlisle);
 }
@@ -390,6 +395,10 @@ button {
 
 .bar-aaca {
   background: var(--aaca);
+}
+
+.bar-traaca {
+  background: var(--traaca);
 }
 
 .bar-carlisle {
@@ -518,6 +527,11 @@ button {
   color: #0e6635;
 }
 
+.pill.source-traaca {
+  background: #def2f5;
+  color: #075868;
+}
+
 .pill.source-carlisle {
   background: #eee7fb;
   color: #56309a;
@@ -536,6 +550,10 @@ button {
 
 .event-title-aaca {
   color: var(--aaca);
+}
+
+.event-title-traaca {
+  color: var(--traaca);
 }
 
 .event-title-carlisle {
