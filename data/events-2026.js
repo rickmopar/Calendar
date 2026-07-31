@@ -5580,16 +5580,16 @@ window.CCCHR_METADATA = {
   "sourceCalendar": "https://www.ccchr.org/calendar",
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
+  "facebookSourceCalendar": "https://www.facebook.com/ccchr/events",
+  "sourceNotes": {
+    "Facebook": "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session."
+  },
   "year": 2026,
-  "refreshedAt": "2026-07-30T12:04:22.067Z",
+  "refreshedAt": "2026-07-31T12:16:51.302Z",
   "totalEvents": 292,
   "sourceCounts": {
     "CCCHR": 274,
     "AACA": 14,
     "Carlisle": 4
-  },
-  "facebookSourceCalendar": "https://www.facebook.com/ccchr/events",
-  "sourceNotes": {
-    "Facebook": "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session."
   }
 };
