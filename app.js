@@ -82,6 +82,30 @@ function fillCheckboxOptions(container, group, values, { checked = false } = {})
   );
 }
 
+function fillTypeOptions(values) {
+  const facebookId = "type-facebook-only";
+  const facebookLabel = document.createElement("label");
+  facebookLabel.className = "filter-special";
+  facebookLabel.setAttribute("for", facebookId);
+  facebookLabel.innerHTML = `
+    <input id="${facebookId}" name="type-special" type="radio" value="Facebook only">
+    <span>Facebook only</span>
+  `;
+
+  const typeLabels = values.map((value) => {
+    const id = `type-${slug(value)}`;
+    const label = document.createElement("label");
+    label.setAttribute("for", id);
+    label.innerHTML = `
+      <input id="${id}" type="checkbox" value="${escapeHtml(value)}" checked>
+      <span>${escapeHtml(value)}</span>
+    `;
+    return label;
+  });
+
+  container.replaceChildren(facebookLabel, ...typeLabels);
+}
+
 function fillCityOptions(values) {
   fillCheckboxOptions(els.cityOptions, "city", values);
 }
@@ -92,6 +116,14 @@ function selectedValues(container) {
 
 function selectedCities() {
   return selectedValues(els.cityOptions);
+}
+
+function isFacebookOnlyFilterActive() {
+  return Boolean(els.typeOptions.querySelector('input[value="Facebook only"]:checked'));
+}
+
+function selectedTypeValues() {
+  return [...els.typeOptions.querySelectorAll('input[type="checkbox"]:checked')].map((input) => input.value);
 }
 
 function updateMultiSummary(summaryEl, selected, allValues, label) {
@@ -111,7 +143,12 @@ function updateMonthSummary() {
 }
 
 function updateTypeSummary() {
-  updateMultiSummary(els.typeSummary, selectedValues(els.typeOptions), typeValues, "types");
+  if (isFacebookOnlyFilterActive()) {
+    els.typeSummary.textContent = "Facebook only";
+    return;
+  }
+
+  updateMultiSummary(els.typeSummary, selectedTypeValues(), typeValues, "types");
 }
 
 function updateCitySummary() {
@@ -131,10 +168,17 @@ function eventText(event) {
     .toLowerCase();
 }
 
+function isFacebookLinkedEvent(event) {
+  return [event.sourceUrl, event.url, event.calendarUrl]
+    .filter(Boolean)
+    .some((url) => /(^|\/\/)(www\.)?facebook\.com\//i.test(url));
+}
+
 function getFilteredEvents() {
   const query = els.search.value.trim().toLowerCase();
   const months = selectedValues(els.monthOptions);
-  const selectedTypes = selectedValues(els.typeOptions);
+  const selectedTypes = selectedTypeValues();
+  const facebookOnly = isFacebookOnlyFilterActive();
   const selectedEventTypes = selectedTypes.filter((value) => value !== "Recurring");
   const includeRecurring = selectedTypes.includes("Recurring");
   const cities = selectedCities();
@@ -144,9 +188,11 @@ function getFilteredEvents() {
     const hasSelectedEventTypes = selectedEventTypes.length > 0;
     const matchesQuery = !query || eventText(event).includes(query);
     const matchesMonth = months.includes(event.month);
-    const matchesType = hasSelectedEventTypes
-      ? selectedEventTypes.includes(event.type) && (includeRecurring || !recurrence)
-      : includeRecurring && recurrence;
+    const matchesType = facebookOnly
+      ? isFacebookLinkedEvent(event)
+      : hasSelectedEventTypes
+        ? selectedEventTypes.includes(event.type) && (includeRecurring || !recurrence)
+        : includeRecurring && recurrence;
     const matchesCity = !cities.length || cities.includes(event.city);
     return matchesQuery && matchesMonth && matchesType && matchesCity;
   });
@@ -443,7 +489,8 @@ function renderStats(items) {
   els.range.textContent = dates.length
     ? `${dates[0].toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${dates.at(-1).toLocaleDateString("en-US", { month: "short", day: "numeric" })}`
     : "-";
-  els.resultCount.textContent = `${items.length.toLocaleString()} matching event${items.length === 1 ? "" : "s"}`;
+  const prefix = isFacebookOnlyFilterActive() ? "Facebook-only: " : "";
+  els.resultCount.textContent = `${prefix}${items.length.toLocaleString()} matching event${items.length === 1 ? "" : "s"}`;
 }
 
 function renderFreshness() {
@@ -537,7 +584,9 @@ function renderEvents(items) {
   els.list.replaceChildren(
     ...items.map((event) => {
       const card = document.createElement("article");
-      card.className = "event-card";
+      const facebookLinked = isFacebookLinkedEvent(event);
+      const facebookStandalone = facebookLinked && isFacebookOnlyFilterActive();
+      card.className = `event-card${facebookStandalone ? " event-card-facebook" : ""}`;
       const recurrence = detectRecurrence(event);
       const calendarHref = `data:text/calendar;charset=utf-8,${encodeURIComponent(buildCalendarFile(event))}`;
       const title = escapeHtml(event.title);
@@ -547,7 +596,7 @@ function renderEvents(items) {
       const description = escapeHtml(event.description);
       const source = escapeHtml(event.source || "CCCHR");
       const sourceClass = source.toLowerCase();
-      const titleClass = `event-title event-title-${sourceClass}`;
+      const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
       const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
@@ -563,6 +612,7 @@ function renderEvents(items) {
           <div class="event-topline">
             <span class="pill type">${escapeHtml(event.type)}</span>
             <span class="pill source source-${sourceClass}">${source}</span>
+            ${facebookLinked ? `<span class="pill source-facebook">Facebook info</span>` : ""}
             <span class="pill">${city}</span>
             ${recurrence ? `<span class="pill">${escapeHtml(recurrence.label)}</span>` : ""}
           </div>
@@ -596,7 +646,7 @@ const monthValues = monthOrder.filter((month) => events.some((event) => event.mo
 const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
 
 fillCheckboxOptions(els.monthOptions, "month", monthValues, { checked: true });
-fillCheckboxOptions(els.typeOptions, "type", typeValues, { checked: true });
+fillTypeOptions(typeValues);
 fillCityOptions(unique(events.map((event) => event.city)));
 updateMonthSummary();
 updateTypeSummary();
@@ -611,7 +661,17 @@ els.monthOptions.addEventListener("change", () => {
   render();
 });
 
-els.typeOptions.addEventListener("change", () => {
+els.typeOptions.addEventListener("change", (event) => {
+  const facebookRadio = els.typeOptions.querySelector('input[value="Facebook only"]');
+
+  if (event.target === facebookRadio && facebookRadio.checked) {
+    els.typeOptions.querySelectorAll('input[type="checkbox"]').forEach((input) => {
+      input.checked = false;
+    });
+  } else if (event.target.type === "checkbox") {
+    facebookRadio.checked = false;
+  }
+
   updateTypeSummary();
   render();
 });
@@ -627,7 +687,7 @@ els.reset.addEventListener("click", () => {
     input.checked = true;
   });
   els.typeOptions.querySelectorAll("input").forEach((input) => {
-    input.checked = true;
+    input.checked = input.type === "checkbox";
   });
   els.cityOptions.querySelectorAll("input:checked").forEach((input) => {
     input.checked = false;

@@ -9,6 +9,8 @@
   --accent-dark: #76201f;
   --aaca: #168146;
   --carlisle: #7143b8;
+  --facebook: #1877f2;
+  --facebook-dark: #0b4aa0;
   --teal: #1f7a74;
   --gold: #c28b21;
   --shadow: 0 16px 36px rgba(30, 39, 50, 0.12);
@@ -265,6 +267,16 @@ select,
   background: #f4f7f7;
 }
 
+.multi-options .filter-special {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 6px;
+  color: var(--facebook-dark);
+}
+
+.multi-options .filter-special input {
+  accent-color: var(--facebook);
+}
+
 .multi-options input {
   width: 16px;
   min-height: 16px;
@@ -439,6 +451,16 @@ button {
   padding: 18px;
 }
 
+.event-card-facebook {
+  border-color: rgba(24, 119, 242, 0.38);
+  box-shadow: 0 16px 36px rgba(24, 119, 242, 0.14);
+}
+
+.event-card-facebook .date-tile {
+  background: #e7f1ff;
+  color: var(--facebook-dark);
+}
+
 .date-tile {
   display: grid;
   place-items: center;
@@ -501,6 +523,11 @@ button {
   color: #56309a;
 }
 
+.pill.source-facebook {
+  background: #e7f1ff;
+  color: var(--facebook-dark);
+}
+
 .event-card h3 {
   margin: 0 0 8px;
   font-size: 1.2rem;
@@ -513,6 +540,10 @@ button {
 
 .event-title-carlisle {
   color: var(--carlisle);
+}
+
+.event-title-facebook {
+  color: var(--facebook-dark);
 }
 
 .event-meta,
