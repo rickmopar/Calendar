@@ -82,7 +82,7 @@ function fillCheckboxOptions(container, group, values, { checked = false } = {})
   );
 }
 
-function fillTypeOptions(values) {
+function fillTypeOptions(container, values) {
   const facebookId = "type-facebook-only";
   const facebookLabel = document.createElement("label");
   facebookLabel.className = "filter-special";
@@ -646,7 +646,7 @@ const monthValues = monthOrder.filter((month) => events.some((event) => event.mo
 const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
 
 fillCheckboxOptions(els.monthOptions, "month", monthValues, { checked: true });
-fillTypeOptions(typeValues);
+fillTypeOptions(els.typeOptions, typeValues);
 fillCityOptions(unique(events.map((event) => event.city)));
 updateMonthSummary();
 updateTypeSummary();
