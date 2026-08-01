@@ -140,7 +140,7 @@ function updateMultiSummary(summaryEl, selected, allValues, label) {
 }
 
 function updateMonthSummary() {
-  updateMultiSummary(els.monthSummary, selectedValues(els.monthOptions), monthValues, "months");
+  updateMultiSummary(els.monthSummary, selectedValues(els.monthOptions), activeMonthValues(), "months");
 }
 
 function updateTypeSummary() {
@@ -549,7 +549,7 @@ function renderChart(items) {
     return acc;
   }, {});
   const max = Math.max(1, ...Object.values(counts));
-  const activeMonths = monthOrder.filter((month) => events.some((event) => event.month === month));
+  const activeMonths = activeMonthValues();
 
   els.chart.replaceChildren(
     ...activeMonths.map((month) => {
@@ -674,15 +674,34 @@ const monthValues = monthOrder.filter((month) => events.some((event) => event.mo
 const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
 const cityValues = unique(events.map((event) => event.city));
 
-fillCheckboxOptions(els.monthOptions, "month", monthValues, { checked: true });
+function activeMonthValues() {
+  return monthOrder.filter((month) => events.some((event) => event.month === month && matchesDateRange(event)));
+}
+
+function refreshMonthOptions() {
+  const activeValues = activeMonthValues();
+  const previous = new Set(selectedValues(els.monthOptions));
+  const selected = activeValues.filter((month) => !previous.size || previous.has(month));
+
+  fillCheckboxOptions(els.monthOptions, "month", activeValues, { checked: false });
+  setCheckedValues(els.monthOptions, selected.length ? selected : activeValues);
+  updateMonthSummary();
+}
+
+fillCheckboxOptions(els.monthOptions, "month", activeMonthValues(), { checked: true });
 fillTypeOptions(els.typeOptions, typeValues);
 fillCityOptions(cityValues);
 updateMonthSummary();
 updateTypeSummary();
 updateCitySummary();
 
-[els.search, els.dateRange, els.sort].forEach((control) => {
+[els.search, els.sort].forEach((control) => {
   control.addEventListener("input", render);
+});
+
+els.dateRange.addEventListener("input", () => {
+  refreshMonthOptions();
+  render();
 });
 
 els.monthOptions.addEventListener("change", () => {
@@ -722,6 +741,7 @@ els.reset.addEventListener("click", () => {
     input.checked = false;
   });
   els.dateRange.value = "upcoming";
+  refreshMonthOptions();
   els.assistantInput.value = "";
   els.assistantResponse.textContent = "Ask for a city, month, or type of event.";
   els.monthFilter.open = false;
@@ -778,7 +798,8 @@ function runAssistant() {
   else if (/\b30\b|this month|next month/.test(query)) els.dateRange.value = "next30";
   else els.dateRange.value = "upcoming";
 
-  if (matchedMonths.length) setCheckedValues(els.monthOptions, matchedMonths);
+  refreshMonthOptions();
+  if (matchedMonths.length) setCheckedValues(els.monthOptions, matchedMonths.filter((month) => activeMonthValues().includes(month)));
   if (matchedCities.length) setCheckedValues(els.cityOptions, matchedCities);
   if (matchedTypes.length) {
     setCheckedValues(els.typeOptions, matchedTypes);
@@ -810,6 +831,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=8").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=9").catch(() => {});
   });
 }

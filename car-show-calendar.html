@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=8">
+    <link rel="manifest" href="manifest.webmanifest?v=9">
     <style>
 :root {
   color-scheme: light;
@@ -7181,7 +7181,7 @@ function updateMultiSummary(summaryEl, selected, allValues, label) {
 }
 
 function updateMonthSummary() {
-  updateMultiSummary(els.monthSummary, selectedValues(els.monthOptions), monthValues, "months");
+  updateMultiSummary(els.monthSummary, selectedValues(els.monthOptions), activeMonthValues(), "months");
 }
 
 function updateTypeSummary() {
@@ -7590,7 +7590,7 @@ function renderChart(items) {
     return acc;
   }, {});
   const max = Math.max(1, ...Object.values(counts));
-  const activeMonths = monthOrder.filter((month) => events.some((event) => event.month === month));
+  const activeMonths = activeMonthValues();
 
   els.chart.replaceChildren(
     ...activeMonths.map((month) => {
@@ -7715,15 +7715,34 @@ const monthValues = monthOrder.filter((month) => events.some((event) => event.mo
 const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
 const cityValues = unique(events.map((event) => event.city));
 
-fillCheckboxOptions(els.monthOptions, "month", monthValues, { checked: true });
+function activeMonthValues() {
+  return monthOrder.filter((month) => events.some((event) => event.month === month && matchesDateRange(event)));
+}
+
+function refreshMonthOptions() {
+  const activeValues = activeMonthValues();
+  const previous = new Set(selectedValues(els.monthOptions));
+  const selected = activeValues.filter((month) => !previous.size || previous.has(month));
+
+  fillCheckboxOptions(els.monthOptions, "month", activeValues, { checked: false });
+  setCheckedValues(els.monthOptions, selected.length ? selected : activeValues);
+  updateMonthSummary();
+}
+
+fillCheckboxOptions(els.monthOptions, "month", activeMonthValues(), { checked: true });
 fillTypeOptions(els.typeOptions, typeValues);
 fillCityOptions(cityValues);
 updateMonthSummary();
 updateTypeSummary();
 updateCitySummary();
 
-[els.search, els.dateRange, els.sort].forEach((control) => {
+[els.search, els.sort].forEach((control) => {
   control.addEventListener("input", render);
+});
+
+els.dateRange.addEventListener("input", () => {
+  refreshMonthOptions();
+  render();
 });
 
 els.monthOptions.addEventListener("change", () => {
@@ -7763,6 +7782,7 @@ els.reset.addEventListener("click", () => {
     input.checked = false;
   });
   els.dateRange.value = "upcoming";
+  refreshMonthOptions();
   els.assistantInput.value = "";
   els.assistantResponse.textContent = "Ask for a city, month, or type of event.";
   els.monthFilter.open = false;
@@ -7819,7 +7839,8 @@ function runAssistant() {
   else if (/\b30\b|this month|next month/.test(query)) els.dateRange.value = "next30";
   else els.dateRange.value = "upcoming";
 
-  if (matchedMonths.length) setCheckedValues(els.monthOptions, matchedMonths);
+  refreshMonthOptions();
+  if (matchedMonths.length) setCheckedValues(els.monthOptions, matchedMonths.filter((month) => activeMonthValues().includes(month)));
   if (matchedCities.length) setCheckedValues(els.cityOptions, matchedCities);
   if (matchedTypes.length) {
     setCheckedValues(els.typeOptions, matchedTypes);
@@ -7851,7 +7872,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=8").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=9").catch(() => {});
   });
 }
 
