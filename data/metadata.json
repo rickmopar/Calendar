@@ -14,13 +14,17 @@
   "sourceNotes": {
     "Facebook": "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session."
   },
+  "years": [
+    2026,
+    2027
+  ],
   "year": 2026,
-  "refreshedAt": "2026-08-01T01:10:55.233Z",
-  "totalEvents": 297,
+  "refreshedAt": "2026-08-01T01:23:00.549Z",
+  "totalEvents": 304,
   "sourceCounts": {
     "CCCHR": 274,
     "AACA": 14,
     "TRAACA": 5,
-    "Carlisle": 4
+    "Carlisle": 11
   }
 }

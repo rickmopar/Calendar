@@ -1,7 +1,7 @@
 {
   "name": "Car Show Calendar",
   "short_name": "Car Shows",
-  "description": "A mobile-friendly calendar of CCCHR, AACA, TRAACA, and Carlisle car events.",
+  "description": "A mobile-friendly calendar of CCCHR, AACA, TRAACA, and Carlisle car events for 2026 and 2027.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

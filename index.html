@@ -11,13 +11,13 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=6">
-    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="manifest" href="manifest.webmanifest?v=8">
+    <link rel="stylesheet" href="styles.css?v=8">
   </head>
   <body>
     <header class="masthead">
       <div>
-        <p class="eyebrow">2026 Auto Events</p>
+        <p class="eyebrow">2026-2027 Auto Events</p>
         <h1>Car Show Calendar</h1>
         <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
         <div class="status-line" aria-label="Dashboard freshness">
@@ -85,6 +85,17 @@
           </details>
         </div>
         <label>
+          <span>Date range</span>
+          <select id="dateRangeSelect">
+            <option value="upcoming">Upcoming events</option>
+            <option value="next30">Next 30 days</option>
+            <option value="next90">Next 90 days</option>
+            <option value="rest2026">Rest of 2026</option>
+            <option value="year2027">2027 events</option>
+            <option value="allFuture">All future events</option>
+          </select>
+        </label>
+        <label>
           <span>Sort</span>
           <select id="sortSelect">
             <option value="date-asc">Date, earliest first</option>
@@ -94,6 +105,15 @@
           </select>
         </label>
         <button id="resetButton" type="button">Reset</button>
+      </section>
+
+      <section class="trip-helper" aria-label="Smart event finder">
+        <label>
+          <span>Smart Find</span>
+          <input id="assistantInput" type="search" placeholder="Where do you want to go? Try Virginia Beach in September or 2027 tours">
+        </label>
+        <button id="assistantButton" type="button">Find Events</button>
+        <p id="assistantResponse">Ask for a city, month, or type of event.</p>
       </section>
 
       <section class="chart-panel" aria-label="Events by month">
@@ -124,7 +144,7 @@
       </section>
     </main>
 
-    <script src="data/events-2026.js?v=6"></script>
-    <script src="app.js?v=6"></script>
+    <script src="data/events-2026.js?v=8"></script>
+    <script src="app.js?v=8"></script>
   </body>
 </html>

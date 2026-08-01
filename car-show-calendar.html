@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=6">
+    <link rel="manifest" href="manifest.webmanifest?v=8">
     <style>
 :root {
   color-scheme: light;
@@ -197,7 +197,7 @@ main {
 
 .controls {
   display: grid;
-  grid-template-columns: minmax(220px, 1.4fr) repeat(4, minmax(140px, 1fr)) auto;
+  grid-template-columns: minmax(220px, 1.4fr) repeat(5, minmax(140px, 1fr)) auto;
   gap: 12px;
   margin-top: 18px;
   padding: 16px;
@@ -312,6 +312,26 @@ button {
   align-self: end;
   min-height: 42px;
   padding: 0 18px;
+}
+
+.trip-helper {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto minmax(220px, 0.8fr);
+  gap: 12px;
+  align-items: end;
+  margin-top: 18px;
+  padding: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.trip-helper p {
+  align-self: center;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .chart-panel {
@@ -632,6 +652,7 @@ button {
   }
 
   .controls,
+  .trip-helper,
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
@@ -695,6 +716,7 @@ button {
 
   .stats,
   .controls,
+  .trip-helper,
   .chart-panel,
   .insights,
   .event-card,
@@ -718,6 +740,12 @@ button {
   }
 
   .controls {
+    gap: 14px;
+    margin-top: 0;
+    padding: 18px;
+  }
+
+  .trip-helper {
     gap: 14px;
     margin-top: 0;
     padding: 18px;
@@ -811,7 +839,7 @@ button {
   <body>
     <header class="masthead">
       <div>
-        <p class="eyebrow">2026 Auto Events</p>
+        <p class="eyebrow">2026-2027 Auto Events</p>
         <h1>Car Show Calendar</h1>
         <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
         <div class="status-line" aria-label="Dashboard freshness">
@@ -879,6 +907,17 @@ button {
           </details>
         </div>
         <label>
+          <span>Date range</span>
+          <select id="dateRangeSelect">
+            <option value="upcoming">Upcoming events</option>
+            <option value="next30">Next 30 days</option>
+            <option value="next90">Next 90 days</option>
+            <option value="rest2026">Rest of 2026</option>
+            <option value="year2027">2027 events</option>
+            <option value="allFuture">All future events</option>
+          </select>
+        </label>
+        <label>
           <span>Sort</span>
           <select id="sortSelect">
             <option value="date-asc">Date, earliest first</option>
@@ -888,6 +927,15 @@ button {
           </select>
         </label>
         <button id="resetButton" type="button">Reset</button>
+      </section>
+
+      <section class="trip-helper" aria-label="Smart event finder">
+        <label>
+          <span>Smart Find</span>
+          <input id="assistantInput" type="search" placeholder="Where do you want to go? Try Virginia Beach in September or 2027 tours">
+        </label>
+        <button id="assistantButton" type="button">Find Events</button>
+        <p id="assistantResponse">Ask for a city, month, or type of event.</p>
       </section>
 
       <section class="chart-panel" aria-label="Events by month">
@@ -6589,6 +6637,153 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "https://www.facebook.com/carsandcoffeenorfolkva",
     "url": "https://www.ccchr.org/events/cars-and-coffee-norfolk-dec-26",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
+  },
+  {
+    "id": "carlisle-2027-01-15-4",
+    "title": "Auto Mania Indoor Collector Car Flea Market & Corral",
+    "startDate": "2027-01-15T00:00:00.000Z",
+    "endDate": "2027-01-17T00:00:00.000Z",
+    "allDay": true,
+    "month": "January",
+    "weekday": "Fri",
+    "dateLabel": "Jan 15, 2027",
+    "timeLabel": "All day",
+    "type": "Flea market",
+    "source": "Carlisle",
+    "city": "Carlisle",
+    "venue": "Agri-Plex Expo Center",
+    "address": "Agri-Plex Expo Center | 302 N 17th St | Allentown, PA 18104",
+    "description": "Auto Mania Indoor Collector Car Flea Market & Corral January 15 - 17, 2027 Event Hours Friday: 11 AM - 8 PM | Saturday: 9 AM - 6 PM | Sunday: 9 AM - 3 PM | | View Vendor List | Admission Daily Fri- Sun: *$13 | Kids 12 and Under FREE | Parking - FREE | *Online tickets discounted | Note - This is an ALL WEATHER Event | Location Agri-Plex Expo Center | 302 N 17th St | Allentown, PA 18104 Event Details Event Details &raquo;",
+    "sourceUrl": "",
+    "url": "https://carlisleevents.com/events/events-detail/index?id=auto+mania",
+    "calendarUrl": "",
+    "image": ""
+  },
+  {
+    "id": "carlisle-2027-04-21-5",
+    "title": "Spring Carlisle Collector Car Flea Market, Corral & Auction",
+    "startDate": "2027-04-21T00:00:00.000Z",
+    "endDate": "2027-04-25T00:00:00.000Z",
+    "allDay": true,
+    "month": "April",
+    "weekday": "Wed",
+    "dateLabel": "Apr 21, 2027",
+    "timeLabel": "All day",
+    "type": "Auction",
+    "source": "Carlisle",
+    "city": "Carlisle",
+    "venue": "Carlisle Fairgrounds",
+    "address": "Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA, 17013 |",
+    "description": "Spring Carlisle Collector Car Flea Market, Corral & Auction April 21 - 25, 2027 Event Hours Wed- Sat: 7 AM - 6 PM | Sunday: 7 AM - 12 PM | | View Vendor List | Admission Daily Admission: $13 (Free on Sunday) | Event Pass: $38 | Kids 12 & Under: Free | Student & Military Discounts Available | General Parking: $10 | | Location Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA, 17013 | Buy Vendor Space Event Details Buy Vendor Space Event Details &raquo;",
+    "sourceUrl": "",
+    "url": "https://carlisleevents.com/events/events-detail/index?id=spring+carlisle",
+    "calendarUrl": "",
+    "image": ""
+  },
+  {
+    "id": "carlisle-2027-04-22-6",
+    "title": "Spring Carlisle Collector Car Auction",
+    "startDate": "2027-04-22T00:00:00.000Z",
+    "endDate": "2027-04-23T00:00:00.000Z",
+    "allDay": true,
+    "month": "April",
+    "weekday": "Thu",
+    "dateLabel": "Apr 22, 2027",
+    "timeLabel": "All day",
+    "type": "Auction",
+    "source": "Carlisle",
+    "city": "Carlisle",
+    "venue": "Carlisle Expo Center",
+    "address": "Carlisle Expo Center | 100 K St. | Carlisle, PA 17013",
+    "description": "Spring Carlisle Collector Car Auction April 22 - 23, 2027 Event Hours Starts at 10 AM daily | Admission Register to Bid | Consign a Vehicle Location Carlisle Expo Center | 100 K St. | Carlisle, PA 17013 Event Details Event Details &raquo;",
+    "sourceUrl": "",
+    "url": "https://carlisleevents.com/events/events-detail/index?id=caspringcarlisle",
+    "calendarUrl": "",
+    "image": ""
+  },
+  {
+    "id": "carlisle-2027-05-14-7",
+    "title": "Carlisle Import & Performance Nationals",
+    "startDate": "2027-05-14T00:00:00.000Z",
+    "endDate": "2027-05-15T00:00:00.000Z",
+    "allDay": true,
+    "month": "May",
+    "weekday": "Fri",
+    "dateLabel": "May 14, 2027",
+    "timeLabel": "All day",
+    "type": "National show",
+    "source": "Carlisle",
+    "city": "Carlisle",
+    "venue": "Carlisle Fairgrounds",
+    "address": "Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA 17013 |",
+    "description": "Carlisle Import & Performance Nationals May 14 - 15, 2027 Event Hours Fri- Sat: 7 AM - 6 PM | | Add to Calendar | | View Vendor List | Admission Daily Admission: $12 | Event Pass: $20 | Kids 12 & Under: Free | Student & Military Discounts Available | General Parking: $10 | | Location Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA 17013 | Buy Vendor Space Show a Vehicle Event Details Buy Vendor Space Show a Vehicle Event Details &raquo;",
+    "sourceUrl": "https://carlisleevents.com/docs/default-source/resources-documents/calendar-documents/2026-dates/2026_ipn.ics?sfvrsn=11f826f7_6&download=true",
+    "url": "https://carlisleevents.com/events/events-detail/index?id=import+and+performance+nationals",
+    "calendarUrl": "https://carlisleevents.com/docs/default-source/resources-documents/calendar-documents/2026-dates/2026_ipn.ics?sfvrsn=11f826f7_6&download=true",
+    "image": ""
+  },
+  {
+    "id": "carlisle-2027-06-04-8",
+    "title": "Carlisle Ford Nationals",
+    "startDate": "2027-06-04T00:00:00.000Z",
+    "endDate": "2027-06-06T00:00:00.000Z",
+    "allDay": true,
+    "month": "June",
+    "weekday": "Fri",
+    "dateLabel": "Jun 4, 2027",
+    "timeLabel": "All day",
+    "type": "National show",
+    "source": "Carlisle",
+    "city": "Carlisle",
+    "venue": "Carlisle Fairgrounds",
+    "address": "Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA 17013",
+    "description": "Carlisle Ford Nationals June 4 - 6, 2027 Event Hours Thursday*: 7 AM - 4 PM | *Early-Bird Shopping & Set-Up | Fri- Sat: 7 AM - 6 PM | Sunday: 7 AM - 12 PM | | Add to Calendar | | View Vendor List | Admission Daily Admission: $15 | Sunday: $7 (Free with Event Ticket) | Event Pass: $30 | Kids 12 & Under: Free | Student & Military Discounts Available | General Parking: $10 | Location Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA 17013 Buy Vendor Space Show a Vehicle Event Details Buy Vendor Space Show a Vehicle Event Details &raquo;",
+    "sourceUrl": "https://carlisleevents.com/docs/default-source/resources-documents/calendar-documents/2026-dates/2026_ford.ics?sfvrsn=5bc7d66b_2&download=true",
+    "url": "https://carlisleevents.com/events/events-detail/index?id=ford+nationals",
+    "calendarUrl": "https://carlisleevents.com/docs/default-source/resources-documents/calendar-documents/2026-dates/2026_ford.ics?sfvrsn=5bc7d66b_2&download=true",
+    "image": ""
+  },
+  {
+    "id": "carlisle-2027-06-25-9",
+    "title": "Carlisle GM Nationals",
+    "startDate": "2027-06-25T00:00:00.000Z",
+    "endDate": "2027-06-26T00:00:00.000Z",
+    "allDay": true,
+    "month": "June",
+    "weekday": "Fri",
+    "dateLabel": "Jun 25, 2027",
+    "timeLabel": "All day",
+    "type": "National show",
+    "source": "Carlisle",
+    "city": "Carlisle",
+    "venue": "Carlisle Fairgrounds",
+    "address": "Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA 17013 | |",
+    "description": "Carlisle GM Nationals June 25 - 26, 2027 Event Hours Fri- Sat: 7 AM - 6 PM | | View Vendor List | Admission Daily Admission: $12 | Event Pass: $20 | Kids 12 & Under: Free | Student & Military Discounts Available | General Parking: $10 | | | Location Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA 17013 | | Buy Vendor Space Show a Vehicle Event Details Buy Vendor Space Show a Vehicle Event Details &raquo;",
+    "sourceUrl": "",
+    "url": "https://carlisleevents.com/events/events-detail/index?id=gm+nationals",
+    "calendarUrl": "",
+    "image": ""
+  },
+  {
+    "id": "carlisle-2027-07-09-10",
+    "title": "Carlisle Chrysler Nationals",
+    "startDate": "2027-07-09T00:00:00.000Z",
+    "endDate": "2027-07-11T00:00:00.000Z",
+    "allDay": true,
+    "month": "July",
+    "weekday": "Fri",
+    "dateLabel": "Jul 9, 2027",
+    "timeLabel": "All day",
+    "type": "National show",
+    "source": "Carlisle",
+    "city": "Carlisle",
+    "venue": "Carlisle Fairgrounds",
+    "address": "Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA, 17013",
+    "description": "Carlisle Chrysler Nationals July 9 - 11, 2027 Event Hours Thursday*: 7 AM - 4 PM | *Early-Bird Shopping & Set-Up | Fri- Sat: 7 AM - 6 PM | Sunday: 7 AM - 12 PM | | View Vendor List | Admission Daily Admission: $15 | Sunday: $7 ( Free with Event Ticket ) | Event Pass: $30 | Kids 12 & Under: Free | Student & Military Discounts Available | General Parking: $10 | | Location Carlisle Fairgrounds | 1000 Bryn Mawr Rd | Carlisle, PA, 17013 Buy Vendor Space Show a Vehicle Event Details Buy Vendor Space Show a Vehicle Event Details &raquo; Didn't find your event? Visit carlislepafairgrounds.com for the complete schedule of events happening at the Carlisle Fairgrounds. A Note to Our Visitors Dangerous conditions can exist on the Fairgrounds. Due to exposure to the weather, areas may become slippery or soft. Due to the nature of the goods displayed, heavy and sometimes dangerous equipment and moving",
+    "sourceUrl": "",
+    "url": "https://carlisleevents.com/events/events-detail/index?id=chrysler+nationals",
+    "calendarUrl": "",
+    "image": ""
   }
 ];
 window.CCCHR_METADATA = {
@@ -6607,14 +6802,18 @@ window.CCCHR_METADATA = {
   "sourceNotes": {
     "Facebook": "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session."
   },
+  "years": [
+    2026,
+    2027
+  ],
   "year": 2026,
-  "refreshedAt": "2026-08-01T01:10:55.233Z",
-  "totalEvents": 297,
+  "refreshedAt": "2026-08-01T01:23:00.549Z",
+  "totalEvents": 304,
   "sourceCounts": {
     "CCCHR": 274,
     "AACA": 14,
     "TRAACA": 5,
-    "Carlisle": 4
+    "Carlisle": 11
   }
 };
 
@@ -6651,7 +6850,11 @@ const els = {
   cityFilter: document.querySelector("#cityFilter"),
   cityOptions: document.querySelector("#cityOptions"),
   citySummary: document.querySelector("#citySummary"),
+  dateRange: document.querySelector("#dateRangeSelect"),
   sort: document.querySelector("#sortSelect"),
+  assistantInput: document.querySelector("#assistantInput"),
+  assistantButton: document.querySelector("#assistantButton"),
+  assistantResponse: document.querySelector("#assistantResponse"),
   reset: document.querySelector("#resetButton"),
   total: document.querySelector("#totalEvents"),
   cities: document.querySelector("#activeCities"),
@@ -6676,10 +6879,7 @@ function dateKey(date, timeZone = "America/New_York") {
 
 const today = new Date();
 const todayKey = dateKey(today);
-const events = allEvents.filter((event) => {
-  const timeZone = event.allDay ? "UTC" : "America/New_York";
-  return dateKey(new Date(event.startDate), timeZone) >= todayKey;
-});
+const events = allEvents;
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
@@ -6785,7 +6985,7 @@ function updateCitySummary() {
 }
 
 function eventText(event) {
-  return [event.title, event.venue, event.city, event.address, event.description, event.type]
+  return [event.title, event.venue, event.city, event.address, event.description, event.type, event.source]
     .join(" ")
     .toLowerCase();
 }
@@ -6794,6 +6994,29 @@ function isFacebookLinkedEvent(event) {
   return [event.sourceUrl, event.url, event.calendarUrl]
     .filter(Boolean)
     .some((url) => /(^|\/\/)(www\.)?facebook\.com\//i.test(url));
+}
+
+function addDays(date, days) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function eventDateKey(event) {
+  const timeZone = event.allDay ? "UTC" : "America/New_York";
+  return dateKey(new Date(event.startDate), timeZone);
+}
+
+function matchesDateRange(event) {
+  const key = eventDateKey(event);
+  const selectedRange = els.dateRange.value;
+
+  if (selectedRange === "allFuture") return key >= todayKey;
+  if (selectedRange === "rest2026") return key >= todayKey && key <= "20261231";
+  if (selectedRange === "year2027") return key >= "20270101" && key <= "20271231";
+  if (selectedRange === "next30") return key >= todayKey && key <= dateKey(addDays(today, 30));
+  if (selectedRange === "next90") return key >= todayKey && key <= dateKey(addDays(today, 90));
+  return key >= todayKey;
 }
 
 function getFilteredEvents() {
@@ -6809,6 +7032,7 @@ function getFilteredEvents() {
     const recurrence = detectRecurrence(event);
     const hasSelectedEventTypes = selectedEventTypes.length > 0;
     const matchesQuery = !query || eventText(event).includes(query);
+    const matchesDate = matchesDateRange(event);
     const matchesMonth = months.includes(event.month);
     const matchesType = facebookOnly
       ? isFacebookLinkedEvent(event)
@@ -6816,7 +7040,7 @@ function getFilteredEvents() {
         ? selectedEventTypes.includes(event.type) && (includeRecurring || !recurrence)
         : includeRecurring && recurrence;
     const matchesCity = !cities.length || cities.includes(event.city);
-    return matchesQuery && matchesMonth && matchesType && matchesCity;
+    return matchesQuery && matchesDate && matchesMonth && matchesType && matchesCity;
   });
 
   return filtered.sort((a, b) => {
@@ -7269,15 +7493,16 @@ renderFreshness();
 
 const monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
 const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
+const cityValues = unique(events.map((event) => event.city));
 
 fillCheckboxOptions(els.monthOptions, "month", monthValues, { checked: true });
 fillTypeOptions(els.typeOptions, typeValues);
-fillCityOptions(unique(events.map((event) => event.city)));
+fillCityOptions(cityValues);
 updateMonthSummary();
 updateTypeSummary();
 updateCitySummary();
 
-[els.search, els.sort].forEach((control) => {
+[els.search, els.dateRange, els.sort].forEach((control) => {
   control.addEventListener("input", render);
 });
 
@@ -7317,6 +7542,9 @@ els.reset.addEventListener("click", () => {
   els.cityOptions.querySelectorAll("input:checked").forEach((input) => {
     input.checked = false;
   });
+  els.dateRange.value = "upcoming";
+  els.assistantInput.value = "";
+  els.assistantResponse.textContent = "Ask for a city, month, or type of event.";
   els.monthFilter.open = false;
   els.typeFilter.open = false;
   els.cityFilter.open = false;
@@ -7327,11 +7555,83 @@ els.reset.addEventListener("click", () => {
   render();
 });
 
+function setCheckedValues(container, values, { emptyMeansAll = false } = {}) {
+  const wanted = new Set(values);
+  container.querySelectorAll("input").forEach((input) => {
+    input.checked = emptyMeansAll && !wanted.size ? true : wanted.has(input.value);
+  });
+}
+
+function assistantTypeMatches(query) {
+  const aliases = [
+    ["Car show", /\b(show|car show|shine)\b/],
+    ["Cruise-in", /\b(cruise|cruise-in|cruz)\b/],
+    ["Tour", /\b(tour|drive|trip)\b/],
+    ["Meetup", /\b(meet|meeting|dinner|brunch|cookoff|auction)\b/],
+    ["Cars & coffee", /\b(coffee)\b/],
+    ["National show", /\b(national|nationals)\b/],
+    ["Swap meet", /\b(swap)\b/],
+  ];
+  return unique([
+    ...typeValues.filter((type) => query.includes(type.toLowerCase())),
+    ...aliases.filter(([, pattern]) => pattern.test(query)).map(([type]) => type),
+  ]).filter((type) => typeValues.includes(type));
+}
+
+function runAssistant() {
+  const query = els.assistantInput.value.trim().toLowerCase();
+  if (!query) {
+    els.assistantResponse.textContent = "Try a city, month, or event type.";
+    return;
+  }
+
+  const matchedMonths = monthValues.filter((month) => {
+    const lower = month.toLowerCase();
+    return query.includes(lower) || query.includes(lower.slice(0, 3));
+  });
+  const matchedCities = cityValues.filter((city) => query.includes(city.toLowerCase()));
+  const matchedTypes = assistantTypeMatches(query);
+
+  if (/\b2027\b|next year/.test(query)) els.dateRange.value = "year2027";
+  else if (/\brest of 2026|2026\b/.test(query)) els.dateRange.value = "rest2026";
+  else if (/\ball|future|everything\b/.test(query)) els.dateRange.value = "allFuture";
+  else if (/\b90\b|three months/.test(query)) els.dateRange.value = "next90";
+  else if (/\b30\b|this month|next month/.test(query)) els.dateRange.value = "next30";
+  else els.dateRange.value = "upcoming";
+
+  if (matchedMonths.length) setCheckedValues(els.monthOptions, matchedMonths);
+  if (matchedCities.length) setCheckedValues(els.cityOptions, matchedCities);
+  if (matchedTypes.length) {
+    setCheckedValues(els.typeOptions, matchedTypes);
+    const facebookRadio = els.typeOptions.querySelector('input[value="Facebook only"]');
+    if (facebookRadio) facebookRadio.checked = false;
+  }
+
+  const handled = matchedMonths.length || matchedCities.length || matchedTypes.length;
+  els.search.value = handled ? "" : query;
+  updateMonthSummary();
+  updateTypeSummary();
+  updateCitySummary();
+  render();
+
+  const pieces = [
+    matchedCities.length ? matchedCities.join(", ") : "any city",
+    matchedMonths.length ? matchedMonths.join(", ") : "selected date range",
+    matchedTypes.length ? matchedTypes.join(", ") : "any type",
+  ];
+  els.assistantResponse.textContent = `Showing ${pieces.join(" | ")}.`;
+}
+
+els.assistantButton.addEventListener("click", runAssistant);
+els.assistantInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") runAssistant();
+});
+
 render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=6").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=8").catch(() => {});
   });
 }
 

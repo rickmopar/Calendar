@@ -182,7 +182,7 @@ main {
 
 .controls {
   display: grid;
-  grid-template-columns: minmax(220px, 1.4fr) repeat(4, minmax(140px, 1fr)) auto;
+  grid-template-columns: minmax(220px, 1.4fr) repeat(5, minmax(140px, 1fr)) auto;
   gap: 12px;
   margin-top: 18px;
   padding: 16px;
@@ -297,6 +297,26 @@ button {
   align-self: end;
   min-height: 42px;
   padding: 0 18px;
+}
+
+.trip-helper {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto minmax(220px, 0.8fr);
+  gap: 12px;
+  align-items: end;
+  margin-top: 18px;
+  padding: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.trip-helper p {
+  align-self: center;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .chart-panel {
@@ -617,6 +637,7 @@ button {
   }
 
   .controls,
+  .trip-helper,
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
@@ -680,6 +701,7 @@ button {
 
   .stats,
   .controls,
+  .trip-helper,
   .chart-panel,
   .insights,
   .event-card,
@@ -703,6 +725,12 @@ button {
   }
 
   .controls {
+    gap: 14px;
+    margin-top: 0;
+    padding: 18px;
+  }
+
+  .trip-helper {
     gap: 14px;
     margin-top: 0;
     padding: 18px;

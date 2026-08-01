@@ -9,7 +9,8 @@ const aacaSourceUrl = "https://aaca.org/aacanationalshowsandtourscalendar/";
 const traacaSourceUrl = "https://www.traaca.com/calendar.htm";
 const carlisleSourceUrl = "https://carlisleevents.com/events";
 const facebookSourceUrl = "https://www.facebook.com/ccchr/events";
-const year = 2026;
+const years = [2026, 2027];
+const year = years[0];
 
 function decodeHtml(value) {
   return String(value || "")
@@ -183,7 +184,7 @@ function parseEventDateRange(value) {
 
   const [, startMonthName, startDay, endMonthNameRaw, endDayRaw, eventYearRaw] = match;
   const eventYear = Number(eventYearRaw);
-  if (eventYear !== year) return null;
+  if (!years.includes(eventYear)) return null;
 
   const startMonth = monthNumber(startMonthName);
   const endMonth = monthNumber(endMonthNameRaw || startMonthName);
@@ -201,7 +202,7 @@ function normalizeAacaEvent(line, link, index) {
 
   const [, monthName, startDay, endDayRaw, eventYearRaw, rest] = dateMatch;
   const eventYear = Number(eventYearRaw);
-  if (eventYear !== year) return null;
+  if (!years.includes(eventYear)) return null;
 
   const month = monthNumber(monthName);
   if (month === undefined) return null;
@@ -386,7 +387,7 @@ async function fetchAacaEvents() {
   while ((match = paragraphPattern.exec(html))) {
     const block = match[1];
     const text = decodeHtml(block);
-    if (!new RegExp(`\\b${year}\\b`).test(text)) continue;
+    if (!years.some((eventYear) => new RegExp(`\\b${eventYear}\\b`).test(text))) continue;
     const linkMatch = block.match(/href="([^"]+)"/i);
     const event = normalizeAacaEvent(text, linkMatch ? decodeHtml(linkMatch[1]) : aacaSourceUrl, index);
     if (event) {
@@ -518,7 +519,7 @@ async function main() {
   }
 
   const ccchrEvents = all
-    .filter((event) => new Date(event.startDate).getFullYear() === year)
+    .filter((event) => years.includes(new Date(event.startDate).getFullYear()))
     .map(normalize);
   const aacaEvents = await fetchAacaEvents();
   const traacaEvents = await fetchTraacaEvents();
@@ -547,6 +548,7 @@ async function main() {
     sourceNotes: {
       Facebook: "Linked as a source page; Facebook does not expose public event records to the refresh script without an authenticated API or browser session.",
     },
+    years,
     year,
     refreshedAt: new Date().toISOString(),
     totalEvents: events.length,
@@ -565,7 +567,7 @@ async function main() {
     `window.CCCHR_EVENTS_2026 = ${JSON.stringify(events, null, 2)};\nwindow.CCCHR_METADATA = ${JSON.stringify(metadata, null, 2)};\n`,
   );
 
-  console.log(`Refreshed ${events.length} events for ${year}.`);
+  console.log(`Refreshed ${events.length} events for ${years.join("-")}.`);
   console.log(`CCCHR: ${ccchrEvents.length}; AACA: ${aacaEvents.length}; TRAACA: ${traacaEvents.length}; Carlisle: ${carlisleEvents.length}`);
   console.log(`Latest source refresh: ${metadata.refreshedAt}`);
 }

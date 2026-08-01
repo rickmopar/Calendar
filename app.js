@@ -29,7 +29,11 @@ const els = {
   cityFilter: document.querySelector("#cityFilter"),
   cityOptions: document.querySelector("#cityOptions"),
   citySummary: document.querySelector("#citySummary"),
+  dateRange: document.querySelector("#dateRangeSelect"),
   sort: document.querySelector("#sortSelect"),
+  assistantInput: document.querySelector("#assistantInput"),
+  assistantButton: document.querySelector("#assistantButton"),
+  assistantResponse: document.querySelector("#assistantResponse"),
   reset: document.querySelector("#resetButton"),
   total: document.querySelector("#totalEvents"),
   cities: document.querySelector("#activeCities"),
@@ -54,10 +58,7 @@ function dateKey(date, timeZone = "America/New_York") {
 
 const today = new Date();
 const todayKey = dateKey(today);
-const events = allEvents.filter((event) => {
-  const timeZone = event.allDay ? "UTC" : "America/New_York";
-  return dateKey(new Date(event.startDate), timeZone) >= todayKey;
-});
+const events = allEvents;
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
@@ -163,7 +164,7 @@ function updateCitySummary() {
 }
 
 function eventText(event) {
-  return [event.title, event.venue, event.city, event.address, event.description, event.type]
+  return [event.title, event.venue, event.city, event.address, event.description, event.type, event.source]
     .join(" ")
     .toLowerCase();
 }
@@ -172,6 +173,29 @@ function isFacebookLinkedEvent(event) {
   return [event.sourceUrl, event.url, event.calendarUrl]
     .filter(Boolean)
     .some((url) => /(^|\/\/)(www\.)?facebook\.com\//i.test(url));
+}
+
+function addDays(date, days) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function eventDateKey(event) {
+  const timeZone = event.allDay ? "UTC" : "America/New_York";
+  return dateKey(new Date(event.startDate), timeZone);
+}
+
+function matchesDateRange(event) {
+  const key = eventDateKey(event);
+  const selectedRange = els.dateRange.value;
+
+  if (selectedRange === "allFuture") return key >= todayKey;
+  if (selectedRange === "rest2026") return key >= todayKey && key <= "20261231";
+  if (selectedRange === "year2027") return key >= "20270101" && key <= "20271231";
+  if (selectedRange === "next30") return key >= todayKey && key <= dateKey(addDays(today, 30));
+  if (selectedRange === "next90") return key >= todayKey && key <= dateKey(addDays(today, 90));
+  return key >= todayKey;
 }
 
 function getFilteredEvents() {
@@ -187,6 +211,7 @@ function getFilteredEvents() {
     const recurrence = detectRecurrence(event);
     const hasSelectedEventTypes = selectedEventTypes.length > 0;
     const matchesQuery = !query || eventText(event).includes(query);
+    const matchesDate = matchesDateRange(event);
     const matchesMonth = months.includes(event.month);
     const matchesType = facebookOnly
       ? isFacebookLinkedEvent(event)
@@ -194,7 +219,7 @@ function getFilteredEvents() {
         ? selectedEventTypes.includes(event.type) && (includeRecurring || !recurrence)
         : includeRecurring && recurrence;
     const matchesCity = !cities.length || cities.includes(event.city);
-    return matchesQuery && matchesMonth && matchesType && matchesCity;
+    return matchesQuery && matchesDate && matchesMonth && matchesType && matchesCity;
   });
 
   return filtered.sort((a, b) => {
@@ -647,15 +672,16 @@ renderFreshness();
 
 const monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
 const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
+const cityValues = unique(events.map((event) => event.city));
 
 fillCheckboxOptions(els.monthOptions, "month", monthValues, { checked: true });
 fillTypeOptions(els.typeOptions, typeValues);
-fillCityOptions(unique(events.map((event) => event.city)));
+fillCityOptions(cityValues);
 updateMonthSummary();
 updateTypeSummary();
 updateCitySummary();
 
-[els.search, els.sort].forEach((control) => {
+[els.search, els.dateRange, els.sort].forEach((control) => {
   control.addEventListener("input", render);
 });
 
@@ -695,6 +721,9 @@ els.reset.addEventListener("click", () => {
   els.cityOptions.querySelectorAll("input:checked").forEach((input) => {
     input.checked = false;
   });
+  els.dateRange.value = "upcoming";
+  els.assistantInput.value = "";
+  els.assistantResponse.textContent = "Ask for a city, month, or type of event.";
   els.monthFilter.open = false;
   els.typeFilter.open = false;
   els.cityFilter.open = false;
@@ -705,10 +734,82 @@ els.reset.addEventListener("click", () => {
   render();
 });
 
+function setCheckedValues(container, values, { emptyMeansAll = false } = {}) {
+  const wanted = new Set(values);
+  container.querySelectorAll("input").forEach((input) => {
+    input.checked = emptyMeansAll && !wanted.size ? true : wanted.has(input.value);
+  });
+}
+
+function assistantTypeMatches(query) {
+  const aliases = [
+    ["Car show", /\b(show|car show|shine)\b/],
+    ["Cruise-in", /\b(cruise|cruise-in|cruz)\b/],
+    ["Tour", /\b(tour|drive|trip)\b/],
+    ["Meetup", /\b(meet|meeting|dinner|brunch|cookoff|auction)\b/],
+    ["Cars & coffee", /\b(coffee)\b/],
+    ["National show", /\b(national|nationals)\b/],
+    ["Swap meet", /\b(swap)\b/],
+  ];
+  return unique([
+    ...typeValues.filter((type) => query.includes(type.toLowerCase())),
+    ...aliases.filter(([, pattern]) => pattern.test(query)).map(([type]) => type),
+  ]).filter((type) => typeValues.includes(type));
+}
+
+function runAssistant() {
+  const query = els.assistantInput.value.trim().toLowerCase();
+  if (!query) {
+    els.assistantResponse.textContent = "Try a city, month, or event type.";
+    return;
+  }
+
+  const matchedMonths = monthValues.filter((month) => {
+    const lower = month.toLowerCase();
+    return query.includes(lower) || query.includes(lower.slice(0, 3));
+  });
+  const matchedCities = cityValues.filter((city) => query.includes(city.toLowerCase()));
+  const matchedTypes = assistantTypeMatches(query);
+
+  if (/\b2027\b|next year/.test(query)) els.dateRange.value = "year2027";
+  else if (/\brest of 2026|2026\b/.test(query)) els.dateRange.value = "rest2026";
+  else if (/\ball|future|everything\b/.test(query)) els.dateRange.value = "allFuture";
+  else if (/\b90\b|three months/.test(query)) els.dateRange.value = "next90";
+  else if (/\b30\b|this month|next month/.test(query)) els.dateRange.value = "next30";
+  else els.dateRange.value = "upcoming";
+
+  if (matchedMonths.length) setCheckedValues(els.monthOptions, matchedMonths);
+  if (matchedCities.length) setCheckedValues(els.cityOptions, matchedCities);
+  if (matchedTypes.length) {
+    setCheckedValues(els.typeOptions, matchedTypes);
+    const facebookRadio = els.typeOptions.querySelector('input[value="Facebook only"]');
+    if (facebookRadio) facebookRadio.checked = false;
+  }
+
+  const handled = matchedMonths.length || matchedCities.length || matchedTypes.length;
+  els.search.value = handled ? "" : query;
+  updateMonthSummary();
+  updateTypeSummary();
+  updateCitySummary();
+  render();
+
+  const pieces = [
+    matchedCities.length ? matchedCities.join(", ") : "any city",
+    matchedMonths.length ? matchedMonths.join(", ") : "selected date range",
+    matchedTypes.length ? matchedTypes.join(", ") : "any type",
+  ];
+  els.assistantResponse.textContent = `Showing ${pieces.join(" | ")}.`;
+}
+
+els.assistantButton.addEventListener("click", runAssistant);
+els.assistantInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") runAssistant();
+});
+
 render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=6").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=8").catch(() => {});
   });
 }
