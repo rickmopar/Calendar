@@ -1123,6 +1123,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=15").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=16").catch(() => {});
   });
 }
