@@ -85,22 +85,18 @@ let eventNotes = loadEventNotes();
 
 function loadManualEvents() {
   try {
-    const saved = JSON.parse(localStorage.getItem(manualEventsStorageKey) || "[]");
-    return Array.isArray(saved) ? saved.filter((event) => event && event.id && event.startDate && event.title) : [];
+    return JSON.parse(localStorage.getItem(manualEventsStorageKey) || "[]");
   } catch {
     return [];
   }
 }
 
 function saveManualEvents() {
-  manualEvents = Array.isArray(manualEvents) ? manualEvents : [];
   localStorage.setItem(manualEventsStorageKey, JSON.stringify(manualEvents));
 }
 
 function combinedEvents() {
-  const savedManualEvents = Array.isArray(manualEvents) ? manualEvents : [];
-  return [...allEvents, ...savedManualEvents]
-    .filter((event) => event && event.startDate && event.title)
+  return [...allEvents, ...manualEvents]
     .sort((a, b) => a.startDate.localeCompare(b.startDate));
 }
 
@@ -1301,6 +1297,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=20").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=19").catch(() => {});
   });
 }
