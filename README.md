@@ -20,6 +20,12 @@ node scripts/refresh-events.js
 
 or, on a Mac, double-click `refresh.command`.
 
-The refresh script downloads the latest CCCHR, AACA, and Carlisle source URLs, rebuilds `data/events-2026.json`, and updates the "Last refreshed" date shown at the top of the calendar.
+The refresh script downloads the latest CCCHR, AACA, and Carlisle source URLs, rebuilds `data/events-2026.json`, and updates the "Last refreshed" date shown at the top of the calendar. It also scans AACA PDF flyers for registration deadline language and saves those deadline notes with the matching events.
+
+PDF scanning uses Python's `pypdf` package. Install it once with:
+
+```sh
+python3 -m pip install --user pypdf
+```
 
 The CCCHR Facebook events page is included as a visible source link and metadata source. Facebook does not expose public event records to this refresh script without an authenticated API or browser session, so automated event records still come from the CCCHR website feed plus AACA and Carlisle.

@@ -660,6 +660,13 @@ function renderChart(items) {
 }
 
 function deadlineForEvent(event) {
+  if (event.registrationDeadlineNote) {
+    return {
+      event,
+      note: event.registrationDeadlineNote,
+    };
+  }
+
   const text = [event.description, event.title].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
   if (!text) return null;
 
@@ -1116,6 +1123,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=14").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=15").catch(() => {});
   });
 }

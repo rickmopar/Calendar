@@ -209,7 +209,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "March 26-28, 2026 - Winter Nationals - Cartersville, GA - hosted by Lake Allatoona Region | hosted by Lake Allatoona Region",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/03/2026WinterNationals_CartersvilleGA_brochure_ONLINE.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/03/2026WinterNationals_CartersvilleGA_brochure_ONLINE.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "Registration Deadline Extended: March 6 Cartersville • ANTIQUE AUTOMOBILE CLUB OF AMERICA LAKE ALLATOONAREGION AACA Hosted By The Lake Allatoona Region invites you to attend the AACA Winter Nationals on the beautiful",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/03/2026WinterNationals_CartersvilleGA_brochure_ONLINE.pdf"
   },
   {
     "id": "697d5b7d4281e67fd20e8287",
@@ -343,7 +345,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "April 9-11, 2026 - Southeastern Spring Nationals - Charlotte, NC - hosted by Hornets Nest Region | hosted by Hornets Nest Region",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/01/2026_SE_Spring_Natoinals_Charlotte.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/01/2026_SE_Spring_Natoinals_Charlotte.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "REGISTRATION DEADLINE: March 9 Drivers Participation Class Almost every AACA Member has a Driver Participation vehicle that can be shown at the AACA Nationals. Spring in Charlotte is a great time to bring out your DPC",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/01/2026_SE_Spring_Natoinals_Charlotte.pdf"
   },
   {
     "id": "684a3fff3f81d6128c52cafd",
@@ -496,7 +500,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "April 23-25, 2026 - Annual Grand Nationals/Western Spring Nationals - Las Vegas, NV - hosted by Las Vegas Region | | hosted by Las Vegas Region |",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2025/11/2026_Western_Dual_Nationals_Las_Vegas-1.pdf",
     "url": "https://aaca.org/wp-content/uploads/2025/11/2026_Western_Dual_Nationals_Las_Vegas-1.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "REGISTRATION DEADLINE MARCH 20TH 2026 AACA Membership Webpage Members.AACA.org/login.asp RV Camping: Lake Mead RV Park (702) 293-2540 Trailer parking next to Show Field Merchandise available during Show APRIL 23 • 24 •",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2025/11/2026_Western_Dual_Nationals_Las_Vegas-1.pdf"
   },
   {
     "id": "699a02fb247efd3938ad0ddf",
@@ -839,7 +845,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "May 28-30, 2026 - Eastern Spring Nationals - Indiana, PA - hosted by Shannock Valley Region | hosted by Shannock Valley Region",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/02/2026EastSpringNat_brochure.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/02/2026EastSpringNat_brochure.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "REGISTRATION DEADLINE: MONDAY, APRIL 27, 2026 CANCELLATION POLICY Written request MUST be received by Registration Chair by April 30, 2026 SPECIAL NOTE: Firearms are prohibited at this event as it is on the Campus of",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/02/2026EastSpringNat_brochure.pdf"
   },
   {
     "id": "69a09428c7d0b9564aaa8de4",
@@ -1106,7 +1114,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "June 11-13, 2026 - Southeastern Fall Nationals - Oak Ridge, TN - hosted by Volunteer Region | hosted by Volunteer Region",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/03/2026-SE-Fall-Nationals-Brochure_Oak-Ridge-TN.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/03/2026-SE-Fall-Nationals-Brochure_Oak-Ridge-TN.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "Registration Deadline: May 15, 2026 Schedule of Events Thursday, June 11 8 a.m. - 5 p.m. Trailer Parking Open 8 a.m. - 5 p.m. Registration Pick-Up 1 - 4 p.m. Oak Ridge Bus Tour Friday, June 12 8 a.m. - 5 p.m. Trailer",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/03/2026-SE-Fall-Nationals-Brochure_Oak-Ridge-TN.pdf"
   },
   {
     "id": "69a09465c6f9e43565b8b7e3",
@@ -1259,7 +1269,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "June 15-19, 2026 - Sentimental Tour - Mechanicsburg, PA - hosted by Oakland-Pontiac Worldwide Region | hosted by Oakland-Pontiac Worldwide Region",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/02/2026-Sentimental-To-ur_Mechanicsburg_PA.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/02/2026-Sentimental-To-ur_Mechanicsburg_PA.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "Registration Deadline: May 15th 12th AACA12th AACA Sentimental TourSentimental Tour 1928-1958 vehicles only June 14 - 19, 2026 Mechanicsburg, Pennsylvania Hosted By Host Hotel Information Fairfield by Marriott 503",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/02/2026-Sentimental-To-ur_Mechanicsburg_PA.pdf"
   },
   {
     "id": "699d0a4329702e796e0eebf5",
@@ -2210,7 +2222,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "July 22-26, 2026 - Central Spring Nationals - Green Bay, WI",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/03/2026CentralSpringNat_GreenBayWI_brochure_web.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/03/2026CentralSpringNat_GreenBayWI_brochure_web.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "Deadline: June 20, 2026 SCHEDULE Wednesday, July 22 2PM-6PM Trailer Parking @ Brown County Fairgrounds 2PM-5PM Registration @ Tundra Lodge Thursday, July 23 9AM-4PM Lambeau Field Tours On Your Own 10AM-5PM Trailer",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/03/2026CentralSpringNat_GreenBayWI_brochure_web.pdf"
   },
   {
     "id": "6a35733212d46415f09d9142",
@@ -3205,7 +3219,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "August 19-22, 2026 - Annual Grand Nationals / Zenith Awards - Allentown, PA - 717-534-1910 | 717-534-1910",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/04/2026_GrandNationalZenith_Allentown_PA.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/04/2026_GrandNationalZenith_Allentown_PA.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "Deadline: July 22, 2026 Schedule of Events Thursday, August 20 7 a.m. – 4 p.m. Trailer Parking Open Hours 12 p.m. – 4 p.m. Registration Pickup & Merchandise Sales Inside The NB Center Visitor Center 6 p.m. – 9 p.m.",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/04/2026_GrandNationalZenith_Allentown_PA.pdf"
   },
   {
     "id": "6a3573e5639eca453ae86d62",
@@ -3873,7 +3889,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "September 9-14, 2026 - Founders Tour (1932-2001) - Williamsburg, VA - hosted by Historic VA Peninsula Region | hosted by Historic VA Peninsula Region",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/05/2026FoundersTour_brochure-updated-5-19-26.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/05/2026FoundersTour_brochure-updated-5-19-26.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "Registration Deadline: June 30, 2026 Come celebrate the 250th Anniversary of our country’s founding by touring the land where America was born. For automobiles manufactured between 1932 and 2001 and as originally built.",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/05/2026FoundersTour_brochure-updated-5-19-26.pdf"
   },
   {
     "id": "6a3574c49cb9730112c1cd44",
@@ -4410,7 +4428,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "September 21-26, 2026 - Revival AAA Glidden Tour (Pre-1943) - Dover, DE",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/05/2026GliddenTour_brochure.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/05/2026GliddenTour_brochure.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "Deadline: August 22, 2026 Onsite Registration Open: Monday, September 21: 8 a.m. – 5 p.m. and 8 p.m. – 10 p.m. Tuesday, September 22: 7 a.m. – 9 a.m. and 7:30 – 9 p.m. Onsite Hospitality Area Open: Monday, September 21:",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/05/2026GliddenTour_brochure.pdf"
   },
   {
     "id": "6a3574fe00819861d42e55d6",
@@ -4890,7 +4910,9 @@ window.CCCHR_EVENTS_2026 = [
     "description": "October 6-9, 2026 - Eastern Fall Nationals - Hershey, PA - hosted by Hershey Region | hosted by Hershey Region",
     "sourceUrl": "https://aaca.org/wp-content/uploads/2026/06/2026_Hershey_brochure.pdf",
     "url": "https://aaca.org/wp-content/uploads/2026/06/2026_Hershey_brochure.pdf",
-    "image": ""
+    "image": "",
+    "registrationDeadlineNote": "Registration Deadline MUST be postmarked by August 15, 2026 Hosted by the Hershey Region AACA Schedule of Events Monday, October 5, 2026 8 a.m. Flea Market Load-in (weather permitting) Tuesday, October 6, 2026 7 a.m.",
+    "registrationDeadlineSource": "https://aaca.org/wp-content/uploads/2026/06/2026_Hershey_brochure.pdf"
   },
   {
     "id": "6a357bcaee7e7d1f6fb0e01b",
@@ -6180,7 +6202,7 @@ window.CCCHR_METADATA = {
     2027
   ],
   "year": 2026,
-  "refreshedAt": "2026-08-01T01:42:48.238Z",
+  "refreshedAt": "2026-08-01T02:27:44.891Z",
   "totalEvents": 321,
   "sourceCounts": {
     "CCCHR": 274,

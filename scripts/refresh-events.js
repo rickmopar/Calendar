@@ -1,9 +1,12 @@
 const fs = require("fs");
 const path = require("path");
+const { execFileSync } = require("child_process");
+const crypto = require("crypto");
 
 const root = path.resolve(__dirname, "..");
 const dataDir = path.join(root, "data");
 const rawDir = path.join(root, "raw");
+const pdfDir = path.join(rawDir, "pdfs");
 const sourceUrl = "https://www.ccchr.org/events?format=json";
 const aacaSourceUrl = "https://aaca.org/aacanationalshowsandtourscalendar/";
 const aacaLocalSourceUrl = "https://aaca.org/events/";
@@ -98,6 +101,146 @@ async function fetchTextWithCache(url, cacheFile) {
     }
     throw error;
   }
+}
+
+function hashUrl(url) {
+  return crypto.createHash("sha1").update(url).digest("hex").slice(0, 14);
+}
+
+async function fetchBinaryWithCache(url, cacheFile) {
+  const cached = path.join(pdfDir, cacheFile);
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "accept": "application/pdf,*/*;q=0.8",
+        "user-agent": "CCCHR dashboard local refresh",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed ${response.status} ${response.statusText} for ${url}`);
+    }
+
+    const buffer = Buffer.from(await response.arrayBuffer());
+    fs.writeFileSync(cached, buffer);
+    return cached;
+  } catch (error) {
+    if (fs.existsSync(cached)) {
+      console.warn(`Using cached ${cacheFile}: ${error.message}`);
+      return cached;
+    }
+    throw error;
+  }
+}
+
+function isPdfUrl(url) {
+  return /\.pdf(?:[?#].*)?$/i.test(String(url || ""));
+}
+
+function extractPdfLinks(html, baseUrl) {
+  const links = [];
+  const pattern = /<a\b[^>]*href=["']([^"']+\.pdf(?:[^"']*)?)["'][^>]*>/gi;
+  let match;
+  while ((match = pattern.exec(html))) {
+    links.push(absoluteUrl(match[1], baseUrl));
+  }
+  return [...new Set(links)];
+}
+
+function extractPdfText(pdfPath) {
+  try {
+    return execFileSync("python3", ["-c", `
+import sys
+path = sys.argv[1]
+text = ""
+try:
+    from pypdf import PdfReader
+    reader = PdfReader(path)
+    text = "\\n".join((page.extract_text() or "") for page in reader.pages)
+except Exception:
+    try:
+        from PyPDF2 import PdfReader
+        reader = PdfReader(path)
+        text = "\\n".join((page.extract_text() or "") for page in reader.pages)
+    except Exception as exc:
+        sys.stderr.write(str(exc))
+        sys.exit(2)
+print(text)
+`, pdfPath], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+  } catch (error) {
+    const message = String(error.stderr || error.message || "").trim();
+    console.warn(`PDF text extraction skipped for ${path.basename(pdfPath)}${message ? `: ${message}` : ""}`);
+    return "";
+  }
+}
+
+function deadlineNoteFromText(text) {
+  const cleaned = decodeHtml(text).replace(/\s+/g, " ").trim();
+  if (!cleaned) return "";
+
+  const keyword = /\b(registration deadline|register by|pre[- ]?register(?: by)?|pre[- ]?registration|registration closes|deadline|last day to register|postmarked by|late fee after|must be received by|entries close|entry deadline)\b/i;
+  const match = keyword.exec(cleaned);
+  if (!match) return "";
+
+  const start = match.index;
+  const end = Math.min(cleaned.length, match.index + 220);
+  const snippet = cleaned
+    .slice(start, end)
+    .replace(/^[^A-Za-z0-9$]+/, "")
+    .replace(/\s+[^\s]*$/, "")
+    .trim();
+  const dateLike = /\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+\d{1,2}(?:st|nd|rd|th)?(?:,?\s+\d{4})?\b|\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/i;
+
+  return dateLike.test(snippet) ? snippet.slice(0, 240) : "";
+}
+
+async function pdfUrlsForEvent(event) {
+  if (!/^AACA/.test(event.source || "")) return [];
+
+  const directUrls = [event.url, event.sourceUrl, event.calendarUrl]
+    .filter(isPdfUrl)
+    .filter((url) => !/\bP-P-\d{4}\.pdf/i.test(url));
+  if (directUrls.length) return [...new Set(directUrls)];
+
+  const pageUrl = [event.url, event.sourceUrl].find((url) => url && !/^https:\/\/www\.facebook\.com\//i.test(url));
+  if (!pageUrl) return [];
+
+  try {
+    const html = await fetchTextWithCache(pageUrl, `event-page-${hashUrl(pageUrl)}.html`);
+    return extractPdfLinks(html, pageUrl)
+      .filter((url) => !/\bP-P-\d{4}\.pdf/i.test(url));
+  } catch (error) {
+    console.warn(`PDF link scan skipped for ${event.title}: ${error.message}`);
+    return [];
+  }
+}
+
+async function enrichEventsWithPdfDeadlines(events) {
+  let scanned = 0;
+  let matched = 0;
+
+  for (const event of events) {
+    const urls = await pdfUrlsForEvent(event);
+    for (const pdfUrl of urls.slice(0, 3)) {
+      try {
+        const pdfPath = await fetchBinaryWithCache(pdfUrl, `${hashUrl(pdfUrl)}.pdf`);
+        scanned += 1;
+        const text = extractPdfText(pdfPath);
+        const note = deadlineNoteFromText(text);
+        if (note) {
+          event.registrationDeadlineNote = note;
+          event.registrationDeadlineSource = pdfUrl;
+          matched += 1;
+          break;
+        }
+      } catch (error) {
+        console.warn(`PDF deadline scan skipped for ${event.title}: ${error.message}`);
+      }
+    }
+  }
+
+  console.log(`PDF deadline scan: scanned ${scanned} PDFs; found ${matched} deadline notes.`);
+  return events;
 }
 
 function normalize(event) {
@@ -601,6 +744,7 @@ function mergeEventsWithAacaPriority(groups) {
 async function main() {
   fs.mkdirSync(dataDir, { recursive: true });
   fs.mkdirSync(rawDir, { recursive: true });
+  fs.mkdirSync(pdfDir, { recursive: true });
 
   const seen = new Set();
   const all = [];
@@ -642,14 +786,14 @@ async function main() {
   const aacaLocalEvents = await fetchAacaLocalEvents();
   const traacaEvents = await fetchTraacaEvents();
   const carlisleEvents = await fetchCarlisleEvents();
-  const events = mergeEventsWithAacaPriority({
+  const events = await enrichEventsWithPdfDeadlines(mergeEventsWithAacaPriority({
     CCCHR: ccchrEvents,
     AACA: aacaEvents,
     AACALocal: aacaLocalEvents,
     TRAACA: traacaEvents,
     Carlisle: carlisleEvents,
   })
-    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+    .sort((a, b) => a.startDate.localeCompare(b.startDate)));
 
   const metadata = {
     sources: [
