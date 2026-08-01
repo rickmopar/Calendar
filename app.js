@@ -37,6 +37,17 @@ const els = {
   assistantInput: document.querySelector("#assistantInput"),
   assistantButton: document.querySelector("#assistantButton"),
   assistantResponse: document.querySelector("#assistantResponse"),
+  manualForm: document.querySelector("#manualEventForm"),
+  manualTitle: document.querySelector("#manualTitle"),
+  manualDate: document.querySelector("#manualDate"),
+  manualTime: document.querySelector("#manualTime"),
+  manualCity: document.querySelector("#manualCity"),
+  manualType: document.querySelector("#manualType"),
+  manualVenue: document.querySelector("#manualVenue"),
+  manualAddress: document.querySelector("#manualAddress"),
+  manualDeadline: document.querySelector("#manualDeadline"),
+  manualDescription: document.querySelector("#manualDescription"),
+  exportPdf: document.querySelector("#exportPdfButton"),
   reset: document.querySelector("#resetButton"),
   total: document.querySelector("#totalEvents"),
   cities: document.querySelector("#activeCities"),
@@ -65,11 +76,94 @@ function dateKey(date, timeZone = "America/New_York") {
 
 const today = new Date();
 const todayKey = dateKey(today);
-const events = allEvents;
+const manualEventsStorageKey = "car-show-calendar-manual-events-v1";
+const events = [...allEvents, ...loadManualEvents()]
+  .sort((a, b) => a.startDate.localeCompare(b.startDate));
 const interestedStorageKey = "car-show-calendar-interested-v1";
 const eventNotesStorageKey = "car-show-calendar-notes-v1";
 let interestedIds = loadInterestedIds();
 let eventNotes = loadEventNotes();
+
+function isValidManualEvent(event) {
+  return Boolean(
+    event
+    && typeof event.id === "string"
+    && typeof event.title === "string"
+    && typeof event.startDate === "string"
+    && typeof event.endDate === "string"
+    && !Number.isNaN(Date.parse(event.startDate))
+    && !Number.isNaN(Date.parse(event.endDate)),
+  );
+}
+
+function loadManualEvents() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(manualEventsStorageKey) || "[]");
+    return Array.isArray(saved) ? saved.filter(isValidManualEvent) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveManualEvent(event) {
+  const saved = loadManualEvents();
+  saved.push(event);
+  localStorage.setItem(manualEventsStorageKey, JSON.stringify(saved));
+}
+
+function deleteManualEvent(id) {
+  const saved = loadManualEvents().filter((event) => event.id !== id);
+  localStorage.setItem(manualEventsStorageKey, JSON.stringify(saved));
+  interestedIds.delete(id);
+  delete eventNotes[id];
+  saveInterestedIds();
+  saveEventNotes();
+  window.location.search = "?fresh=23";
+}
+
+function manualDateToEventParts(dateValue, timeValue) {
+  const [year, month, day] = dateValue.split("-").map(Number);
+  const hasTime = Boolean(timeValue);
+  const [hour, minute] = hasTime ? timeValue.split(":").map(Number) : [9, 0];
+  const start = hasTime
+    ? new Date(year, month - 1, day, hour, minute)
+    : new Date(Date.UTC(year, month - 1, day));
+  const end = hasTime ? new Date(start.getTime() + 2 * 60 * 60 * 1000) : start;
+  const timeZone = hasTime ? "America/New_York" : "UTC";
+  return { start, end, hasTime, timeZone };
+}
+
+function createManualEvent() {
+  const title = els.manualTitle.value.trim();
+  const dateValue = els.manualDate.value;
+  const city = els.manualCity.value.trim();
+  if (!title || !dateValue || !city) return null;
+
+  const { start, end, hasTime, timeZone } = manualDateToEventParts(dateValue, els.manualTime.value);
+  const deadline = els.manualDeadline.value.trim();
+
+  return {
+    id: `manual-${Date.now()}`,
+    title,
+    startDate: start.toISOString(),
+    endDate: end.toISOString(),
+    allDay: !hasTime,
+    month: start.toLocaleString("en-US", { month: "long", timeZone }),
+    weekday: start.toLocaleString("en-US", { weekday: "short", timeZone }),
+    dateLabel: start.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone }),
+    timeLabel: hasTime ? start.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", timeZone }) : "All day",
+    type: els.manualType.value,
+    source: "Manual",
+    city,
+    venue: els.manualVenue.value.trim() || "Manual entry",
+    address: els.manualAddress.value.trim(),
+    description: els.manualDescription.value.trim(),
+    sourceUrl: "",
+    url: "",
+    image: "",
+    registrationDeadlineNote: deadline ? `Registration deadline: ${deadline}` : "",
+  };
+}
 
 function loadInterestedIds() {
   try {
@@ -473,7 +567,8 @@ function buildCalendarFile(event) {
   const location = [event.venue, event.address].filter(Boolean).join(", ");
   const recurrence = detectRecurrence(event);
   const recurrenceNote = recurrence ? `Recurrence detected by dashboard: ${recurrence.label}` : "";
-  const description = [recurrenceNote, event.description, event.url].filter(Boolean).join("\\n\\n");
+  const eventUrl = event.url || event.sourceUrl || "";
+  const description = [recurrenceNote, event.description, eventUrl].filter(Boolean).join("\\n\\n");
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -486,8 +581,8 @@ function buildCalendarFile(event) {
     `SUMMARY:${escapeCalendarText(event.title)}`,
     `LOCATION:${escapeCalendarText(location)}`,
     `DESCRIPTION:${escapeCalendarText(description)}`,
-    `URL:${event.url}`,
   ];
+  if (eventUrl) lines.push(`URL:${eventUrl}`);
   if (event.allDay) {
     lines.splice(8, 0, `DTSTART;VALUE=DATE:${formatCalendarDay(event.startDate)}`);
     lines.splice(9, 0, `DTEND;VALUE=DATE:${nextCalendarDay(event.endDate)}`);
@@ -631,12 +726,14 @@ function renderChart(items) {
       const aacaLocalCount = countsBySource[month]?.["AACA Local"] || 0;
       const carlisleCount = countsBySource[month]?.Carlisle || 0;
       const traacaCount = countsBySource[month]?.TRAACA || 0;
+      const manualCount = countsBySource[month]?.Manual || 0;
       const totalHeight = Math.max(8, (count / max) * 140);
       const ccchrHeight = count ? (ccchrCount / count) * totalHeight : 0;
       const aacaHeight = count ? (aacaCount / count) * totalHeight : 0;
       const aacaLocalHeight = count ? (aacaLocalCount / count) * totalHeight : 0;
       const carlisleHeight = count ? (carlisleCount / count) * totalHeight : 0;
       const traacaHeight = count ? (traacaCount / count) * totalHeight : 0;
+      const manualHeight = count ? (manualCount / count) * totalHeight : 0;
       const wrapper = document.createElement("div");
       wrapper.className = "month-bar";
       wrapper.dataset.month = month;
@@ -645,7 +742,8 @@ function renderChart(items) {
       wrapper.setAttribute("aria-label", `Show ${month} events`);
       wrapper.innerHTML = `
         <div class="bar-count">${count}</div>
-        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
+        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle, ${manualCount} Manual">
+          ${manualCount ? `<span class="bar-segment bar-manual" style="height:${manualHeight}px"></span>` : ""}
           ${carlisleCount ? `<span class="bar-segment bar-carlisle" style="height:${carlisleHeight}px"></span>` : ""}
           ${traacaCount ? `<span class="bar-segment bar-traaca" style="height:${traacaHeight}px"></span>` : ""}
           ${aacaLocalCount ? `<span class="bar-segment bar-aaca-local" style="height:${aacaLocalHeight}px"></span>` : ""}
@@ -699,9 +797,13 @@ function deadlineForEvent(event) {
 
 function plannerItemHtml(event, { action = "" } = {}) {
   const note = noteForEvent(event.id);
+  const deadline = deadlineForEvent(event);
+  const eventUrl = event.url || event.sourceUrl || "";
+  const title = escapeHtml(event.title);
   return `
     <div class="planner-item">
-      <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
+      ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${title}</a>` : `<strong>${title}</strong>`}
+      ${deadline?.date ? `<strong class="deadline-date">Deadline: ${escapeHtml(deadline.date)}</strong>` : ""}
       <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
       ${note ? `<p class="planner-note">${escapeHtml(note)}</p>` : ""}
       ${action}
@@ -730,18 +832,21 @@ function interestedEvents() {
 function renderDeadlinePanel() {
   const deadlines = interestedEvents()
     .map(deadlineForEvent)
-    .filter(Boolean)
-    .slice(0, 8);
+    .filter(Boolean);
 
   els.deadlineCount.textContent = deadlines.length.toLocaleString();
   els.deadlineList.innerHTML = deadlines.length
-    ? deadlines.map(({ event, note, date }) => `
-      <div class="planner-item deadline-item">
-        <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
-        <strong class="deadline-date">${escapeHtml(date || note)}</strong>
-        <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
-      </div>
-    `).join("")
+    ? deadlines.map(({ event, note, date }) => {
+      const eventUrl = event.url || event.sourceUrl || "";
+      const title = escapeHtml(event.title);
+      return `
+        <div class="planner-item deadline-item">
+          ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${title}</a>` : `<strong>${title}</strong>`}
+          <strong class="deadline-date">${escapeHtml(date || note)}</strong>
+          <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
+        </div>
+      `;
+    }).join("")
     : `<p class="assistant-empty">No registration deadline language found in your Interested events.</p>`;
 }
 
@@ -761,6 +866,7 @@ function renderInsights(items) {
     ["Top city", `${city} (${cityCount})`],
     ["Top type", `${type} (${typeCount})`],
     ["Weekend events", `${weekends} of ${items.length}`],
+    ["Deadlines found", `${events.filter((event) => event.registrationDeadlineNote).length} total`],
     ["First match", next ? `${next.dateLabel}: ${next.title}` : "No matching events"],
   ];
 
@@ -796,7 +902,9 @@ function renderEvents(items) {
       const source = escapeHtml(event.source || "CCCHR");
       const sourceClass = slug(source);
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
-      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
+      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : event.source === "Manual" ? "Manual entry" : "CCCHR listing";
+      const eventUrl = event.url || event.sourceUrl || "";
+      const titleHtml = eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${title}</a>` : title;
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
       const note = escapeHtml(noteForEvent(event.id));
@@ -820,14 +928,15 @@ function renderEvents(items) {
             <span class="pill">${city}</span>
             ${recurrence ? `<span class="pill">${escapeHtml(recurrence.label)}</span>` : ""}
           </div>
-          <h3 class="${titleClass}"><a href="${event.url}" target="_blank" rel="noreferrer">${title}</a></h3>
+          <h3 class="${titleClass}">${titleHtml}</h3>
           <div class="event-meta">${dateLine}${venue ? ` | ${venue}` : ""}</div>
           ${address ? `<div class="event-address">${address}</div>` : ""}
           ${description ? `<p class="event-description">${description}</p>` : ""}
           <div class="event-actions">
             <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Add Recurring Event" : "Add to Calendar"}</a>
-            <a href="${event.url}" target="_blank" rel="noreferrer">${listingLabel}</a>
+            ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${listingLabel}</a>` : ""}
             ${event.sourceUrl && event.sourceUrl !== event.url && event.sourceUrl !== event.calendarUrl ? `<a href="${event.sourceUrl}" target="_blank" rel="noreferrer">More info</a>` : ""}
+            ${event.source === "Manual" ? `<button type="button" data-delete-manual="${escapeHtml(event.id)}">Remove Manual Show</button>` : ""}
           </div>
           <label class="event-note">
             <span>Note</span>
@@ -1000,6 +1109,7 @@ function selectMonth(month) {
 }
 
 function selectSource(source) {
+  if (!sourceValues.includes(source)) return;
   els.search.value = "";
   setCheckedValues(els.monthOptions, activeMonthValues());
   setCheckedValues(els.typeOptions, typeValues);
@@ -1033,7 +1143,47 @@ document.querySelector(".legend")?.addEventListener("click", (event) => {
   if (button?.dataset.source) selectSource(button.dataset.source);
 });
 
+
+els.manualForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const manualEvent = createManualEvent();
+  if (!manualEvent) return;
+  saveManualEvent(manualEvent);
+  window.location.search = "?fresh=23";
+});
+
+function exportPdfReport() {
+  const rows = events.map((event) => {
+    const deadline = deadlineForEvent(event)?.date || "";
+    return `<tr>
+      <td>${escapeHtml(event.dateLabel)}</td>
+      <td>${escapeHtml(event.title)}</td>
+      <td>${escapeHtml(event.city || "")}</td>
+      <td>${escapeHtml(event.type || "")}</td>
+      <td>${escapeHtml(event.source || "")}</td>
+      <td>${escapeHtml(deadline)}</td>
+      <td>${escapeHtml(event.venue || "")}</td>
+      <td>${escapeHtml(event.description || "")}</td>
+    </tr>`;
+  }).join("");
+  const report = window.open("", "_blank");
+  if (!report) return;
+  report.document.write(`<!doctype html><html><head><title>Car Show Calendar Export</title>
+    <style>body{font-family:Arial,sans-serif;color:#111820}h1{font-size:22px}p{color:#555}table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #ccc;padding:5px;vertical-align:top}th{background:#f0f0f0;text-align:left}@media print{button{display:none}}</style>
+    </head><body><button onclick="window.print()">Print or Save as PDF</button><h1>Car Show Calendar Export</h1><p>${events.length} events. Generated ${new Date().toLocaleString("en-US")}.</p><table><thead><tr><th>Date</th><th>Event</th><th>City</th><th>Type</th><th>Source</th><th>Deadline</th><th>Venue</th><th>Details</th></tr></thead><tbody>${rows}</tbody></table></body></html>`);
+  report.document.close();
+  report.focus();
+}
+
+els.exportPdf?.addEventListener("click", exportPdfReport);
+
 els.list.addEventListener("click", (event) => {
+  const deleteButton = event.target.closest("button[data-delete-manual]");
+  if (deleteButton) {
+    deleteManualEvent(deleteButton.dataset.deleteManual);
+    return;
+  }
+
   const button = event.target.closest("button[data-source]");
   if (button?.dataset.source) selectSource(button.dataset.source);
 });
@@ -1139,6 +1289,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=22").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=23").catch(() => {});
   });
 }

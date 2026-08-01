@@ -11,8 +11,8 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=22">
-    <link rel="stylesheet" href="styles.css?v=22">
+    <link rel="manifest" href="manifest.webmanifest?v=23">
+    <link rel="stylesheet" href="styles.css?v=23">
   </head>
   <body>
     <header class="masthead">
@@ -115,6 +115,7 @@
           </select>
         </label>
         <button id="resetButton" type="button">Reset</button>
+        <button id="exportPdfButton" type="button">Export PDF</button>
       </section>
 
       <section class="trip-helper" aria-label="Smart event finder">
@@ -125,6 +126,56 @@
         <button id="assistantButton" type="button">Find Events</button>
         <p id="assistantResponse">Ask for a city, month, or type of event.</p>
       </section>
+
+      <details class="manual-panel">
+        <summary>Add Manual Show</summary>
+        <form id="manualEventForm" class="manual-form">
+          <label>
+            <span>Show name</span>
+            <input id="manualTitle" type="text" required placeholder="Saturday cruise-in, local show, club meet">
+          </label>
+          <label>
+            <span>Date</span>
+            <input id="manualDate" type="date" required>
+          </label>
+          <label>
+            <span>Time</span>
+            <input id="manualTime" type="time">
+          </label>
+          <label>
+            <span>City</span>
+            <input id="manualCity" type="text" required placeholder="Chesapeake">
+          </label>
+          <label>
+            <span>Type</span>
+            <select id="manualType">
+              <option>Car show</option>
+              <option>Cruise-in</option>
+              <option>Meetup</option>
+              <option>Swap meet</option>
+              <option>Tour</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>
+            <span>Venue</span>
+            <input id="manualVenue" type="text" placeholder="Parking lot, church, restaurant">
+          </label>
+          <label>
+            <span>Address</span>
+            <input id="manualAddress" type="text" placeholder="Optional">
+          </label>
+          <label>
+            <span>Deadline</span>
+            <input id="manualDeadline" type="text" placeholder="Optional, like April 9, 2026">
+          </label>
+          <label class="manual-notes">
+            <span>Details</span>
+            <textarea id="manualDescription" rows="3" placeholder="Anything useful: registration cost, contact, rain date..."></textarea>
+          </label>
+          <button type="submit">Save Show</button>
+        </form>
+      </details>
 
       <section class="chart-panel" aria-label="Events by month">
         <div class="section-heading">
@@ -137,6 +188,7 @@
               <button type="button" data-source="AACA Local"><i class="legend-aaca-local"></i>AACA Local</button>
               <button type="button" data-source="TRAACA"><i class="legend-traaca"></i>TRAACA</button>
               <button type="button" data-source="Carlisle"><i class="legend-carlisle"></i>Carlisle</button>
+              <button type="button" data-source="Manual"><i class="legend-manual"></i>Manual</button>
             </div>
           </div>
         </div>
@@ -174,7 +226,7 @@
       </section>
     </main>
 
-    <script src="data/events-2026.js?v=22"></script>
-    <script src="app.js?v=22"></script>
+    <script src="data/events-2026.js?v=23"></script>
+    <script src="app.js?v=23"></script>
   </body>
 </html>
