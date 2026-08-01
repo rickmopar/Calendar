@@ -4,22 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#111820">
-    <meta name="description" content="A mobile-friendly calendar of CCCHR, Facebook, AACA, TRAACA, and Carlisle car events.">
+    <meta name="description" content="A mobile-friendly calendar of CCCHR, Facebook, AACA, AACA Local, TRAACA, and Carlisle car events.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Car Shows">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=9">
-    <link rel="stylesheet" href="styles.css?v=9">
+    <link rel="manifest" href="manifest.webmanifest?v=10">
+    <link rel="stylesheet" href="styles.css?v=10">
   </head>
   <body>
     <header class="masthead">
       <div>
         <p class="eyebrow">2026-2027 Auto Events</p>
         <h1>Car Show Calendar</h1>
-        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
+        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, AACA Local, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
         <div class="status-line" aria-label="Dashboard freshness">
           <span id="currentDate">Today: -</span>
           <span id="refreshDate">Last refreshed: -</span>
@@ -29,6 +29,7 @@
         <a class="source-link" href="https://www.ccchr.org/calendar" target="_blank" rel="noreferrer">CCCHR calendar</a>
         <a class="source-link source-link-secondary" href="https://www.facebook.com/ccchr/events" target="_blank" rel="noreferrer">Facebook events</a>
         <a class="source-link source-link-secondary" href="https://www.traaca.com/calendar.htm" target="_blank" rel="noreferrer">TRAACA calendar</a>
+        <a class="source-link source-link-secondary" href="https://aaca.org/events/" target="_blank" rel="noreferrer">AACA local</a>
       </nav>
     </header>
 
@@ -124,6 +125,7 @@
             <div class="legend" aria-label="Bar color legend">
               <span><i class="legend-ccchr"></i>CCCHR</span>
               <span><i class="legend-aaca"></i>AACA</span>
+              <span><i class="legend-aaca-local"></i>AACA Local</span>
               <span><i class="legend-traaca"></i>TRAACA</span>
               <span><i class="legend-carlisle"></i>Carlisle</span>
             </div>
@@ -144,7 +146,7 @@
       </section>
     </main>
 
-    <script src="data/events-2026.js?v=9"></script>
-    <script src="app.js?v=9"></script>
+    <script src="data/events-2026.js?v=10"></script>
+    <script src="app.js?v=10"></script>
   </body>
 </html>

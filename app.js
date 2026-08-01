@@ -181,21 +181,22 @@ function addDays(date, days) {
   return next;
 }
 
-function eventDateKey(event) {
+function eventDateKey(event, field = "startDate") {
   const timeZone = event.allDay ? "UTC" : "America/New_York";
-  return dateKey(new Date(event.startDate), timeZone);
+  return dateKey(new Date(event[field] || event.startDate), timeZone);
 }
 
 function matchesDateRange(event) {
-  const key = eventDateKey(event);
+  const startKey = eventDateKey(event);
+  const endKey = eventDateKey(event, "endDate");
   const selectedRange = els.dateRange.value;
 
-  if (selectedRange === "allFuture") return key >= todayKey;
-  if (selectedRange === "rest2026") return key >= todayKey && key <= "20261231";
-  if (selectedRange === "year2027") return key >= "20270101" && key <= "20271231";
-  if (selectedRange === "next30") return key >= todayKey && key <= dateKey(addDays(today, 30));
-  if (selectedRange === "next90") return key >= todayKey && key <= dateKey(addDays(today, 90));
-  return key >= todayKey;
+  if (selectedRange === "allFuture") return endKey >= todayKey;
+  if (selectedRange === "rest2026") return endKey >= todayKey && startKey <= "20261231";
+  if (selectedRange === "year2027") return endKey >= "20270101" && startKey <= "20271231";
+  if (selectedRange === "next30") return endKey >= todayKey && startKey <= dateKey(addDays(today, 30));
+  if (selectedRange === "next90") return endKey >= todayKey && startKey <= dateKey(addDays(today, 90));
+  return endKey >= todayKey;
 }
 
 function getFilteredEvents() {
@@ -556,20 +557,23 @@ function renderChart(items) {
       const count = counts[month] || 0;
       const ccchrCount = countsBySource[month]?.CCCHR || 0;
       const aacaCount = countsBySource[month]?.AACA || 0;
+      const aacaLocalCount = countsBySource[month]?.["AACA Local"] || 0;
       const carlisleCount = countsBySource[month]?.Carlisle || 0;
       const traacaCount = countsBySource[month]?.TRAACA || 0;
       const totalHeight = Math.max(8, (count / max) * 140);
       const ccchrHeight = count ? (ccchrCount / count) * totalHeight : 0;
       const aacaHeight = count ? (aacaCount / count) * totalHeight : 0;
+      const aacaLocalHeight = count ? (aacaLocalCount / count) * totalHeight : 0;
       const carlisleHeight = count ? (carlisleCount / count) * totalHeight : 0;
       const traacaHeight = count ? (traacaCount / count) * totalHeight : 0;
       const wrapper = document.createElement("div");
       wrapper.className = "month-bar";
       wrapper.innerHTML = `
         <div class="bar-count">${count}</div>
-        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
+        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
           ${carlisleCount ? `<span class="bar-segment bar-carlisle" style="height:${carlisleHeight}px"></span>` : ""}
           ${traacaCount ? `<span class="bar-segment bar-traaca" style="height:${traacaHeight}px"></span>` : ""}
+          ${aacaLocalCount ? `<span class="bar-segment bar-aaca-local" style="height:${aacaLocalHeight}px"></span>` : ""}
           ${aacaCount ? `<span class="bar-segment bar-aaca" style="height:${aacaHeight}px"></span>` : ""}
           ${ccchrCount ? `<span class="bar-segment bar-ccchr" style="height:${ccchrHeight}px"></span>` : ""}
         </div>
@@ -623,9 +627,9 @@ function renderEvents(items) {
       const address = escapeHtml(event.address);
       const description = escapeHtml(event.description);
       const source = escapeHtml(event.source || "CCCHR");
-      const sourceClass = source.toLowerCase();
+      const sourceClass = slug(source);
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
-      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
+      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
       card.innerHTML = `
@@ -831,6 +835,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=9").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=10").catch(() => {});
   });
 }

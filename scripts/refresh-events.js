@@ -6,6 +6,7 @@ const dataDir = path.join(root, "data");
 const rawDir = path.join(root, "raw");
 const sourceUrl = "https://www.ccchr.org/events?format=json";
 const aacaSourceUrl = "https://aaca.org/aacanationalshowsandtourscalendar/";
+const aacaLocalSourceUrl = "https://aaca.org/events/";
 const traacaSourceUrl = "https://www.traaca.com/calendar.htm";
 const carlisleSourceUrl = "https://carlisleevents.com/events";
 const facebookSourceUrl = "https://www.facebook.com/ccchr/events";
@@ -151,11 +152,23 @@ function monthNumber(monthName) {
   }[monthName.toLowerCase()];
 }
 
+function slug(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
 function normalizeAacaType(title) {
   if (/tour/i.test(title)) return "Tour";
   if (/convention|awards/i.test(title)) return "Convention";
   if (/national/i.test(title)) return "National show";
   return "AACA event";
+}
+
+function normalizeAacaLocalType(title, description = "") {
+  const text = `${title} ${description}`.toLowerCase();
+  if (/swap|flea/.test(text)) return "Swap meet";
+  if (/tour/.test(text)) return "Tour";
+  if (/show|meet|festival/.test(text)) return "Car show";
+  return "AACA local event";
 }
 
 function normalizeCarlisleType(title) {
@@ -375,6 +388,105 @@ async function fetchTraacaEvents() {
   return events;
 }
 
+function extractAacaLocalCity(description) {
+  const text = decodeHtml(description);
+  const streetCity = text.match(/[-–]\s*([A-Z][A-Za-z .'-]+),\s*([A-Z]{2})\s+\d{5}/);
+  if (streetCity) return streetCity[1].trim();
+
+  const cityMatches = [...text.matchAll(/(?:Location:\s*)?[^.]*?,\s*([A-Z][A-Za-z .'-]+),\s*([A-Z]{2})\b/g)];
+  if (cityMatches.length) return cityMatches.at(-1)[1].replace(/.*[-–]\s*/, "").trim();
+
+  const compactMatch = text.match(/\b([A-Z][A-Za-z .'-]+),\s*([A-Z]{2})\b/);
+  return compactMatch ? compactMatch[1].trim() : "AACA Local";
+}
+
+function normalizeAacaLocalEvent(event, index) {
+  const start = new Date(event.startDate);
+  const end = new Date(event.endDate || event.startDate);
+  if (!years.includes(start.getFullYear())) return null;
+
+  const title = decodeHtml(event.name || "AACA Local Event");
+  const description = decodeHtml(event.description || "");
+  const startText = String(event.startDate || "");
+  const allDay = /T00:00:00/.test(startText) && /T23:59:59/.test(String(event.endDate || ""));
+  const timeZone = "America/New_York";
+  const city = extractAacaLocalCity(description);
+
+  return {
+    id: `aaca-local-${start.toISOString().slice(0, 10)}-${slug(title)}-${index}`,
+    title,
+    startDate: start.toISOString(),
+    endDate: end.toISOString(),
+    allDay,
+    month: start.toLocaleString("en-US", { month: "long", timeZone }),
+    weekday: start.toLocaleString("en-US", { weekday: "short", timeZone }),
+    dateLabel: start.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      timeZone,
+    }),
+    timeLabel: allDay
+      ? "All day"
+      : start.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", timeZone }),
+    type: normalizeAacaLocalType(title, description),
+    source: "AACA Local",
+    city,
+    venue: "AACA Local & Regional Calendar",
+    address: city,
+    description,
+    sourceUrl: aacaLocalSourceUrl,
+    url: event.url || aacaLocalSourceUrl,
+    image: "",
+  };
+}
+
+function parseAacaLocalEvents(html, page) {
+  const events = [];
+  const scripts = [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+
+  for (const script of scripts) {
+    let parsed;
+    try {
+      parsed = JSON.parse(script[1].trim());
+    } catch {
+      continue;
+    }
+
+    const items = Array.isArray(parsed) ? parsed : [parsed];
+    for (const item of items.filter((entry) => entry && entry["@type"] === "Event")) {
+      const event = normalizeAacaLocalEvent(item, `${page}-${events.length}`);
+      if (event) events.push(event);
+    }
+  }
+
+  return events;
+}
+
+async function fetchAacaLocalEvents() {
+  const events = [];
+
+  for (let page = 1; page <= 8; page += 1) {
+    const url = page === 1 ? aacaLocalSourceUrl : `${aacaLocalSourceUrl}page/${page}/`;
+    const cacheFile = `aaca-local-events-page-${page}.html`;
+    let html;
+
+    try {
+      html = await fetchTextWithCache(url, cacheFile);
+    } catch (error) {
+      console.warn(`Skipping AACA local page ${page}: ${error.message}`);
+      break;
+    }
+
+    fs.writeFileSync(path.join(rawDir, cacheFile), html);
+    const pageEvents = parseAacaLocalEvents(html, page);
+    if (!pageEvents.length) break;
+    events.push(...pageEvents);
+  }
+
+  return events;
+}
+
 async function fetchAacaEvents() {
   const html = await fetchTextWithCache(aacaSourceUrl, "aaca-national-calendar.html");
   fs.writeFileSync(path.join(rawDir, "aaca-national-calendar.html"), html);
@@ -463,7 +575,7 @@ async function fetchCarlisleEvents() {
 
 function duplicateKey(event) {
   const source = event.source || "";
-  if (source !== "TRAACA" && source !== "AACA") return "";
+  if (source !== "TRAACA" && source !== "AACA" && source !== "AACA Local") return "";
   const day = event.startDate.slice(0, 10);
   const title = String(event.title || "")
     .toLowerCase()
@@ -477,9 +589,9 @@ function mergeEventsWithAacaPriority(groups) {
   const merged = [];
   const aacaKeys = new Set(groups.AACA.map(duplicateKey).filter(Boolean));
 
-  for (const event of [...groups.CCCHR, ...groups.AACA, ...groups.TRAACA, ...groups.Carlisle]) {
+  for (const event of [...groups.CCCHR, ...groups.AACA, ...groups.AACALocal, ...groups.TRAACA, ...groups.Carlisle]) {
     const key = duplicateKey(event);
-    if (event.source === "TRAACA" && key && aacaKeys.has(key)) continue;
+    if ((event.source === "TRAACA" || event.source === "AACA Local") && key && aacaKeys.has(key)) continue;
     merged.push(event);
   }
 
@@ -527,11 +639,13 @@ async function main() {
     .filter((event) => years.includes(new Date(event.startDate).getFullYear()))
     .map(normalize);
   const aacaEvents = await fetchAacaEvents();
+  const aacaLocalEvents = await fetchAacaLocalEvents();
   const traacaEvents = await fetchTraacaEvents();
   const carlisleEvents = await fetchCarlisleEvents();
   const events = mergeEventsWithAacaPriority({
     CCCHR: ccchrEvents,
     AACA: aacaEvents,
+    AACALocal: aacaLocalEvents,
     TRAACA: traacaEvents,
     Carlisle: carlisleEvents,
   })
@@ -541,12 +655,14 @@ async function main() {
     sources: [
       "https://www.ccchr.org/events",
       aacaSourceUrl,
+      aacaLocalSourceUrl,
       traacaSourceUrl,
       carlisleSourceUrl,
       facebookSourceUrl,
     ],
     sourceCalendar: "https://www.ccchr.org/calendar",
     aacaSourceCalendar: aacaSourceUrl,
+    aacaLocalSourceCalendar: aacaLocalSourceUrl,
     traacaSourceCalendar: traacaSourceUrl,
     carlisleSourceCalendar: carlisleSourceUrl,
     facebookSourceCalendar: facebookSourceUrl,
@@ -560,6 +676,7 @@ async function main() {
     sourceCounts: {
       CCCHR: ccchrEvents.length,
       AACA: aacaEvents.length,
+      "AACA Local": aacaLocalEvents.length,
       TRAACA: traacaEvents.length,
       Carlisle: carlisleEvents.length,
     },
@@ -573,7 +690,7 @@ async function main() {
   );
 
   console.log(`Refreshed ${events.length} events for ${years.join("-")}.`);
-  console.log(`CCCHR: ${ccchrEvents.length}; AACA: ${aacaEvents.length}; TRAACA: ${traacaEvents.length}; Carlisle: ${carlisleEvents.length}`);
+  console.log(`CCCHR: ${ccchrEvents.length}; AACA: ${aacaEvents.length}; AACA Local: ${aacaLocalEvents.length}; TRAACA: ${traacaEvents.length}; Carlisle: ${carlisleEvents.length}`);
   console.log(`Latest source refresh: ${metadata.refreshedAt}`);
 }
 

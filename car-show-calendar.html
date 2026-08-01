@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#111820">
-    <meta name="description" content="A mobile-friendly calendar of CCCHR, Facebook, AACA, TRAACA, and Carlisle car events.">
+    <meta name="description" content="A mobile-friendly calendar of CCCHR, Facebook, AACA, AACA Local, TRAACA, and Carlisle car events.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Car Shows">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=9">
+    <link rel="manifest" href="manifest.webmanifest?v=10">
     <style>
 :root {
   color-scheme: light;
@@ -23,6 +23,7 @@
   --accent: #b8302f;
   --accent-dark: #76201f;
   --aaca: #168146;
+  --aaca-local: #2f8bb8;
   --traaca: #0f7f95;
   --carlisle: #7143b8;
   --facebook: #1877f2;
@@ -387,6 +388,10 @@ button {
   background: var(--aaca);
 }
 
+.legend-aaca-local {
+  background: var(--aaca-local);
+}
+
 .legend-traaca {
   background: var(--traaca);
 }
@@ -430,6 +435,10 @@ button {
 
 .bar-aaca {
   background: var(--aaca);
+}
+
+.bar-aaca-local {
+  background: var(--aaca-local);
 }
 
 .bar-traaca {
@@ -562,6 +571,11 @@ button {
   color: #0e6635;
 }
 
+.pill.source-aaca-local {
+  background: #e1f0f7;
+  color: #1e6688;
+}
+
 .pill.source-traaca {
   background: #def2f5;
   color: #075868;
@@ -585,6 +599,10 @@ button {
 
 .event-title-aaca {
   color: var(--aaca);
+}
+
+.event-title-aaca-local {
+  color: var(--aaca-local);
 }
 
 .event-title-traaca {
@@ -841,7 +859,7 @@ button {
       <div>
         <p class="eyebrow">2026-2027 Auto Events</p>
         <h1>Car Show Calendar</h1>
-        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
+        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, AACA Local, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
         <div class="status-line" aria-label="Dashboard freshness">
           <span id="currentDate">Today: -</span>
           <span id="refreshDate">Last refreshed: -</span>
@@ -851,6 +869,7 @@ button {
         <a class="source-link" href="https://www.ccchr.org/calendar" target="_blank" rel="noreferrer">CCCHR calendar</a>
         <a class="source-link source-link-secondary" href="https://www.facebook.com/ccchr/events" target="_blank" rel="noreferrer">Facebook events</a>
         <a class="source-link source-link-secondary" href="https://www.traaca.com/calendar.htm" target="_blank" rel="noreferrer">TRAACA calendar</a>
+        <a class="source-link source-link-secondary" href="https://aaca.org/events/" target="_blank" rel="noreferrer">AACA local</a>
       </nav>
     </header>
 
@@ -946,6 +965,7 @@ button {
             <div class="legend" aria-label="Bar color legend">
               <span><i class="legend-ccchr"></i>CCCHR</span>
               <span><i class="legend-aaca"></i>AACA</span>
+              <span><i class="legend-aaca-local"></i>AACA Local</span>
               <span><i class="legend-traaca"></i>TRAACA</span>
               <span><i class="legend-carlisle"></i>Carlisle</span>
             </div>
@@ -3467,6 +3487,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
+    "id": "aaca-local-2026-07-31-ontelaunee-region-aaca-s-das-awkscht-fescht-1-0",
+    "title": "Ontelaunee Region AACA’s Das Awkscht Fescht",
+    "startDate": "2026-07-31T04:00:00.000Z",
+    "endDate": "2026-08-03T03:59:59.000Z",
+    "allDay": true,
+    "month": "July",
+    "weekday": "Fri",
+    "dateLabel": "Jul 31, 2026",
+    "timeLabel": "All day",
+    "type": "Swap meet",
+    "source": "AACA Local",
+    "city": "Macungie",
+    "venue": "AACA Local & Regional Calendar",
+    "address": "Macungie",
+    "description": "&lt;p&gt;Location: Macungie Memorial Park, 50 North Poplar St, Macungie, PA 18062 Three-day car show, flea market, car corral, and Toy Town. This year\\'s feature is race cars and antique motorcycles. Festival takes place in a beautiful park with shade trees. There will be arts and crafts, including quilts in air conditioned building, live bands on [&hellip;]&lt;/p&gt;\\n",
+    "sourceUrl": "https://aaca.org/events/",
+    "url": "https://aaca.org/event/ontelaunee-region-aacas-das-awkscht-fescht/",
+    "image": ""
+  },
+  {
     "id": "6a35882b4c9c4e0695813d4f",
     "title": "Let's Talk Cars Friday Night Cruise-in | July 31st",
     "startDate": "2026-07-31T21:00:00.065Z",
@@ -3484,6 +3524,26 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "",
     "url": "https://www.ccchr.org/events/lets-talk-cars-friday-night-cruise-in-july-31",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782324253735-BYUJYAFS6DSI6WTPFJ8W/Middle+Pinisula+Classic+Cruisers.jpg"
+  },
+  {
+    "id": "aaca-local-2026-08-01-35th-annual-zooland-region-antique-car-show-1-1",
+    "title": "35th Annual Zooland Region Antique Car Show",
+    "startDate": "2026-08-01T04:00:00.000Z",
+    "endDate": "2026-08-02T03:59:59.000Z",
+    "allDay": true,
+    "month": "August",
+    "weekday": "Sat",
+    "dateLabel": "Aug 1, 2026",
+    "timeLabel": "All day",
+    "type": "Car show",
+    "source": "AACA Local",
+    "city": "Asheboro",
+    "venue": "AACA Local & Regional Calendar",
+    "address": "Asheboro",
+    "description": "&lt;p&gt;Location: Bicentennial Park, Asheboro, NC Contact: Larry Pugh, President - arrchief600@gmail.com, zoolandaaca@gmail.com Registrations 8-10:30 Award Presentation by 3:00 - 1st & 2nd place awards for all classes First 150 cars will be judged for Best of Shows and Special awards presented&lt;/p&gt;\\n",
+    "sourceUrl": "https://aaca.org/events/",
+    "url": "https://aaca.org/event/35th-annual-zooland-region-antique-car-show/",
+    "image": ""
   },
   {
     "id": "6a358adca5663a0860931af0",
@@ -4976,6 +5036,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782327947484-R8XZO1F07IGPIHDXFWGS/Classic+Cruisers+Car+Club.png"
   },
   {
+    "id": "aaca-local-2026-09-13-chesapeake-region-s-annual-autumn-harvest-collector-car-show-1-2",
+    "title": "Chesapeake Region’s Annual Autumn Harvest Collector Car Show",
+    "startDate": "2026-09-13T04:00:00.000Z",
+    "endDate": "2026-09-14T03:59:59.000Z",
+    "allDay": true,
+    "month": "September",
+    "weekday": "Sun",
+    "dateLabel": "Sep 13, 2026",
+    "timeLabel": "All day",
+    "type": "Car show",
+    "source": "AACA Local",
+    "city": "Manchester",
+    "venue": "AACA Local & Regional Calendar",
+    "address": "Manchester",
+    "description": "&lt;p&gt;Location: Manchester Carnival Grounds 3285 York Street - Manchester, MD 21102 Contact: Tom Rosso 240-375-5325 1965barracuda@comcast.net https://chesapeake.aaca.com &lt;/p&gt;\\n",
+    "sourceUrl": "https://aaca.org/events/",
+    "url": "https://aaca.org/event/chesapeake-regions-annual-autumn-harvest-collector-car-show-2/",
+    "image": ""
+  },
+  {
     "id": "6a35934647223d010911fb8d",
     "title": "Boost and Brunch NN | Sept 13th",
     "startDate": "2026-09-13T12:30:00.767Z",
@@ -5108,6 +5188,26 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "",
     "url": "https://www.ccchr.org/events/lets-talk-cars-friday-night-cruise-in-sept-18",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782324253735-BYUJYAFS6DSI6WTPFJ8W/Middle+Pinisula+Classic+Cruisers.jpg"
+  },
+  {
+    "id": "aaca-local-2026-09-19-50th-edgar-rohr-memorial-car-meet-1-3",
+    "title": "50th Edgar Rohr Memorial Car Meet",
+    "startDate": "2026-09-19T12:00:00.000Z",
+    "endDate": "2026-09-19T19:00:00.000Z",
+    "allDay": false,
+    "month": "September",
+    "weekday": "Sat",
+    "dateLabel": "Sep 19, 2026",
+    "timeLabel": "8:00 AM",
+    "type": "Swap meet",
+    "source": "AACA Local",
+    "city": "Manassas",
+    "venue": "AACA Local & Regional Calendar",
+    "address": "Manassas",
+    "description": "&lt;p&gt;Hosted by: Bull Run Region AACA Location: Manassas, VA, Historic railroad depot parking lot, 9431 West St. Manassas, VA 20110 Free admission and free garage parking to spectators. Free car trailer parking. Trophies, dash plaques, door prizes, 50-50 drawing. Model T Ford assembly & disassembly demonstrations. Flea Market. Show location is a short walk from [&hellip;]&lt;/p&gt;\\n",
+    "sourceUrl": "https://aaca.org/events/",
+    "url": "https://aaca.org/event/50th-edgar-rohr-memorial-car-meet/",
+    "image": ""
   },
   {
     "id": "69f38cb0e79d482162560a2d",
@@ -5260,6 +5360,26 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "",
     "url": "https://www.ccchr.org/events/classic-cruisers-saturday-night-cruz-in-sept-19",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782327947484-R8XZO1F07IGPIHDXFWGS/Classic+Cruisers+Car+Club.png"
+  },
+  {
+    "id": "aaca-local-2026-09-20-anthracite-region-aaca-40th-annual-car-show-and-flea-market-1-4",
+    "title": "Anthracite Region AACA 40th Annual Car Show and Flea Market",
+    "startDate": "2026-09-20T08:00:00.000Z",
+    "endDate": "2026-09-20T17:00:00.000Z",
+    "allDay": false,
+    "month": "September",
+    "weekday": "Sun",
+    "dateLabel": "Sep 20, 2026",
+    "timeLabel": "4:00 AM",
+    "type": "Swap meet",
+    "source": "AACA Local",
+    "city": "McAdoo",
+    "venue": "AACA Local & Regional Calendar",
+    "address": "McAdoo",
+    "description": "&lt;p&gt;Location: McAdoo, PA Contact Dave Bielen - Dbielen51@gmail.com or 717-471-9313 Click here for more informaton. &lt;/p&gt;\\n",
+    "sourceUrl": "https://aaca.org/events/",
+    "url": "https://aaca.org/event/anthracite-region-aaca-40th-annual-car-show-and-flea-market/",
+    "image": ""
   },
   {
     "id": "aaca-2026-9-21-12",
@@ -6295,6 +6415,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/42ff5e1b-abd6-4195-86ee-321d21d2d84f/Last+Saturday+Cruise+in.jpg"
   },
   {
+    "id": "aaca-local-2026-11-01-tcvcc-cars-of-our-lives-cool-show-2026-1-5",
+    "title": "TCVCC Cars Of Our Lives (COOL) Show 2026",
+    "startDate": "2026-11-01T04:00:00.000Z",
+    "endDate": "2026-11-02T04:59:59.000Z",
+    "allDay": true,
+    "month": "November",
+    "weekday": "Sun",
+    "dateLabel": "Nov 1, 2026",
+    "timeLabel": "All day",
+    "type": "Car show",
+    "source": "AACA Local",
+    "city": "Stuart",
+    "venue": "AACA Local & Regional Calendar",
+    "address": "Stuart",
+    "description": "&lt;p&gt;Region host: Treasure Coast Vintage Car Club Location: 301 SE Stypmann Blvd., Stuart, FL 34994 Join us for our 45th annual COOL Classic Car Show in beautiful downtown Stuart, Florida. We have plenty of shade trees and a great location. Food trucks and a DJ will keep you fed and entertained. Roll in starts at [&hellip;]&lt;/p&gt;\\n",
+    "sourceUrl": "https://aaca.org/events/",
+    "url": "https://aaca.org/event/tcvcc-cars-of-our-lives-cool-show-2026/",
+    "image": ""
+  },
+  {
     "id": "6a3c4b249829096a9ffec1b4",
     "title": "Cheeseburgers & Classic Car Cruise In (Smithfield) | Nov 1st",
     "startDate": "2026-11-01T19:00:00.123Z",
@@ -7010,12 +7150,14 @@ window.CCCHR_METADATA = {
   "sources": [
     "https://www.ccchr.org/events",
     "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "https://aaca.org/events/",
     "https://www.traaca.com/calendar.htm",
     "https://carlisleevents.com/events",
     "https://www.facebook.com/ccchr/events"
   ],
   "sourceCalendar": "https://www.ccchr.org/calendar",
   "aacaSourceCalendar": "https://aaca.org/aacanationalshowsandtourscalendar/",
+  "aacaLocalSourceCalendar": "https://aaca.org/events/",
   "traacaSourceCalendar": "https://www.traaca.com/calendar.htm",
   "carlisleSourceCalendar": "https://carlisleevents.com/events",
   "facebookSourceCalendar": "https://www.facebook.com/ccchr/events",
@@ -7027,11 +7169,12 @@ window.CCCHR_METADATA = {
     2027
   ],
   "year": 2026,
-  "refreshedAt": "2026-08-01T01:30:41.203Z",
-  "totalEvents": 315,
+  "refreshedAt": "2026-08-01T01:42:48.238Z",
+  "totalEvents": 321,
   "sourceCounts": {
     "CCCHR": 274,
     "AACA": 25,
+    "AACA Local": 6,
     "TRAACA": 5,
     "Carlisle": 11
   }
@@ -7222,21 +7365,22 @@ function addDays(date, days) {
   return next;
 }
 
-function eventDateKey(event) {
+function eventDateKey(event, field = "startDate") {
   const timeZone = event.allDay ? "UTC" : "America/New_York";
-  return dateKey(new Date(event.startDate), timeZone);
+  return dateKey(new Date(event[field] || event.startDate), timeZone);
 }
 
 function matchesDateRange(event) {
-  const key = eventDateKey(event);
+  const startKey = eventDateKey(event);
+  const endKey = eventDateKey(event, "endDate");
   const selectedRange = els.dateRange.value;
 
-  if (selectedRange === "allFuture") return key >= todayKey;
-  if (selectedRange === "rest2026") return key >= todayKey && key <= "20261231";
-  if (selectedRange === "year2027") return key >= "20270101" && key <= "20271231";
-  if (selectedRange === "next30") return key >= todayKey && key <= dateKey(addDays(today, 30));
-  if (selectedRange === "next90") return key >= todayKey && key <= dateKey(addDays(today, 90));
-  return key >= todayKey;
+  if (selectedRange === "allFuture") return endKey >= todayKey;
+  if (selectedRange === "rest2026") return endKey >= todayKey && startKey <= "20261231";
+  if (selectedRange === "year2027") return endKey >= "20270101" && startKey <= "20271231";
+  if (selectedRange === "next30") return endKey >= todayKey && startKey <= dateKey(addDays(today, 30));
+  if (selectedRange === "next90") return endKey >= todayKey && startKey <= dateKey(addDays(today, 90));
+  return endKey >= todayKey;
 }
 
 function getFilteredEvents() {
@@ -7597,20 +7741,23 @@ function renderChart(items) {
       const count = counts[month] || 0;
       const ccchrCount = countsBySource[month]?.CCCHR || 0;
       const aacaCount = countsBySource[month]?.AACA || 0;
+      const aacaLocalCount = countsBySource[month]?.["AACA Local"] || 0;
       const carlisleCount = countsBySource[month]?.Carlisle || 0;
       const traacaCount = countsBySource[month]?.TRAACA || 0;
       const totalHeight = Math.max(8, (count / max) * 140);
       const ccchrHeight = count ? (ccchrCount / count) * totalHeight : 0;
       const aacaHeight = count ? (aacaCount / count) * totalHeight : 0;
+      const aacaLocalHeight = count ? (aacaLocalCount / count) * totalHeight : 0;
       const carlisleHeight = count ? (carlisleCount / count) * totalHeight : 0;
       const traacaHeight = count ? (traacaCount / count) * totalHeight : 0;
       const wrapper = document.createElement("div");
       wrapper.className = "month-bar";
       wrapper.innerHTML = `
         <div class="bar-count">${count}</div>
-        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
+        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
           ${carlisleCount ? `<span class="bar-segment bar-carlisle" style="height:${carlisleHeight}px"></span>` : ""}
           ${traacaCount ? `<span class="bar-segment bar-traaca" style="height:${traacaHeight}px"></span>` : ""}
+          ${aacaLocalCount ? `<span class="bar-segment bar-aaca-local" style="height:${aacaLocalHeight}px"></span>` : ""}
           ${aacaCount ? `<span class="bar-segment bar-aaca" style="height:${aacaHeight}px"></span>` : ""}
           ${ccchrCount ? `<span class="bar-segment bar-ccchr" style="height:${ccchrHeight}px"></span>` : ""}
         </div>
@@ -7664,9 +7811,9 @@ function renderEvents(items) {
       const address = escapeHtml(event.address);
       const description = escapeHtml(event.description);
       const source = escapeHtml(event.source || "CCCHR");
-      const sourceClass = source.toLowerCase();
+      const sourceClass = slug(source);
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
-      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
+      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
       card.innerHTML = `
@@ -7872,7 +8019,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=9").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=10").catch(() => {});
   });
 }
 
