@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=23">
+    <link rel="manifest" href="manifest.webmanifest?v=24">
     <style>
 :root {
   color-scheme: light;
@@ -1304,7 +1304,7 @@ button {
           </label>
           <label>
             <span>Deadline</span>
-            <input id="manualDeadline" type="text" placeholder="Optional, like April 9, 2026">
+            <input id="manualDeadline" type="date">
           </label>
           <label class="manual-notes">
             <span>Details</span>
@@ -7694,6 +7694,17 @@ function saveManualEvent(event) {
   localStorage.setItem(manualEventsStorageKey, JSON.stringify(saved));
 }
 
+function manualDateLabel(dateValue) {
+  if (!dateValue) return "";
+  const [year, month, day] = dateValue.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 function deleteManualEvent(id) {
   const saved = loadManualEvents().filter((event) => event.id !== id);
   localStorage.setItem(manualEventsStorageKey, JSON.stringify(saved));
@@ -7701,7 +7712,7 @@ function deleteManualEvent(id) {
   delete eventNotes[id];
   saveInterestedIds();
   saveEventNotes();
-  window.location.search = "?fresh=23";
+  window.location.search = "?fresh=24";
 }
 
 function manualDateToEventParts(dateValue, timeValue) {
@@ -7723,7 +7734,7 @@ function createManualEvent() {
   if (!title || !dateValue || !city) return null;
 
   const { start, end, hasTime, timeZone } = manualDateToEventParts(dateValue, els.manualTime.value);
-  const deadline = els.manualDeadline.value.trim();
+  const deadline = manualDateLabel(els.manualDeadline.value);
 
   return {
     id: `manual-${Date.now()}`,
@@ -8732,7 +8743,7 @@ els.manualForm?.addEventListener("submit", (event) => {
   const manualEvent = createManualEvent();
   if (!manualEvent) return;
   saveManualEvent(manualEvent);
-  window.location.search = "?fresh=23";
+  window.location.search = "?fresh=24";
 });
 
 function exportPdfReport() {
@@ -8872,7 +8883,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=23").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=24").catch(() => {});
   });
 }
 

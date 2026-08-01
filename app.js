@@ -111,6 +111,17 @@ function saveManualEvent(event) {
   localStorage.setItem(manualEventsStorageKey, JSON.stringify(saved));
 }
 
+function manualDateLabel(dateValue) {
+  if (!dateValue) return "";
+  const [year, month, day] = dateValue.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 function deleteManualEvent(id) {
   const saved = loadManualEvents().filter((event) => event.id !== id);
   localStorage.setItem(manualEventsStorageKey, JSON.stringify(saved));
@@ -118,7 +129,7 @@ function deleteManualEvent(id) {
   delete eventNotes[id];
   saveInterestedIds();
   saveEventNotes();
-  window.location.search = "?fresh=23";
+  window.location.search = "?fresh=24";
 }
 
 function manualDateToEventParts(dateValue, timeValue) {
@@ -140,7 +151,7 @@ function createManualEvent() {
   if (!title || !dateValue || !city) return null;
 
   const { start, end, hasTime, timeZone } = manualDateToEventParts(dateValue, els.manualTime.value);
-  const deadline = els.manualDeadline.value.trim();
+  const deadline = manualDateLabel(els.manualDeadline.value);
 
   return {
     id: `manual-${Date.now()}`,
@@ -1149,7 +1160,7 @@ els.manualForm?.addEventListener("submit", (event) => {
   const manualEvent = createManualEvent();
   if (!manualEvent) return;
   saveManualEvent(manualEvent);
-  window.location.search = "?fresh=23";
+  window.location.search = "?fresh=24";
 });
 
 function exportPdfReport() {
@@ -1289,6 +1300,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=23").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=24").catch(() => {});
   });
 }
