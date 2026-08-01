@@ -83,10 +83,22 @@ let events = combinedEvents();
 let interestedIds = loadInterestedIds();
 let eventNotes = loadEventNotes();
 
+function isValidManualEvent(event) {
+  return Boolean(
+    event
+    && typeof event.id === "string"
+    && typeof event.title === "string"
+    && typeof event.startDate === "string"
+    && typeof event.endDate === "string"
+    && !Number.isNaN(Date.parse(event.startDate))
+    && !Number.isNaN(Date.parse(event.endDate)),
+  );
+}
+
 function loadManualEvents() {
   try {
     const saved = JSON.parse(localStorage.getItem(manualEventsStorageKey) || "[]");
-    return Array.isArray(saved) ? saved.filter((event) => event && event.id && event.startDate && event.title) : [];
+    return Array.isArray(saved) ? saved.filter(isValidManualEvent) : [];
   } catch {
     return [];
   }
@@ -98,9 +110,9 @@ function saveManualEvents() {
 }
 
 function combinedEvents() {
-  const savedManualEvents = Array.isArray(manualEvents) ? manualEvents : [];
+  const savedManualEvents = Array.isArray(manualEvents) ? manualEvents.filter(isValidManualEvent) : [];
   return [...allEvents, ...savedManualEvents]
-    .filter((event) => event && event.startDate && event.title)
+    .filter((event) => event && typeof event.startDate === "string" && event.title)
     .sort((a, b) => a.startDate.localeCompare(b.startDate));
 }
 
@@ -1301,6 +1313,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=20").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=21").catch(() => {});
   });
 }
