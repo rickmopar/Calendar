@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=16">
+    <link rel="manifest" href="manifest.webmanifest?v=17">
     <style>
 :root {
   color-scheme: light;
@@ -633,6 +633,12 @@ button {
 .deadline-item {
   border-color: rgba(194, 139, 33, 0.38);
   background: #fffaf0;
+}
+
+.deadline-date {
+  color: #8a590b;
+  font-size: 1rem;
+  font-weight: 950;
 }
 
 .insight {
@@ -8120,11 +8126,24 @@ function renderChart(items) {
   );
 }
 
+function deadlineDateFromNote(note) {
+  const text = String(note || "");
+  const datePattern = /\b(?:Monday,\s*|Tuesday,\s*|Wednesday,\s*|Thursday,\s*|Friday,\s*|Saturday,\s*|Sunday,\s*)?(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+\d{1,2}(?:st|nd|rd|th)?(?:,?\s+\d{4})?\b|\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/i;
+  const match = text.match(datePattern);
+  if (!match) return "";
+
+  return match[0]
+    .replace(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),\s*/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function deadlineForEvent(event) {
   if (event.registrationDeadlineNote) {
     return {
       event,
       note: event.registrationDeadlineNote,
+      date: deadlineDateFromNote(event.registrationDeadlineNote),
     };
   }
 
@@ -8136,9 +8155,12 @@ function deadlineForEvent(event) {
   const sentence = parts.find((part) => deadlinePattern.test(part));
   if (!sentence) return null;
 
+  const note = sentence.length > 180 ? `${sentence.slice(0, 177)}...` : sentence;
+
   return {
     event,
-    note: sentence.length > 180 ? `${sentence.slice(0, 177)}...` : sentence,
+    note,
+    date: deadlineDateFromNote(note),
   };
 }
 
@@ -8180,11 +8202,11 @@ function renderDeadlinePanel() {
 
   els.deadlineCount.textContent = deadlines.length.toLocaleString();
   els.deadlineList.innerHTML = deadlines.length
-    ? deadlines.map(({ event, note }) => `
+    ? deadlines.map(({ event, note, date }) => `
       <div class="planner-item deadline-item">
         <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
+        <strong class="deadline-date">${escapeHtml(date || note)}</strong>
         <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
-        <p>${escapeHtml(note)}</p>
       </div>
     `).join("")
     : `<p class="assistant-empty">No registration deadline language found in your Interested events.</p>`;
@@ -8584,7 +8606,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=16").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=17").catch(() => {});
   });
 }
 

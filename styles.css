@@ -620,6 +620,12 @@ button {
   background: #fffaf0;
 }
 
+.deadline-date {
+  color: #8a590b;
+  font-size: 1rem;
+  font-weight: 950;
+}
+
 .insight {
   padding: 13px 0;
   border-top: 1px solid var(--line);

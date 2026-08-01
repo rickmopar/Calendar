@@ -659,11 +659,24 @@ function renderChart(items) {
   );
 }
 
+function deadlineDateFromNote(note) {
+  const text = String(note || "");
+  const datePattern = /\b(?:Monday,\s*|Tuesday,\s*|Wednesday,\s*|Thursday,\s*|Friday,\s*|Saturday,\s*|Sunday,\s*)?(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+\d{1,2}(?:st|nd|rd|th)?(?:,?\s+\d{4})?\b|\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/i;
+  const match = text.match(datePattern);
+  if (!match) return "";
+
+  return match[0]
+    .replace(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),\s*/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function deadlineForEvent(event) {
   if (event.registrationDeadlineNote) {
     return {
       event,
       note: event.registrationDeadlineNote,
+      date: deadlineDateFromNote(event.registrationDeadlineNote),
     };
   }
 
@@ -675,9 +688,12 @@ function deadlineForEvent(event) {
   const sentence = parts.find((part) => deadlinePattern.test(part));
   if (!sentence) return null;
 
+  const note = sentence.length > 180 ? `${sentence.slice(0, 177)}...` : sentence;
+
   return {
     event,
-    note: sentence.length > 180 ? `${sentence.slice(0, 177)}...` : sentence,
+    note,
+    date: deadlineDateFromNote(note),
   };
 }
 
@@ -719,11 +735,11 @@ function renderDeadlinePanel() {
 
   els.deadlineCount.textContent = deadlines.length.toLocaleString();
   els.deadlineList.innerHTML = deadlines.length
-    ? deadlines.map(({ event, note }) => `
+    ? deadlines.map(({ event, note, date }) => `
       <div class="planner-item deadline-item">
         <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
+        <strong class="deadline-date">${escapeHtml(date || note)}</strong>
         <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
-        <p>${escapeHtml(note)}</p>
       </div>
     `).join("")
     : `<p class="assistant-empty">No registration deadline language found in your Interested events.</p>`;
@@ -1123,6 +1139,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=16").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=17").catch(() => {});
   });
 }
