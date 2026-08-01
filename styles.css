@@ -575,6 +575,12 @@ button {
   font-size: 0.82rem;
 }
 
+.planner-item .planner-note {
+  margin-top: 3px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
 .planner-item button {
   justify-self: start;
   min-height: 30px;
@@ -731,6 +737,35 @@ button {
   color: inherit;
   font: inherit;
   text-transform: none;
+}
+
+.event-note {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.event-note span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.event-note input {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fffdf8;
+  color: var(--ink);
+  padding: 8px 10px;
+  font: inherit;
+}
+
+.event-note input:focus {
+  outline: 3px solid rgba(194, 139, 33, 0.22);
+  border-color: var(--gold);
 }
 
 .event-card h3 {

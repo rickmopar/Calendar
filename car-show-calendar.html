@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=12">
+    <link rel="manifest" href="manifest.webmanifest?v=13">
     <style>
 :root {
   color-scheme: light;
@@ -590,6 +590,12 @@ button {
   font-size: 0.82rem;
 }
 
+.planner-item .planner-note {
+  margin-top: 3px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
 .planner-item button {
   justify-self: start;
   min-height: 30px;
@@ -746,6 +752,35 @@ button {
   color: inherit;
   font: inherit;
   text-transform: none;
+}
+
+.event-note {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.event-note span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.event-note input {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fffdf8;
+  color: var(--ink);
+  padding: 8px 10px;
+  font: inherit;
+}
+
+.event-note input:focus {
+  outline: 3px solid rgba(194, 139, 33, 0.22);
+  border-color: var(--gold);
 }
 
 .event-card h3 {
@@ -7445,7 +7480,9 @@ const today = new Date();
 const todayKey = dateKey(today);
 const events = allEvents;
 const interestedStorageKey = "car-show-calendar-interested-v1";
+const eventNotesStorageKey = "car-show-calendar-notes-v1";
 let interestedIds = loadInterestedIds();
+let eventNotes = loadEventNotes();
 
 function loadInterestedIds() {
   try {
@@ -7457,6 +7494,29 @@ function loadInterestedIds() {
 
 function saveInterestedIds() {
   localStorage.setItem(interestedStorageKey, JSON.stringify([...interestedIds]));
+}
+
+function loadEventNotes() {
+  try {
+    return JSON.parse(localStorage.getItem(eventNotesStorageKey) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveEventNotes() {
+  localStorage.setItem(eventNotesStorageKey, JSON.stringify(eventNotes));
+}
+
+function noteForEvent(id) {
+  return eventNotes[id] || "";
+}
+
+function setEventNote(id, note) {
+  const cleanNote = note.trim();
+  if (cleanNote) eventNotes[id] = cleanNote;
+  else delete eventNotes[id];
+  saveEventNotes();
 }
 
 function eventById(id) {
@@ -8028,10 +8088,12 @@ function deadlineForEvent(event) {
 }
 
 function plannerItemHtml(event, { action = "" } = {}) {
+  const note = noteForEvent(event.id);
   return `
     <div class="planner-item">
       <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
       <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
+      ${note ? `<p class="planner-note">${escapeHtml(note)}</p>` : ""}
       ${action}
     </div>
   `;
@@ -8123,6 +8185,7 @@ function renderEvents(items) {
       const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
+      const note = escapeHtml(noteForEvent(event.id));
       card.innerHTML = `
         <div class="date-tile">
           <div>
@@ -8152,6 +8215,10 @@ function renderEvents(items) {
             <a href="${event.url}" target="_blank" rel="noreferrer">${listingLabel}</a>
             ${event.sourceUrl && event.sourceUrl !== event.url && event.sourceUrl !== event.calendarUrl ? `<a href="${event.sourceUrl}" target="_blank" rel="noreferrer">More info</a>` : ""}
           </div>
+          <label class="event-note">
+            <span>Note</span>
+            <input type="text" data-note-id="${escapeHtml(event.id)}" value="${note}" placeholder="Paid online, paid check, call club...">
+          </label>
         </div>
       `;
       return card;
@@ -8367,6 +8434,14 @@ els.list.addEventListener("change", (event) => {
   renderAssistant(getFilteredEvents());
 });
 
+els.list.addEventListener("input", (event) => {
+  const input = event.target.closest("input[data-note-id]");
+  if (!input) return;
+
+  setEventNote(input.dataset.noteId, input.value);
+  renderInterestedPanel();
+});
+
 els.interestedList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-remove-interest]");
   if (!button) return;
@@ -8450,7 +8525,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=12").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=13").catch(() => {});
   });
 }
 

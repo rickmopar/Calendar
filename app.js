@@ -67,7 +67,9 @@ const today = new Date();
 const todayKey = dateKey(today);
 const events = allEvents;
 const interestedStorageKey = "car-show-calendar-interested-v1";
+const eventNotesStorageKey = "car-show-calendar-notes-v1";
 let interestedIds = loadInterestedIds();
+let eventNotes = loadEventNotes();
 
 function loadInterestedIds() {
   try {
@@ -79,6 +81,29 @@ function loadInterestedIds() {
 
 function saveInterestedIds() {
   localStorage.setItem(interestedStorageKey, JSON.stringify([...interestedIds]));
+}
+
+function loadEventNotes() {
+  try {
+    return JSON.parse(localStorage.getItem(eventNotesStorageKey) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveEventNotes() {
+  localStorage.setItem(eventNotesStorageKey, JSON.stringify(eventNotes));
+}
+
+function noteForEvent(id) {
+  return eventNotes[id] || "";
+}
+
+function setEventNote(id, note) {
+  const cleanNote = note.trim();
+  if (cleanNote) eventNotes[id] = cleanNote;
+  else delete eventNotes[id];
+  saveEventNotes();
 }
 
 function eventById(id) {
@@ -650,10 +675,12 @@ function deadlineForEvent(event) {
 }
 
 function plannerItemHtml(event, { action = "" } = {}) {
+  const note = noteForEvent(event.id);
   return `
     <div class="planner-item">
       <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
       <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
+      ${note ? `<p class="planner-note">${escapeHtml(note)}</p>` : ""}
       ${action}
     </div>
   `;
@@ -745,6 +772,7 @@ function renderEvents(items) {
       const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
+      const note = escapeHtml(noteForEvent(event.id));
       card.innerHTML = `
         <div class="date-tile">
           <div>
@@ -774,6 +802,10 @@ function renderEvents(items) {
             <a href="${event.url}" target="_blank" rel="noreferrer">${listingLabel}</a>
             ${event.sourceUrl && event.sourceUrl !== event.url && event.sourceUrl !== event.calendarUrl ? `<a href="${event.sourceUrl}" target="_blank" rel="noreferrer">More info</a>` : ""}
           </div>
+          <label class="event-note">
+            <span>Note</span>
+            <input type="text" data-note-id="${escapeHtml(event.id)}" value="${note}" placeholder="Paid online, paid check, call club...">
+          </label>
         </div>
       `;
       return card;
@@ -989,6 +1021,14 @@ els.list.addEventListener("change", (event) => {
   renderAssistant(getFilteredEvents());
 });
 
+els.list.addEventListener("input", (event) => {
+  const input = event.target.closest("input[data-note-id]");
+  if (!input) return;
+
+  setEventNote(input.dataset.noteId, input.value);
+  renderInterestedPanel();
+});
+
 els.interestedList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-remove-interest]");
   if (!button) return;
@@ -1072,6 +1112,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=12").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=13").catch(() => {});
   });
 }
