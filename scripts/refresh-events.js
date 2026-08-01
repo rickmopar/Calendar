@@ -380,19 +380,24 @@ async function fetchAacaEvents() {
   fs.writeFileSync(path.join(rawDir, "aaca-national-calendar.html"), html);
 
   const events = [];
-  const paragraphPattern = /<p><strong>([\s\S]*?)<\/strong><\/p>/gi;
+  const strongPattern = /<strong\b[^>]*>([\s\S]*?)<\/strong>/gi;
   let match;
   let index = 0;
 
-  while ((match = paragraphPattern.exec(html))) {
+  while ((match = strongPattern.exec(html))) {
     const block = match[1];
-    const text = decodeHtml(block);
-    if (!years.some((eventYear) => new RegExp(`\\b${eventYear}\\b`).test(text))) continue;
     const linkMatch = block.match(/href="([^"]+)"/i);
-    const event = normalizeAacaEvent(text, linkMatch ? decodeHtml(linkMatch[1]) : aacaSourceUrl, index);
-    if (event) {
-      events.push(event);
-      index += 1;
+    const lines = decodeHtml(block)
+      .split(/\s+\|\s+/)
+      .map((line) => line.trim())
+      .filter((line) => years.some((eventYear) => new RegExp(`\\b${eventYear}\\b`).test(line)));
+
+    for (const line of lines) {
+      const event = normalizeAacaEvent(line, linkMatch ? decodeHtml(linkMatch[1]) : aacaSourceUrl, index);
+      if (event) {
+        events.push(event);
+        index += 1;
+      }
     }
   }
 
