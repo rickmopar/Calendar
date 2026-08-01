@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=21">
+    <link rel="manifest" href="manifest.webmanifest?v=20">
     <style>
 :root {
   color-scheme: light;
@@ -7673,22 +7673,10 @@ let events = combinedEvents();
 let interestedIds = loadInterestedIds();
 let eventNotes = loadEventNotes();
 
-function isValidManualEvent(event) {
-  return Boolean(
-    event
-    && typeof event.id === "string"
-    && typeof event.title === "string"
-    && typeof event.startDate === "string"
-    && typeof event.endDate === "string"
-    && !Number.isNaN(Date.parse(event.startDate))
-    && !Number.isNaN(Date.parse(event.endDate)),
-  );
-}
-
 function loadManualEvents() {
   try {
     const saved = JSON.parse(localStorage.getItem(manualEventsStorageKey) || "[]");
-    return Array.isArray(saved) ? saved.filter(isValidManualEvent) : [];
+    return Array.isArray(saved) ? saved.filter((event) => event && event.id && event.startDate && event.title) : [];
   } catch {
     return [];
   }
@@ -7700,9 +7688,9 @@ function saveManualEvents() {
 }
 
 function combinedEvents() {
-  const savedManualEvents = Array.isArray(manualEvents) ? manualEvents.filter(isValidManualEvent) : [];
+  const savedManualEvents = Array.isArray(manualEvents) ? manualEvents : [];
   return [...allEvents, ...savedManualEvents]
-    .filter((event) => event && typeof event.startDate === "string" && event.title)
+    .filter((event) => event && event.startDate && event.title)
     .sort((a, b) => a.startDate.localeCompare(b.startDate));
 }
 
@@ -8903,7 +8891,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=21").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=20").catch(() => {});
   });
 }
 
