@@ -974,10 +974,7 @@ function refreshFilterValues({ selectManual = false, selectAllSources = false } 
     return !selectedSources.size || selectedSources.has(value);
   }));
   refreshMonthOptions();
-  const activeMonths = activeMonthValues();
-  setCheckedValues(els.monthOptions, selectManual
-    ? activeMonths
-    : activeMonths.filter((value) => !selectedMonths.size || selectedMonths.has(value)));
+  setCheckedValues(els.monthOptions, activeMonthValues().filter((value) => !selectedMonths.size || selectedMonths.has(value)));
   updateMonthSummary();
   updateTypeSummary();
   updateCitySummary();
@@ -1048,7 +1045,7 @@ els.sourceOptions.addEventListener("change", () => {
 });
 
 
-els.manualForm?.addEventListener("submit", (event) => {
+els.manualForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const manualEvent = createManualEvent();
   if (!manualEvent) return;
@@ -1057,7 +1054,6 @@ els.manualForm?.addEventListener("submit", (event) => {
   saveManualEvents();
   refreshEventData();
   els.manualForm.reset();
-  els.dateRange.value = "allFuture";
   refreshFilterValues({ selectManual: true });
   render();
 });
@@ -1297,6 +1293,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=19").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=18").catch(() => {});
   });
 }
