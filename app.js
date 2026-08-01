@@ -687,21 +687,25 @@ function plannerItemHtml(event, { action = "" } = {}) {
 }
 
 function renderInterestedPanel() {
-  const interestedEvents = [...interestedIds]
-    .map(eventById)
-    .filter(Boolean)
-    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+  const items = interestedEvents();
 
-  els.interestedCount.textContent = interestedEvents.length.toLocaleString();
-  els.interestedList.innerHTML = interestedEvents.length
-    ? interestedEvents.map((event) => plannerItemHtml(event, {
+  els.interestedCount.textContent = items.length.toLocaleString();
+  els.interestedList.innerHTML = items.length
+    ? items.map((event) => plannerItemHtml(event, {
       action: `<button type="button" data-remove-interest="${escapeHtml(event.id)}">Remove</button>`,
     })).join("")
     : `<p class="assistant-empty">Check Interested on events you want to remember.</p>`;
 }
 
-function renderDeadlinePanel(items) {
-  const deadlines = items
+function interestedEvents() {
+  return [...interestedIds]
+    .map(eventById)
+    .filter(Boolean)
+    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+}
+
+function renderDeadlinePanel() {
+  const deadlines = interestedEvents()
     .map(deadlineForEvent)
     .filter(Boolean)
     .slice(0, 8);
@@ -715,12 +719,12 @@ function renderDeadlinePanel(items) {
         <p>${escapeHtml(note)}</p>
       </div>
     `).join("")
-    : `<p class="assistant-empty">No registration deadline language found in the current results.</p>`;
+    : `<p class="assistant-empty">No registration deadline language found in your Interested events.</p>`;
 }
 
 function renderAssistant(items) {
   renderInterestedPanel();
-  renderDeadlinePanel(items);
+  renderDeadlinePanel();
   renderInsights(items);
 }
 
@@ -1112,6 +1116,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=13").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=14").catch(() => {});
   });
 }
