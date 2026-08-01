@@ -11,8 +11,8 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=10">
-    <link rel="stylesheet" href="styles.css?v=10">
+    <link rel="manifest" href="manifest.webmanifest?v=11">
+    <link rel="stylesheet" href="styles.css?v=11">
   </head>
   <body>
     <header class="masthead">
@@ -85,6 +85,15 @@
             <div id="cityOptions" class="multi-options" aria-label="City filter options"></div>
           </details>
         </div>
+        <div class="field">
+          <span>Source</span>
+          <details id="sourceFilter" class="multi-filter">
+            <summary>
+              <span id="sourceSummary">All sources</span>
+            </summary>
+            <div id="sourceOptions" class="multi-options" aria-label="Source filter options"></div>
+          </details>
+        </div>
         <label>
           <span>Date range</span>
           <select id="dateRangeSelect">
@@ -123,11 +132,11 @@
           <div class="chart-meta">
             <p id="resultCount">0 matching events</p>
             <div class="legend" aria-label="Bar color legend">
-              <span><i class="legend-ccchr"></i>CCCHR</span>
-              <span><i class="legend-aaca"></i>AACA</span>
-              <span><i class="legend-aaca-local"></i>AACA Local</span>
-              <span><i class="legend-traaca"></i>TRAACA</span>
-              <span><i class="legend-carlisle"></i>Carlisle</span>
+              <button type="button" data-source="CCCHR"><i class="legend-ccchr"></i>CCCHR</button>
+              <button type="button" data-source="AACA"><i class="legend-aaca"></i>AACA</button>
+              <button type="button" data-source="AACA Local"><i class="legend-aaca-local"></i>AACA Local</button>
+              <button type="button" data-source="TRAACA"><i class="legend-traaca"></i>TRAACA</button>
+              <button type="button" data-source="Carlisle"><i class="legend-carlisle"></i>Carlisle</button>
             </div>
           </div>
         </div>
@@ -146,7 +155,7 @@
       </section>
     </main>
 
-    <script src="data/events-2026.js?v=10"></script>
-    <script src="app.js?v=10"></script>
+    <script src="data/events-2026.js?v=11"></script>
+    <script src="app.js?v=11"></script>
   </body>
 </html>

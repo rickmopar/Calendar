@@ -183,7 +183,7 @@ main {
 
 .controls {
   display: grid;
-  grid-template-columns: minmax(220px, 1.4fr) repeat(5, minmax(140px, 1fr)) auto;
+  grid-template-columns: minmax(220px, 1.4fr) repeat(6, minmax(130px, 1fr)) auto;
   gap: 12px;
   margin-top: 18px;
   padding: 16px;
@@ -254,6 +254,24 @@ select,
   background: #fff;
   box-shadow: var(--shadow);
   padding: 8px;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 8px;
+  padding: 4px 4px 8px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 6px;
+}
+
+.filter-actions button {
+  min-height: 32px;
+  flex: 1;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--accent-dark);
+  padding: 5px 8px;
+  font-size: 0.82rem;
 }
 
 .multi-options label {
@@ -352,10 +370,33 @@ button {
   font-weight: 800;
 }
 
-.legend span {
+.legend button {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  min-height: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.legend button:hover,
+.month-bar:hover {
+  color: var(--accent-dark);
+}
+
+.month-bar {
+  cursor: pointer;
+}
+
+.month-bar:focus-visible,
+.legend button:focus-visible,
+.pill.source:focus-visible {
+  outline: 3px solid rgba(31, 122, 116, 0.28);
+  outline-offset: 3px;
 }
 
 .legend i {
@@ -533,6 +574,9 @@ button {
 }
 
 .pill {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
   border-radius: 999px;
   background: #f4e9d4;
   color: #765012;
@@ -580,6 +624,15 @@ button {
   margin: 0 0 8px;
   font-size: 1.2rem;
   line-height: 1.22;
+}
+
+.event-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.event-card h3 a:hover {
+  text-decoration: underline;
 }
 
 .event-title-aaca {

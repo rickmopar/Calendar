@@ -29,6 +29,9 @@ const els = {
   cityFilter: document.querySelector("#cityFilter"),
   cityOptions: document.querySelector("#cityOptions"),
   citySummary: document.querySelector("#citySummary"),
+  sourceFilter: document.querySelector("#sourceFilter"),
+  sourceOptions: document.querySelector("#sourceOptions"),
+  sourceSummary: document.querySelector("#sourceSummary"),
   dateRange: document.querySelector("#dateRangeSelect"),
   sort: document.querySelector("#sortSelect"),
   assistantInput: document.querySelector("#assistantInput"),
@@ -68,8 +71,19 @@ function slug(value) {
   return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+function createFilterActions(group) {
+  const actions = document.createElement("div");
+  actions.className = "filter-actions";
+  actions.innerHTML = `
+    <button type="button" data-filter-action="all" data-group="${group}">All</button>
+    <button type="button" data-filter-action="clear" data-group="${group}">Clear</button>
+  `;
+  return actions;
+}
+
 function fillCheckboxOptions(container, group, values, { checked = false } = {}) {
   container.replaceChildren(
+    createFilterActions(group),
     ...values.map((value) => {
       const id = `${group}-${slug(value)}`;
       const label = document.createElement("label");
@@ -104,7 +118,7 @@ function fillTypeOptions(container, values) {
     return label;
   });
 
-  container.replaceChildren(facebookLabel, ...typeLabels);
+  container.replaceChildren(createFilterActions("type"), facebookLabel, ...typeLabels);
 }
 
 function fillCityOptions(values) {
@@ -117,6 +131,10 @@ function selectedValues(container) {
 
 function selectedCities() {
   return selectedValues(els.cityOptions);
+}
+
+function selectedSources() {
+  return selectedValues(els.sourceOptions);
 }
 
 function isFacebookOnlyFilterActive() {
@@ -163,6 +181,10 @@ function updateCitySummary() {
   }
 }
 
+function updateSourceSummary() {
+  updateMultiSummary(els.sourceSummary, selectedSources(), sourceValues, "sources");
+}
+
 function eventText(event) {
   return [event.title, event.venue, event.city, event.address, event.description, event.type, event.source]
     .join(" ")
@@ -207,6 +229,7 @@ function getFilteredEvents() {
   const selectedEventTypes = selectedTypes.filter((value) => value !== "Recurring");
   const includeRecurring = selectedTypes.includes("Recurring");
   const cities = selectedCities();
+  const sources = selectedSources();
 
   const filtered = events.filter((event) => {
     const recurrence = detectRecurrence(event);
@@ -220,7 +243,8 @@ function getFilteredEvents() {
         ? selectedEventTypes.includes(event.type) && (includeRecurring || !recurrence)
         : includeRecurring && recurrence;
     const matchesCity = !cities.length || cities.includes(event.city);
-    return matchesQuery && matchesDate && matchesMonth && matchesType && matchesCity;
+    const matchesSource = sources.includes(event.source || "CCCHR");
+    return matchesQuery && matchesDate && matchesMonth && matchesType && matchesCity && matchesSource;
   });
 
   return filtered.sort((a, b) => {
@@ -568,6 +592,10 @@ function renderChart(items) {
       const traacaHeight = count ? (traacaCount / count) * totalHeight : 0;
       const wrapper = document.createElement("div");
       wrapper.className = "month-bar";
+      wrapper.dataset.month = month;
+      wrapper.tabIndex = 0;
+      wrapper.setAttribute("role", "button");
+      wrapper.setAttribute("aria-label", `Show ${month} events`);
       wrapper.innerHTML = `
         <div class="bar-count">${count}</div>
         <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
@@ -643,12 +671,12 @@ function renderEvents(items) {
         <div class="event-main">
           <div class="event-topline">
             <span class="pill type">${escapeHtml(event.type)}</span>
-            <span class="pill source source-${sourceClass}">${source}</span>
+            <button type="button" class="pill source source-${sourceClass}" data-source="${source}">${source}</button>
             ${facebookLinked ? `<span class="pill source-facebook">Facebook info</span>` : ""}
             <span class="pill">${city}</span>
             ${recurrence ? `<span class="pill">${escapeHtml(recurrence.label)}</span>` : ""}
           </div>
-          <h3 class="${titleClass}">${title}</h3>
+          <h3 class="${titleClass}"><a href="${event.url}" target="_blank" rel="noreferrer">${title}</a></h3>
           <div class="event-meta">${dateLine}${venue ? ` | ${venue}` : ""}</div>
           ${address ? `<div class="event-address">${address}</div>` : ""}
           ${description ? `<p class="event-description">${description}</p>` : ""}
@@ -677,6 +705,7 @@ renderFreshness();
 const monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
 const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
 const cityValues = unique(events.map((event) => event.city));
+const sourceValues = unique(events.map((event) => event.source || "CCCHR"));
 
 function activeMonthValues() {
   return monthOrder.filter((month) => events.some((event) => event.month === month && matchesDateRange(event)));
@@ -695,9 +724,11 @@ function refreshMonthOptions() {
 fillCheckboxOptions(els.monthOptions, "month", activeMonthValues(), { checked: true });
 fillTypeOptions(els.typeOptions, typeValues);
 fillCityOptions(cityValues);
+fillCheckboxOptions(els.sourceOptions, "source", sourceValues, { checked: true });
 updateMonthSummary();
 updateTypeSummary();
 updateCitySummary();
+updateSourceSummary();
 
 [els.search, els.sort].forEach((control) => {
   control.addEventListener("input", render);
@@ -730,6 +761,12 @@ els.typeOptions.addEventListener("change", (event) => {
 
 els.cityOptions.addEventListener("change", () => {
   updateCitySummary();
+  updateSourceSummary();
+  render();
+});
+
+els.sourceOptions.addEventListener("change", () => {
+  updateSourceSummary();
   render();
 });
 
@@ -744,6 +781,9 @@ els.reset.addEventListener("click", () => {
   els.cityOptions.querySelectorAll("input:checked").forEach((input) => {
     input.checked = false;
   });
+  els.sourceOptions.querySelectorAll("input").forEach((input) => {
+    input.checked = true;
+  });
   els.dateRange.value = "upcoming";
   refreshMonthOptions();
   els.assistantInput.value = "";
@@ -751,9 +791,11 @@ els.reset.addEventListener("click", () => {
   els.monthFilter.open = false;
   els.typeFilter.open = false;
   els.cityFilter.open = false;
+  els.sourceFilter.open = false;
   updateMonthSummary();
   updateTypeSummary();
   updateCitySummary();
+  updateSourceSummary();
   els.sort.value = "date-asc";
   render();
 });
@@ -764,6 +806,89 @@ function setCheckedValues(container, values, { emptyMeansAll = false } = {}) {
     input.checked = emptyMeansAll && !wanted.size ? true : wanted.has(input.value);
   });
 }
+
+function applyFilterAction(container, action, { checkboxSelector = 'input[type="checkbox"]', allChecked = true, clearChecked = false } = {}) {
+  container.querySelectorAll(checkboxSelector).forEach((input) => {
+    input.checked = action === "all" ? allChecked : clearChecked;
+  });
+}
+
+function handleFilterAction(event) {
+  const button = event.target.closest("[data-filter-action]");
+  if (!button) return;
+
+  const action = button.dataset.filterAction;
+  const group = button.dataset.group;
+
+  if (group === "month") {
+    applyFilterAction(els.monthOptions, action);
+    updateMonthSummary();
+  } else if (group === "type") {
+    applyFilterAction(els.typeOptions, action);
+    const facebookRadio = els.typeOptions.querySelector('input[value="Facebook only"]');
+    if (facebookRadio) facebookRadio.checked = false;
+    updateTypeSummary();
+  } else if (group === "city") {
+    applyFilterAction(els.cityOptions, action, { allChecked: false, clearChecked: false });
+    updateCitySummary();
+  } else if (group === "source") {
+    applyFilterAction(els.sourceOptions, action);
+    updateSourceSummary();
+  }
+
+  render();
+}
+
+[els.monthOptions, els.typeOptions, els.cityOptions, els.sourceOptions].forEach((container) => {
+  container.addEventListener("click", handleFilterAction);
+});
+
+function selectMonth(month) {
+  setCheckedValues(els.monthOptions, [month]);
+  updateMonthSummary();
+  els.monthFilter.open = false;
+  render();
+  els.list.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function selectSource(source) {
+  els.search.value = "";
+  setCheckedValues(els.monthOptions, activeMonthValues());
+  setCheckedValues(els.typeOptions, typeValues);
+  const facebookRadio = els.typeOptions.querySelector('input[value="Facebook only"]');
+  if (facebookRadio) facebookRadio.checked = false;
+  setCheckedValues(els.cityOptions, []);
+  setCheckedValues(els.sourceOptions, [source]);
+  updateMonthSummary();
+  updateTypeSummary();
+  updateCitySummary();
+  updateSourceSummary();
+  render();
+  els.list.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+els.chart.addEventListener("click", (event) => {
+  const bar = event.target.closest(".month-bar");
+  if (bar?.dataset.month) selectMonth(bar.dataset.month);
+});
+
+els.chart.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  const bar = event.target.closest(".month-bar");
+  if (!bar?.dataset.month) return;
+  event.preventDefault();
+  selectMonth(bar.dataset.month);
+});
+
+document.querySelector(".legend")?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-source]");
+  if (button?.dataset.source) selectSource(button.dataset.source);
+});
+
+els.list.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-source]");
+  if (button?.dataset.source) selectSource(button.dataset.source);
+});
 
 function assistantTypeMatches(query) {
   const aliases = [
@@ -805,23 +930,27 @@ function runAssistant() {
   refreshMonthOptions();
   if (matchedMonths.length) setCheckedValues(els.monthOptions, matchedMonths.filter((month) => activeMonthValues().includes(month)));
   if (matchedCities.length) setCheckedValues(els.cityOptions, matchedCities);
+  const matchedSources = sourceValues.filter((source) => query.includes(source.toLowerCase()));
+  if (matchedSources.length) setCheckedValues(els.sourceOptions, matchedSources);
   if (matchedTypes.length) {
     setCheckedValues(els.typeOptions, matchedTypes);
     const facebookRadio = els.typeOptions.querySelector('input[value="Facebook only"]');
     if (facebookRadio) facebookRadio.checked = false;
   }
 
-  const handled = matchedMonths.length || matchedCities.length || matchedTypes.length;
+  const handled = matchedMonths.length || matchedCities.length || matchedTypes.length || matchedSources.length;
   els.search.value = handled ? "" : query;
   updateMonthSummary();
   updateTypeSummary();
   updateCitySummary();
+  updateSourceSummary();
   render();
 
   const pieces = [
     matchedCities.length ? matchedCities.join(", ") : "any city",
     matchedMonths.length ? matchedMonths.join(", ") : "selected date range",
     matchedTypes.length ? matchedTypes.join(", ") : "any type",
+    matchedSources.length ? matchedSources.join(", ") : "any source",
   ];
   els.assistantResponse.textContent = `Showing ${pieces.join(" | ")}.`;
 }
@@ -835,6 +964,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=10").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=11").catch(() => {});
   });
 }
