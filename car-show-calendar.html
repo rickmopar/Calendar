@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=11">
+    <link rel="manifest" href="manifest.webmanifest?v=12">
     <style>
 :root {
   color-scheme: light;
@@ -518,6 +518,94 @@ button {
   padding: 20px;
 }
 
+.assistant-block {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.assistant-block:first-of-type {
+  margin-top: 0;
+}
+
+.assistant-block-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.assistant-block-heading h3 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.assistant-block-heading span {
+  min-width: 28px;
+  border-radius: 999px;
+  background: #eef4f3;
+  color: var(--teal);
+  padding: 2px 8px;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.assistant-list {
+  display: grid;
+  gap: 8px;
+}
+
+.assistant-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.planner-item {
+  display: grid;
+  gap: 3px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fbfcfb;
+}
+
+.planner-item a {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.planner-item a:hover {
+  text-decoration: underline;
+}
+
+.planner-item span,
+.planner-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.planner-item button {
+  justify-self: start;
+  min-height: 30px;
+  margin-top: 4px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--accent-dark);
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+.deadline-item {
+  border-color: rgba(194, 139, 33, 0.38);
+  background: #fffaf0;
+}
+
 .insight {
   padding: 13px 0;
   border-top: 1px solid var(--line);
@@ -633,6 +721,31 @@ button {
 .pill.source-facebook {
   background: #e7f1ff;
   color: var(--facebook-dark);
+}
+
+.interested-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: #fff7e7;
+  color: #765012;
+  padding: 4px 9px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.interested-toggle input {
+  width: 14px;
+  min-height: 14px;
+  accent-color: var(--gold);
+}
+
+.interested-toggle span {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  text-transform: none;
 }
 
 .event-card h3 {
@@ -1037,9 +1150,28 @@ button {
       </section>
 
       <section class="dashboard-grid">
-        <aside class="insights" aria-label="Quick insights">
-          <h2>Quick Scan</h2>
-          <div id="insightsList"></div>
+        <aside class="insights" aria-label="Planning assistant">
+          <h2>Assistant</h2>
+          <section class="assistant-block" aria-label="Interested events">
+            <div class="assistant-block-heading">
+              <h3>Interested</h3>
+              <span id="interestedCount">0</span>
+            </div>
+            <div id="interestedList" class="assistant-list"></div>
+          </section>
+          <section class="assistant-block" aria-label="Registration deadlines">
+            <div class="assistant-block-heading">
+              <h3>Deadlines</h3>
+              <span id="deadlineCount">0</span>
+            </div>
+            <div id="deadlineList" class="assistant-list"></div>
+          </section>
+          <section class="assistant-block" aria-label="Quick insights">
+            <div class="assistant-block-heading">
+              <h3>Quick Scan</h3>
+            </div>
+            <div id="insightsList"></div>
+          </section>
         </aside>
 
         <section aria-label="Event list">
@@ -7291,6 +7423,10 @@ const els = {
   resultCount: document.querySelector("#resultCount"),
   chart: document.querySelector("#monthChart"),
   list: document.querySelector("#eventList"),
+  interestedList: document.querySelector("#interestedList"),
+  interestedCount: document.querySelector("#interestedCount"),
+  deadlineList: document.querySelector("#deadlineList"),
+  deadlineCount: document.querySelector("#deadlineCount"),
   insights: document.querySelector("#insightsList"),
 };
 
@@ -7308,6 +7444,24 @@ function dateKey(date, timeZone = "America/New_York") {
 const today = new Date();
 const todayKey = dateKey(today);
 const events = allEvents;
+const interestedStorageKey = "car-show-calendar-interested-v1";
+let interestedIds = loadInterestedIds();
+
+function loadInterestedIds() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(interestedStorageKey) || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveInterestedIds() {
+  localStorage.setItem(interestedStorageKey, JSON.stringify([...interestedIds]));
+}
+
+function eventById(id) {
+  return events.find((event) => event.id === id);
+}
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
@@ -7858,6 +8012,69 @@ function renderChart(items) {
   );
 }
 
+function deadlineForEvent(event) {
+  const text = [event.description, event.title].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
+  if (!text) return null;
+
+  const deadlinePattern = /\b(registration deadline|register by|pre[- ]?register(?: by)?|pre[- ]?registration|registration closes|deadline|last day to register|vendor deadline)\b/i;
+  const parts = text.split(/(?<=[.!?])\s+|\s+\|\s+/).map((part) => part.trim()).filter(Boolean);
+  const sentence = parts.find((part) => deadlinePattern.test(part));
+  if (!sentence) return null;
+
+  return {
+    event,
+    note: sentence.length > 180 ? `${sentence.slice(0, 177)}...` : sentence,
+  };
+}
+
+function plannerItemHtml(event, { action = "" } = {}) {
+  return `
+    <div class="planner-item">
+      <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
+      <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
+      ${action}
+    </div>
+  `;
+}
+
+function renderInterestedPanel() {
+  const interestedEvents = [...interestedIds]
+    .map(eventById)
+    .filter(Boolean)
+    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+
+  els.interestedCount.textContent = interestedEvents.length.toLocaleString();
+  els.interestedList.innerHTML = interestedEvents.length
+    ? interestedEvents.map((event) => plannerItemHtml(event, {
+      action: `<button type="button" data-remove-interest="${escapeHtml(event.id)}">Remove</button>`,
+    })).join("")
+    : `<p class="assistant-empty">Check Interested on events you want to remember.</p>`;
+}
+
+function renderDeadlinePanel(items) {
+  const deadlines = items
+    .map(deadlineForEvent)
+    .filter(Boolean)
+    .slice(0, 8);
+
+  els.deadlineCount.textContent = deadlines.length.toLocaleString();
+  els.deadlineList.innerHTML = deadlines.length
+    ? deadlines.map(({ event, note }) => `
+      <div class="planner-item deadline-item">
+        <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
+        <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
+        <p>${escapeHtml(note)}</p>
+      </div>
+    `).join("")
+    : `<p class="assistant-empty">No registration deadline language found in the current results.</p>`;
+}
+
+function renderAssistant(items) {
+  renderInterestedPanel();
+  renderDeadlinePanel(items);
+  renderInsights(items);
+}
+
 function renderInsights(items) {
   const [city, cityCount] = topEntry(countBy(items, "city"));
   const [type, typeCount] = topEntry(countBy(items, "type"));
@@ -7918,6 +8135,10 @@ function renderEvents(items) {
           <div class="event-topline">
             <span class="pill type">${escapeHtml(event.type)}</span>
             <button type="button" class="pill source source-${sourceClass}" data-source="${source}">${source}</button>
+            <label class="interested-toggle">
+              <input type="checkbox" data-interest-id="${escapeHtml(event.id)}"${interestedIds.has(event.id) ? " checked" : ""}>
+              <span>Interested</span>
+            </label>
             ${facebookLinked ? `<span class="pill source-facebook">Facebook info</span>` : ""}
             <span class="pill">${city}</span>
             ${recurrence ? `<span class="pill">${escapeHtml(recurrence.label)}</span>` : ""}
@@ -7942,7 +8163,7 @@ function render() {
   const filtered = getFilteredEvents();
   renderStats(filtered);
   renderChart(filtered);
-  renderInsights(filtered);
+  renderAssistant(filtered);
   renderEvents(filtered);
 }
 
@@ -8136,6 +8357,25 @@ els.list.addEventListener("click", (event) => {
   if (button?.dataset.source) selectSource(button.dataset.source);
 });
 
+els.list.addEventListener("change", (event) => {
+  const input = event.target.closest("input[data-interest-id]");
+  if (!input) return;
+
+  if (input.checked) interestedIds.add(input.dataset.interestId);
+  else interestedIds.delete(input.dataset.interestId);
+  saveInterestedIds();
+  renderAssistant(getFilteredEvents());
+});
+
+els.interestedList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-remove-interest]");
+  if (!button) return;
+
+  interestedIds.delete(button.dataset.removeInterest);
+  saveInterestedIds();
+  render();
+});
+
 function assistantTypeMatches(query) {
   const aliases = [
     ["Car show", /\b(show|car show|shine)\b/],
@@ -8210,7 +8450,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=11").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=12").catch(() => {});
   });
 }
 

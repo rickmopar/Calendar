@@ -11,8 +11,8 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=11">
-    <link rel="stylesheet" href="styles.css?v=11">
+    <link rel="manifest" href="manifest.webmanifest?v=12">
+    <link rel="stylesheet" href="styles.css?v=12">
   </head>
   <body>
     <header class="masthead">
@@ -144,9 +144,28 @@
       </section>
 
       <section class="dashboard-grid">
-        <aside class="insights" aria-label="Quick insights">
-          <h2>Quick Scan</h2>
-          <div id="insightsList"></div>
+        <aside class="insights" aria-label="Planning assistant">
+          <h2>Assistant</h2>
+          <section class="assistant-block" aria-label="Interested events">
+            <div class="assistant-block-heading">
+              <h3>Interested</h3>
+              <span id="interestedCount">0</span>
+            </div>
+            <div id="interestedList" class="assistant-list"></div>
+          </section>
+          <section class="assistant-block" aria-label="Registration deadlines">
+            <div class="assistant-block-heading">
+              <h3>Deadlines</h3>
+              <span id="deadlineCount">0</span>
+            </div>
+            <div id="deadlineList" class="assistant-list"></div>
+          </section>
+          <section class="assistant-block" aria-label="Quick insights">
+            <div class="assistant-block-heading">
+              <h3>Quick Scan</h3>
+            </div>
+            <div id="insightsList"></div>
+          </section>
         </aside>
 
         <section aria-label="Event list">
@@ -155,7 +174,7 @@
       </section>
     </main>
 
-    <script src="data/events-2026.js?v=11"></script>
-    <script src="app.js?v=11"></script>
+    <script src="data/events-2026.js?v=12"></script>
+    <script src="app.js?v=12"></script>
   </body>
 </html>

@@ -503,6 +503,94 @@ button {
   padding: 20px;
 }
 
+.assistant-block {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.assistant-block:first-of-type {
+  margin-top: 0;
+}
+
+.assistant-block-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.assistant-block-heading h3 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.assistant-block-heading span {
+  min-width: 28px;
+  border-radius: 999px;
+  background: #eef4f3;
+  color: var(--teal);
+  padding: 2px 8px;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.assistant-list {
+  display: grid;
+  gap: 8px;
+}
+
+.assistant-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.planner-item {
+  display: grid;
+  gap: 3px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fbfcfb;
+}
+
+.planner-item a {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.planner-item a:hover {
+  text-decoration: underline;
+}
+
+.planner-item span,
+.planner-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.planner-item button {
+  justify-self: start;
+  min-height: 30px;
+  margin-top: 4px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--accent-dark);
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+.deadline-item {
+  border-color: rgba(194, 139, 33, 0.38);
+  background: #fffaf0;
+}
+
 .insight {
   padding: 13px 0;
   border-top: 1px solid var(--line);
@@ -618,6 +706,31 @@ button {
 .pill.source-facebook {
   background: #e7f1ff;
   color: var(--facebook-dark);
+}
+
+.interested-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: #fff7e7;
+  color: #765012;
+  padding: 4px 9px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.interested-toggle input {
+  width: 14px;
+  min-height: 14px;
+  accent-color: var(--gold);
+}
+
+.interested-toggle span {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  text-transform: none;
 }
 
 .event-card h3 {

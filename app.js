@@ -45,6 +45,10 @@ const els = {
   resultCount: document.querySelector("#resultCount"),
   chart: document.querySelector("#monthChart"),
   list: document.querySelector("#eventList"),
+  interestedList: document.querySelector("#interestedList"),
+  interestedCount: document.querySelector("#interestedCount"),
+  deadlineList: document.querySelector("#deadlineList"),
+  deadlineCount: document.querySelector("#deadlineCount"),
   insights: document.querySelector("#insightsList"),
 };
 
@@ -62,6 +66,24 @@ function dateKey(date, timeZone = "America/New_York") {
 const today = new Date();
 const todayKey = dateKey(today);
 const events = allEvents;
+const interestedStorageKey = "car-show-calendar-interested-v1";
+let interestedIds = loadInterestedIds();
+
+function loadInterestedIds() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(interestedStorageKey) || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveInterestedIds() {
+  localStorage.setItem(interestedStorageKey, JSON.stringify([...interestedIds]));
+}
+
+function eventById(id) {
+  return events.find((event) => event.id === id);
+}
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
@@ -612,6 +634,69 @@ function renderChart(items) {
   );
 }
 
+function deadlineForEvent(event) {
+  const text = [event.description, event.title].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
+  if (!text) return null;
+
+  const deadlinePattern = /\b(registration deadline|register by|pre[- ]?register(?: by)?|pre[- ]?registration|registration closes|deadline|last day to register|vendor deadline)\b/i;
+  const parts = text.split(/(?<=[.!?])\s+|\s+\|\s+/).map((part) => part.trim()).filter(Boolean);
+  const sentence = parts.find((part) => deadlinePattern.test(part));
+  if (!sentence) return null;
+
+  return {
+    event,
+    note: sentence.length > 180 ? `${sentence.slice(0, 177)}...` : sentence,
+  };
+}
+
+function plannerItemHtml(event, { action = "" } = {}) {
+  return `
+    <div class="planner-item">
+      <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
+      <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
+      ${action}
+    </div>
+  `;
+}
+
+function renderInterestedPanel() {
+  const interestedEvents = [...interestedIds]
+    .map(eventById)
+    .filter(Boolean)
+    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+
+  els.interestedCount.textContent = interestedEvents.length.toLocaleString();
+  els.interestedList.innerHTML = interestedEvents.length
+    ? interestedEvents.map((event) => plannerItemHtml(event, {
+      action: `<button type="button" data-remove-interest="${escapeHtml(event.id)}">Remove</button>`,
+    })).join("")
+    : `<p class="assistant-empty">Check Interested on events you want to remember.</p>`;
+}
+
+function renderDeadlinePanel(items) {
+  const deadlines = items
+    .map(deadlineForEvent)
+    .filter(Boolean)
+    .slice(0, 8);
+
+  els.deadlineCount.textContent = deadlines.length.toLocaleString();
+  els.deadlineList.innerHTML = deadlines.length
+    ? deadlines.map(({ event, note }) => `
+      <div class="planner-item deadline-item">
+        <a href="${escapeHtml(event.url)}" target="_blank" rel="noreferrer">${escapeHtml(event.title)}</a>
+        <span>${escapeHtml(event.dateLabel)} | ${escapeHtml(event.city || event.source || "")}</span>
+        <p>${escapeHtml(note)}</p>
+      </div>
+    `).join("")
+    : `<p class="assistant-empty">No registration deadline language found in the current results.</p>`;
+}
+
+function renderAssistant(items) {
+  renderInterestedPanel();
+  renderDeadlinePanel(items);
+  renderInsights(items);
+}
+
 function renderInsights(items) {
   const [city, cityCount] = topEntry(countBy(items, "city"));
   const [type, typeCount] = topEntry(countBy(items, "type"));
@@ -672,6 +757,10 @@ function renderEvents(items) {
           <div class="event-topline">
             <span class="pill type">${escapeHtml(event.type)}</span>
             <button type="button" class="pill source source-${sourceClass}" data-source="${source}">${source}</button>
+            <label class="interested-toggle">
+              <input type="checkbox" data-interest-id="${escapeHtml(event.id)}"${interestedIds.has(event.id) ? " checked" : ""}>
+              <span>Interested</span>
+            </label>
             ${facebookLinked ? `<span class="pill source-facebook">Facebook info</span>` : ""}
             <span class="pill">${city}</span>
             ${recurrence ? `<span class="pill">${escapeHtml(recurrence.label)}</span>` : ""}
@@ -696,7 +785,7 @@ function render() {
   const filtered = getFilteredEvents();
   renderStats(filtered);
   renderChart(filtered);
-  renderInsights(filtered);
+  renderAssistant(filtered);
   renderEvents(filtered);
 }
 
@@ -890,6 +979,25 @@ els.list.addEventListener("click", (event) => {
   if (button?.dataset.source) selectSource(button.dataset.source);
 });
 
+els.list.addEventListener("change", (event) => {
+  const input = event.target.closest("input[data-interest-id]");
+  if (!input) return;
+
+  if (input.checked) interestedIds.add(input.dataset.interestId);
+  else interestedIds.delete(input.dataset.interestId);
+  saveInterestedIds();
+  renderAssistant(getFilteredEvents());
+});
+
+els.interestedList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-remove-interest]");
+  if (!button) return;
+
+  interestedIds.delete(button.dataset.removeInterest);
+  saveInterestedIds();
+  render();
+});
+
 function assistantTypeMatches(query) {
   const aliases = [
     ["Car show", /\b(show|car show|shine)\b/],
@@ -964,6 +1072,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=11").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=12").catch(() => {});
   });
 }

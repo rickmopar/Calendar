@@ -1,11 +1,11 @@
-const CACHE_NAME = "car-show-calendar-v11";
+const CACHE_NAME = "car-show-calendar-v12";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=11",
-  "./app.js?v=11",
-  "./data/events-2026.js?v=11",
-  "./manifest.webmanifest?v=11",
+  "./styles.css?v=12",
+  "./app.js?v=12",
+  "./data/events-2026.js?v=12",
+  "./manifest.webmanifest?v=12",
   "./favicon.svg",
 ];
 
