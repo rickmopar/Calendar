@@ -37,16 +37,6 @@ const els = {
   assistantInput: document.querySelector("#assistantInput"),
   assistantButton: document.querySelector("#assistantButton"),
   assistantResponse: document.querySelector("#assistantResponse"),
-  manualForm: document.querySelector("#manualEventForm"),
-  manualTitle: document.querySelector("#manualTitle"),
-  manualDate: document.querySelector("#manualDate"),
-  manualTime: document.querySelector("#manualTime"),
-  manualCity: document.querySelector("#manualCity"),
-  manualType: document.querySelector("#manualType"),
-  manualVenue: document.querySelector("#manualVenue"),
-  manualAddress: document.querySelector("#manualAddress"),
-  manualDeadline: document.querySelector("#manualDeadline"),
-  manualDescription: document.querySelector("#manualDescription"),
   reset: document.querySelector("#resetButton"),
   total: document.querySelector("#totalEvents"),
   cities: document.querySelector("#activeCities"),
@@ -75,89 +65,11 @@ function dateKey(date, timeZone = "America/New_York") {
 
 const today = new Date();
 const todayKey = dateKey(today);
-const manualEventsStorageKey = "car-show-calendar-manual-events-v1";
+const events = allEvents;
 const interestedStorageKey = "car-show-calendar-interested-v1";
 const eventNotesStorageKey = "car-show-calendar-notes-v1";
-let manualEvents = loadManualEvents();
-let events = combinedEvents();
 let interestedIds = loadInterestedIds();
 let eventNotes = loadEventNotes();
-
-function loadManualEvents() {
-  try {
-    return JSON.parse(localStorage.getItem(manualEventsStorageKey) || "[]");
-  } catch {
-    return [];
-  }
-}
-
-function saveManualEvents() {
-  localStorage.setItem(manualEventsStorageKey, JSON.stringify(manualEvents));
-}
-
-function combinedEvents() {
-  return [...allEvents, ...manualEvents]
-    .sort((a, b) => a.startDate.localeCompare(b.startDate));
-}
-
-function refreshEventData() {
-  events = combinedEvents();
-}
-
-function manualDateToEventParts(dateValue, timeValue) {
-  const [year, month, day] = dateValue.split("-").map(Number);
-  const hasTime = Boolean(timeValue);
-  const [hour, minute] = hasTime ? timeValue.split(":").map(Number) : [9, 0];
-  const start = hasTime
-    ? new Date(year, month - 1, day, hour, minute)
-    : new Date(Date.UTC(year, month - 1, day));
-  const end = hasTime
-    ? new Date(start.getTime() + 2 * 60 * 60 * 1000)
-    : start;
-  const timeZone = hasTime ? "America/New_York" : "UTC";
-
-  return { start, end, hasTime, timeZone };
-}
-
-function createManualEvent() {
-  const title = els.manualTitle.value.trim();
-  const dateValue = els.manualDate.value;
-  const city = els.manualCity.value.trim();
-  if (!title || !dateValue || !city) return null;
-
-  const { start, end, hasTime, timeZone } = manualDateToEventParts(dateValue, els.manualTime.value);
-  const description = els.manualDescription.value.trim();
-  const deadline = els.manualDeadline.value.trim();
-
-  return {
-    id: `manual-${Date.now()}`,
-    title,
-    startDate: start.toISOString(),
-    endDate: end.toISOString(),
-    allDay: !hasTime,
-    month: start.toLocaleString("en-US", { month: "long", timeZone }),
-    weekday: start.toLocaleString("en-US", { weekday: "short", timeZone }),
-    dateLabel: start.toLocaleString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      timeZone,
-    }),
-    timeLabel: hasTime
-      ? start.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", timeZone })
-      : "All day",
-    type: els.manualType.value,
-    source: "Manual",
-    city,
-    venue: els.manualVenue.value.trim() || "Manual entry",
-    address: els.manualAddress.value.trim(),
-    description,
-    sourceUrl: "",
-    url: "",
-    image: "",
-    registrationDeadlineNote: deadline ? `Registration deadline: ${deadline}` : "",
-  };
-}
 
 function loadInterestedIds() {
   try {
@@ -574,8 +486,8 @@ function buildCalendarFile(event) {
     `SUMMARY:${escapeCalendarText(event.title)}`,
     `LOCATION:${escapeCalendarText(location)}`,
     `DESCRIPTION:${escapeCalendarText(description)}`,
+    `URL:${event.url}`,
   ];
-  if (eventUrl) lines.push(`URL:${eventUrl}`);
   if (event.allDay) {
     lines.splice(8, 0, `DTSTART;VALUE=DATE:${formatCalendarDay(event.startDate)}`);
     lines.splice(9, 0, `DTEND;VALUE=DATE:${nextCalendarDay(event.endDate)}`);
@@ -719,14 +631,12 @@ function renderChart(items) {
       const aacaLocalCount = countsBySource[month]?.["AACA Local"] || 0;
       const carlisleCount = countsBySource[month]?.Carlisle || 0;
       const traacaCount = countsBySource[month]?.TRAACA || 0;
-      const manualCount = countsBySource[month]?.Manual || 0;
       const totalHeight = Math.max(8, (count / max) * 140);
       const ccchrHeight = count ? (ccchrCount / count) * totalHeight : 0;
       const aacaHeight = count ? (aacaCount / count) * totalHeight : 0;
       const aacaLocalHeight = count ? (aacaLocalCount / count) * totalHeight : 0;
       const carlisleHeight = count ? (carlisleCount / count) * totalHeight : 0;
       const traacaHeight = count ? (traacaCount / count) * totalHeight : 0;
-      const manualHeight = count ? (manualCount / count) * totalHeight : 0;
       const wrapper = document.createElement("div");
       wrapper.className = "month-bar";
       wrapper.dataset.month = month;
@@ -735,8 +645,7 @@ function renderChart(items) {
       wrapper.setAttribute("aria-label", `Show ${month} events`);
       wrapper.innerHTML = `
         <div class="bar-count">${count}</div>
-        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle, ${manualCount} Manual">
-          ${manualCount ? `<span class="bar-segment bar-manual" style="height:${manualHeight}px"></span>` : ""}
+        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
           ${carlisleCount ? `<span class="bar-segment bar-carlisle" style="height:${carlisleHeight}px"></span>` : ""}
           ${traacaCount ? `<span class="bar-segment bar-traaca" style="height:${traacaHeight}px"></span>` : ""}
           ${aacaLocalCount ? `<span class="bar-segment bar-aaca-local" style="height:${aacaLocalHeight}px"></span>` : ""}
@@ -887,11 +796,7 @@ function renderEvents(items) {
       const source = escapeHtml(event.source || "CCCHR");
       const sourceClass = slug(source);
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
-      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : event.source === "Manual" ? "Manual entry" : "CCCHR listing";
-      const eventUrl = event.url || event.sourceUrl || "";
-      const titleHtml = eventUrl
-        ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${title}</a>`
-        : title;
+      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
       const note = escapeHtml(noteForEvent(event.id));
@@ -915,15 +820,14 @@ function renderEvents(items) {
             <span class="pill">${city}</span>
             ${recurrence ? `<span class="pill">${escapeHtml(recurrence.label)}</span>` : ""}
           </div>
-          <h3 class="${titleClass}">${titleHtml}</h3>
+          <h3 class="${titleClass}"><a href="${event.url}" target="_blank" rel="noreferrer">${title}</a></h3>
           <div class="event-meta">${dateLine}${venue ? ` | ${venue}` : ""}</div>
           ${address ? `<div class="event-address">${address}</div>` : ""}
           ${description ? `<p class="event-description">${description}</p>` : ""}
           <div class="event-actions">
             <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Add Recurring Event" : "Add to Calendar"}</a>
-            ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${listingLabel}</a>` : ""}
+            <a href="${event.url}" target="_blank" rel="noreferrer">${listingLabel}</a>
             ${event.sourceUrl && event.sourceUrl !== event.url && event.sourceUrl !== event.calendarUrl ? `<a href="${event.sourceUrl}" target="_blank" rel="noreferrer">More info</a>` : ""}
-            ${event.source === "Manual" ? `<button type="button" data-delete-manual="${escapeHtml(event.id)}">Remove Manual Show</button>` : ""}
           </div>
           <label class="event-note">
             <span>Note</span>
@@ -946,40 +850,10 @@ function render() {
 
 renderFreshness();
 
-let monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
-let typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
-let cityValues = unique(events.map((event) => event.city));
-let sourceValues = unique(events.map((event) => event.source || "CCCHR"));
-
-function refreshFilterValues({ selectManual = false, selectAllSources = false } = {}) {
-  const selectedMonths = new Set(selectedValues(els.monthOptions));
-  const selectedTypes = new Set(selectedTypeValues());
-  const selectedCities = new Set(selectedValues(els.cityOptions));
-  const selectedSources = new Set(selectedValues(els.sourceOptions));
-
-  monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
-  typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
-  cityValues = unique(events.map((event) => event.city));
-  sourceValues = unique(events.map((event) => event.source || "CCCHR"));
-
-  fillTypeOptions(els.typeOptions, typeValues);
-  fillCityOptions(cityValues);
-  fillCheckboxOptions(els.sourceOptions, "source", sourceValues, { checked: true });
-
-  setCheckedValues(els.typeOptions, typeValues.filter((value) => !selectedTypes.size || selectedTypes.has(value)));
-  setCheckedValues(els.cityOptions, cityValues.filter((value) => selectedCities.has(value)));
-  setCheckedValues(els.sourceOptions, sourceValues.filter((value) => {
-    if (selectManual) return value === "Manual";
-    if (selectAllSources) return true;
-    return !selectedSources.size || selectedSources.has(value);
-  }));
-  refreshMonthOptions();
-  setCheckedValues(els.monthOptions, activeMonthValues().filter((value) => !selectedMonths.size || selectedMonths.has(value)));
-  updateMonthSummary();
-  updateTypeSummary();
-  updateCitySummary();
-  updateSourceSummary();
-}
+const monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
+const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
+const cityValues = unique(events.map((event) => event.city));
+const sourceValues = unique(events.map((event) => event.source || "CCCHR"));
 
 function activeMonthValues() {
   return monthOrder.filter((month) => events.some((event) => event.month === month && matchesDateRange(event)));
@@ -1041,20 +915,6 @@ els.cityOptions.addEventListener("change", () => {
 
 els.sourceOptions.addEventListener("change", () => {
   updateSourceSummary();
-  render();
-});
-
-
-els.manualForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const manualEvent = createManualEvent();
-  if (!manualEvent) return;
-
-  manualEvents.push(manualEvent);
-  saveManualEvents();
-  refreshEventData();
-  els.manualForm.reset();
-  refreshFilterValues({ selectManual: true });
   render();
 });
 
@@ -1174,20 +1034,6 @@ document.querySelector(".legend")?.addEventListener("click", (event) => {
 });
 
 els.list.addEventListener("click", (event) => {
-  const deleteButton = event.target.closest("button[data-delete-manual]");
-  if (deleteButton) {
-    manualEvents = manualEvents.filter((manualEvent) => manualEvent.id !== deleteButton.dataset.deleteManual);
-    interestedIds.delete(deleteButton.dataset.deleteManual);
-    delete eventNotes[deleteButton.dataset.deleteManual];
-    saveManualEvents();
-    saveInterestedIds();
-    saveEventNotes();
-    refreshEventData();
-    refreshFilterValues({ selectAllSources: true });
-    render();
-    return;
-  }
-
   const button = event.target.closest("button[data-source]");
   if (button?.dataset.source) selectSource(button.dataset.source);
 });
@@ -1293,6 +1139,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=18").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=17").catch(() => {});
   });
 }

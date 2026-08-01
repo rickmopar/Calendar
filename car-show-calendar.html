@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=18">
+    <link rel="manifest" href="manifest.webmanifest?v=17">
     <style>
 :root {
   color-scheme: light;
@@ -28,7 +28,6 @@
   --carlisle: #7143b8;
   --facebook: #1877f2;
   --facebook-dark: #0b4aa0;
-  --manual: #8a5a14;
   --teal: #1f7a74;
   --gold: #c28b21;
   --shadow: 0 16px 36px rgba(30, 39, 50, 0.12);
@@ -354,45 +353,6 @@ button {
   font-weight: 700;
 }
 
-.manual-panel {
-  margin-top: 18px;
-  padding: 0;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-}
-
-.manual-panel summary {
-  min-height: 48px;
-  padding: 14px 16px;
-  cursor: pointer;
-  color: var(--accent-dark);
-  font-weight: 900;
-}
-
-.manual-form {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  padding: 0 16px 16px;
-}
-
-.manual-form .manual-notes {
-  grid-column: span 3;
-}
-
-textarea {
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: #fff;
-  color: var(--ink);
-  padding: 9px 10px;
-  font: inherit;
-  font-size: 16px;
-  resize: vertical;
-}
-
 .chart-panel {
   margin-top: 18px;
   padding: 20px;
@@ -481,10 +441,6 @@ textarea {
   background: var(--carlisle);
 }
 
-.legend-manual {
-  background: var(--manual);
-}
-
 .month-chart {
   display: grid;
   grid-template-columns: repeat(11, minmax(40px, 1fr));
@@ -532,10 +488,6 @@ textarea {
 
 .bar-carlisle {
   background: var(--carlisle);
-}
-
-.bar-manual {
-  background: var(--manual);
 }
 
 .month-label,
@@ -806,11 +758,6 @@ textarea {
   color: var(--facebook-dark);
 }
 
-.pill.source-manual {
-  background: #fff1d2;
-  color: var(--manual);
-}
-
 .interested-toggle {
   display: inline-flex;
   align-items: center;
@@ -900,10 +847,6 @@ textarea {
   color: var(--facebook-dark);
 }
 
-.event-title-manual {
-  color: var(--manual);
-}
-
 .event-meta,
 .event-address,
 .event-description {
@@ -924,12 +867,9 @@ textarea {
   margin-top: 12px;
 }
 
-.event-actions a,
-.event-actions button {
-  min-height: 0;
+.event-actions a {
   border: 1px solid var(--line);
   border-radius: 7px;
-  background: #fff;
   padding: 7px 10px;
   color: var(--accent-dark);
   font-size: 0.9rem;
@@ -961,13 +901,8 @@ textarea {
 
   .controls,
   .trip-helper,
-  .manual-form,
   .dashboard-grid {
     grid-template-columns: 1fr;
-  }
-
-  .manual-form .manual-notes {
-    grid-column: auto;
   }
 
   .stats {
@@ -1065,13 +1000,6 @@ textarea {
     gap: 14px;
     margin-top: 0;
     padding: 18px;
-  }
-
-  .manual-panel {
-    margin-top: 0;
-    border-right: 0;
-    border-left: 0;
-    box-shadow: none;
   }
 
   input,
@@ -1271,56 +1199,6 @@ textarea {
         <p id="assistantResponse">Ask for a city, month, or type of event.</p>
       </section>
 
-      <details class="manual-panel">
-        <summary>Add Manual Show</summary>
-        <form id="manualEventForm" class="manual-form">
-          <label>
-            <span>Show name</span>
-            <input id="manualTitle" type="text" required placeholder="Saturday cruise-in, local show, club meet">
-          </label>
-          <label>
-            <span>Date</span>
-            <input id="manualDate" type="date" required>
-          </label>
-          <label>
-            <span>Time</span>
-            <input id="manualTime" type="time">
-          </label>
-          <label>
-            <span>City</span>
-            <input id="manualCity" type="text" required placeholder="Chesapeake">
-          </label>
-          <label>
-            <span>Type</span>
-            <select id="manualType">
-              <option>Car show</option>
-              <option>Cruise-in</option>
-              <option>Meetup</option>
-              <option>Swap meet</option>
-              <option>Tour</option>
-              <option>Other</option>
-            </select>
-          </label>
-          <label>
-            <span>Venue</span>
-            <input id="manualVenue" type="text" placeholder="Parking lot, church, restaurant">
-          </label>
-          <label>
-            <span>Address</span>
-            <input id="manualAddress" type="text" placeholder="Optional">
-          </label>
-          <label>
-            <span>Deadline</span>
-            <input id="manualDeadline" type="text" placeholder="Optional, like April 9, 2026">
-          </label>
-          <label class="manual-notes">
-            <span>Details</span>
-            <textarea id="manualDescription" rows="3" placeholder="Anything useful: registration cost, contact, rain date..."></textarea>
-          </label>
-          <button type="submit">Save Show</button>
-        </form>
-      </details>
-
       <section class="chart-panel" aria-label="Events by month">
         <div class="section-heading">
           <h2>Events by Month</h2>
@@ -1332,7 +1210,6 @@ textarea {
               <button type="button" data-source="AACA Local"><i class="legend-aaca-local"></i>AACA Local</button>
               <button type="button" data-source="TRAACA"><i class="legend-traaca"></i>TRAACA</button>
               <button type="button" data-source="Carlisle"><i class="legend-carlisle"></i>Carlisle</button>
-              <button type="button" data-source="Manual"><i class="legend-manual"></i>Manual</button>
             </div>
           </div>
         </div>
@@ -7627,16 +7504,6 @@ const els = {
   assistantInput: document.querySelector("#assistantInput"),
   assistantButton: document.querySelector("#assistantButton"),
   assistantResponse: document.querySelector("#assistantResponse"),
-  manualForm: document.querySelector("#manualEventForm"),
-  manualTitle: document.querySelector("#manualTitle"),
-  manualDate: document.querySelector("#manualDate"),
-  manualTime: document.querySelector("#manualTime"),
-  manualCity: document.querySelector("#manualCity"),
-  manualType: document.querySelector("#manualType"),
-  manualVenue: document.querySelector("#manualVenue"),
-  manualAddress: document.querySelector("#manualAddress"),
-  manualDeadline: document.querySelector("#manualDeadline"),
-  manualDescription: document.querySelector("#manualDescription"),
   reset: document.querySelector("#resetButton"),
   total: document.querySelector("#totalEvents"),
   cities: document.querySelector("#activeCities"),
@@ -7665,89 +7532,11 @@ function dateKey(date, timeZone = "America/New_York") {
 
 const today = new Date();
 const todayKey = dateKey(today);
-const manualEventsStorageKey = "car-show-calendar-manual-events-v1";
+const events = allEvents;
 const interestedStorageKey = "car-show-calendar-interested-v1";
 const eventNotesStorageKey = "car-show-calendar-notes-v1";
-let manualEvents = loadManualEvents();
-let events = combinedEvents();
 let interestedIds = loadInterestedIds();
 let eventNotes = loadEventNotes();
-
-function loadManualEvents() {
-  try {
-    return JSON.parse(localStorage.getItem(manualEventsStorageKey) || "[]");
-  } catch {
-    return [];
-  }
-}
-
-function saveManualEvents() {
-  localStorage.setItem(manualEventsStorageKey, JSON.stringify(manualEvents));
-}
-
-function combinedEvents() {
-  return [...allEvents, ...manualEvents]
-    .sort((a, b) => a.startDate.localeCompare(b.startDate));
-}
-
-function refreshEventData() {
-  events = combinedEvents();
-}
-
-function manualDateToEventParts(dateValue, timeValue) {
-  const [year, month, day] = dateValue.split("-").map(Number);
-  const hasTime = Boolean(timeValue);
-  const [hour, minute] = hasTime ? timeValue.split(":").map(Number) : [9, 0];
-  const start = hasTime
-    ? new Date(year, month - 1, day, hour, minute)
-    : new Date(Date.UTC(year, month - 1, day));
-  const end = hasTime
-    ? new Date(start.getTime() + 2 * 60 * 60 * 1000)
-    : start;
-  const timeZone = hasTime ? "America/New_York" : "UTC";
-
-  return { start, end, hasTime, timeZone };
-}
-
-function createManualEvent() {
-  const title = els.manualTitle.value.trim();
-  const dateValue = els.manualDate.value;
-  const city = els.manualCity.value.trim();
-  if (!title || !dateValue || !city) return null;
-
-  const { start, end, hasTime, timeZone } = manualDateToEventParts(dateValue, els.manualTime.value);
-  const description = els.manualDescription.value.trim();
-  const deadline = els.manualDeadline.value.trim();
-
-  return {
-    id: `manual-${Date.now()}`,
-    title,
-    startDate: start.toISOString(),
-    endDate: end.toISOString(),
-    allDay: !hasTime,
-    month: start.toLocaleString("en-US", { month: "long", timeZone }),
-    weekday: start.toLocaleString("en-US", { weekday: "short", timeZone }),
-    dateLabel: start.toLocaleString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      timeZone,
-    }),
-    timeLabel: hasTime
-      ? start.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", timeZone })
-      : "All day",
-    type: els.manualType.value,
-    source: "Manual",
-    city,
-    venue: els.manualVenue.value.trim() || "Manual entry",
-    address: els.manualAddress.value.trim(),
-    description,
-    sourceUrl: "",
-    url: "",
-    image: "",
-    registrationDeadlineNote: deadline ? `Registration deadline: ${deadline}` : "",
-  };
-}
 
 function loadInterestedIds() {
   try {
@@ -8164,8 +7953,8 @@ function buildCalendarFile(event) {
     `SUMMARY:${escapeCalendarText(event.title)}`,
     `LOCATION:${escapeCalendarText(location)}`,
     `DESCRIPTION:${escapeCalendarText(description)}`,
+    `URL:${event.url}`,
   ];
-  if (eventUrl) lines.push(`URL:${eventUrl}`);
   if (event.allDay) {
     lines.splice(8, 0, `DTSTART;VALUE=DATE:${formatCalendarDay(event.startDate)}`);
     lines.splice(9, 0, `DTEND;VALUE=DATE:${nextCalendarDay(event.endDate)}`);
@@ -8309,14 +8098,12 @@ function renderChart(items) {
       const aacaLocalCount = countsBySource[month]?.["AACA Local"] || 0;
       const carlisleCount = countsBySource[month]?.Carlisle || 0;
       const traacaCount = countsBySource[month]?.TRAACA || 0;
-      const manualCount = countsBySource[month]?.Manual || 0;
       const totalHeight = Math.max(8, (count / max) * 140);
       const ccchrHeight = count ? (ccchrCount / count) * totalHeight : 0;
       const aacaHeight = count ? (aacaCount / count) * totalHeight : 0;
       const aacaLocalHeight = count ? (aacaLocalCount / count) * totalHeight : 0;
       const carlisleHeight = count ? (carlisleCount / count) * totalHeight : 0;
       const traacaHeight = count ? (traacaCount / count) * totalHeight : 0;
-      const manualHeight = count ? (manualCount / count) * totalHeight : 0;
       const wrapper = document.createElement("div");
       wrapper.className = "month-bar";
       wrapper.dataset.month = month;
@@ -8325,8 +8112,7 @@ function renderChart(items) {
       wrapper.setAttribute("aria-label", `Show ${month} events`);
       wrapper.innerHTML = `
         <div class="bar-count">${count}</div>
-        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle, ${manualCount} Manual">
-          ${manualCount ? `<span class="bar-segment bar-manual" style="height:${manualHeight}px"></span>` : ""}
+        <div class="bar" style="height:${totalHeight}px" aria-label="${month}: ${ccchrCount} CCCHR, ${aacaCount} AACA, ${aacaLocalCount} AACA Local, ${traacaCount} TRAACA, ${carlisleCount} Carlisle">
           ${carlisleCount ? `<span class="bar-segment bar-carlisle" style="height:${carlisleHeight}px"></span>` : ""}
           ${traacaCount ? `<span class="bar-segment bar-traaca" style="height:${traacaHeight}px"></span>` : ""}
           ${aacaLocalCount ? `<span class="bar-segment bar-aaca-local" style="height:${aacaLocalHeight}px"></span>` : ""}
@@ -8477,11 +8263,7 @@ function renderEvents(items) {
       const source = escapeHtml(event.source || "CCCHR");
       const sourceClass = slug(source);
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
-      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : event.source === "Manual" ? "Manual entry" : "CCCHR listing";
-      const eventUrl = event.url || event.sourceUrl || "";
-      const titleHtml = eventUrl
-        ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${title}</a>`
-        : title;
+      const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : "CCCHR listing";
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
       const note = escapeHtml(noteForEvent(event.id));
@@ -8505,15 +8287,14 @@ function renderEvents(items) {
             <span class="pill">${city}</span>
             ${recurrence ? `<span class="pill">${escapeHtml(recurrence.label)}</span>` : ""}
           </div>
-          <h3 class="${titleClass}">${titleHtml}</h3>
+          <h3 class="${titleClass}"><a href="${event.url}" target="_blank" rel="noreferrer">${title}</a></h3>
           <div class="event-meta">${dateLine}${venue ? ` | ${venue}` : ""}</div>
           ${address ? `<div class="event-address">${address}</div>` : ""}
           ${description ? `<p class="event-description">${description}</p>` : ""}
           <div class="event-actions">
             <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Add Recurring Event" : "Add to Calendar"}</a>
-            ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${listingLabel}</a>` : ""}
+            <a href="${event.url}" target="_blank" rel="noreferrer">${listingLabel}</a>
             ${event.sourceUrl && event.sourceUrl !== event.url && event.sourceUrl !== event.calendarUrl ? `<a href="${event.sourceUrl}" target="_blank" rel="noreferrer">More info</a>` : ""}
-            ${event.source === "Manual" ? `<button type="button" data-delete-manual="${escapeHtml(event.id)}">Remove Manual Show</button>` : ""}
           </div>
           <label class="event-note">
             <span>Note</span>
@@ -8536,40 +8317,10 @@ function render() {
 
 renderFreshness();
 
-let monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
-let typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
-let cityValues = unique(events.map((event) => event.city));
-let sourceValues = unique(events.map((event) => event.source || "CCCHR"));
-
-function refreshFilterValues({ selectManual = false, selectAllSources = false } = {}) {
-  const selectedMonths = new Set(selectedValues(els.monthOptions));
-  const selectedTypes = new Set(selectedTypeValues());
-  const selectedCities = new Set(selectedValues(els.cityOptions));
-  const selectedSources = new Set(selectedValues(els.sourceOptions));
-
-  monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
-  typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
-  cityValues = unique(events.map((event) => event.city));
-  sourceValues = unique(events.map((event) => event.source || "CCCHR"));
-
-  fillTypeOptions(els.typeOptions, typeValues);
-  fillCityOptions(cityValues);
-  fillCheckboxOptions(els.sourceOptions, "source", sourceValues, { checked: true });
-
-  setCheckedValues(els.typeOptions, typeValues.filter((value) => !selectedTypes.size || selectedTypes.has(value)));
-  setCheckedValues(els.cityOptions, cityValues.filter((value) => selectedCities.has(value)));
-  setCheckedValues(els.sourceOptions, sourceValues.filter((value) => {
-    if (selectManual) return value === "Manual";
-    if (selectAllSources) return true;
-    return !selectedSources.size || selectedSources.has(value);
-  }));
-  refreshMonthOptions();
-  setCheckedValues(els.monthOptions, activeMonthValues().filter((value) => !selectedMonths.size || selectedMonths.has(value)));
-  updateMonthSummary();
-  updateTypeSummary();
-  updateCitySummary();
-  updateSourceSummary();
-}
+const monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
+const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
+const cityValues = unique(events.map((event) => event.city));
+const sourceValues = unique(events.map((event) => event.source || "CCCHR"));
 
 function activeMonthValues() {
   return monthOrder.filter((month) => events.some((event) => event.month === month && matchesDateRange(event)));
@@ -8631,20 +8382,6 @@ els.cityOptions.addEventListener("change", () => {
 
 els.sourceOptions.addEventListener("change", () => {
   updateSourceSummary();
-  render();
-});
-
-
-els.manualForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const manualEvent = createManualEvent();
-  if (!manualEvent) return;
-
-  manualEvents.push(manualEvent);
-  saveManualEvents();
-  refreshEventData();
-  els.manualForm.reset();
-  refreshFilterValues({ selectManual: true });
   render();
 });
 
@@ -8764,20 +8501,6 @@ document.querySelector(".legend")?.addEventListener("click", (event) => {
 });
 
 els.list.addEventListener("click", (event) => {
-  const deleteButton = event.target.closest("button[data-delete-manual]");
-  if (deleteButton) {
-    manualEvents = manualEvents.filter((manualEvent) => manualEvent.id !== deleteButton.dataset.deleteManual);
-    interestedIds.delete(deleteButton.dataset.deleteManual);
-    delete eventNotes[deleteButton.dataset.deleteManual];
-    saveManualEvents();
-    saveInterestedIds();
-    saveEventNotes();
-    refreshEventData();
-    refreshFilterValues({ selectAllSources: true });
-    render();
-    return;
-  }
-
   const button = event.target.closest("button[data-source]");
   if (button?.dataset.source) selectSource(button.dataset.source);
 });
@@ -8883,7 +8606,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=18").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=17").catch(() => {});
   });
 }
 

@@ -13,7 +13,6 @@
   --carlisle: #7143b8;
   --facebook: #1877f2;
   --facebook-dark: #0b4aa0;
-  --manual: #8a5a14;
   --teal: #1f7a74;
   --gold: #c28b21;
   --shadow: 0 16px 36px rgba(30, 39, 50, 0.12);
@@ -339,45 +338,6 @@ button {
   font-weight: 700;
 }
 
-.manual-panel {
-  margin-top: 18px;
-  padding: 0;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-}
-
-.manual-panel summary {
-  min-height: 48px;
-  padding: 14px 16px;
-  cursor: pointer;
-  color: var(--accent-dark);
-  font-weight: 900;
-}
-
-.manual-form {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  padding: 0 16px 16px;
-}
-
-.manual-form .manual-notes {
-  grid-column: span 3;
-}
-
-textarea {
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: #fff;
-  color: var(--ink);
-  padding: 9px 10px;
-  font: inherit;
-  font-size: 16px;
-  resize: vertical;
-}
-
 .chart-panel {
   margin-top: 18px;
   padding: 20px;
@@ -466,10 +426,6 @@ textarea {
   background: var(--carlisle);
 }
 
-.legend-manual {
-  background: var(--manual);
-}
-
 .month-chart {
   display: grid;
   grid-template-columns: repeat(11, minmax(40px, 1fr));
@@ -517,10 +473,6 @@ textarea {
 
 .bar-carlisle {
   background: var(--carlisle);
-}
-
-.bar-manual {
-  background: var(--manual);
 }
 
 .month-label,
@@ -791,11 +743,6 @@ textarea {
   color: var(--facebook-dark);
 }
 
-.pill.source-manual {
-  background: #fff1d2;
-  color: var(--manual);
-}
-
 .interested-toggle {
   display: inline-flex;
   align-items: center;
@@ -885,10 +832,6 @@ textarea {
   color: var(--facebook-dark);
 }
 
-.event-title-manual {
-  color: var(--manual);
-}
-
 .event-meta,
 .event-address,
 .event-description {
@@ -909,12 +852,9 @@ textarea {
   margin-top: 12px;
 }
 
-.event-actions a,
-.event-actions button {
-  min-height: 0;
+.event-actions a {
   border: 1px solid var(--line);
   border-radius: 7px;
-  background: #fff;
   padding: 7px 10px;
   color: var(--accent-dark);
   font-size: 0.9rem;
@@ -946,13 +886,8 @@ textarea {
 
   .controls,
   .trip-helper,
-  .manual-form,
   .dashboard-grid {
     grid-template-columns: 1fr;
-  }
-
-  .manual-form .manual-notes {
-    grid-column: auto;
   }
 
   .stats {
@@ -1050,13 +985,6 @@ textarea {
     gap: 14px;
     margin-top: 0;
     padding: 18px;
-  }
-
-  .manual-panel {
-    margin-top: 0;
-    border-right: 0;
-    border-left: 0;
-    box-shadow: none;
   }
 
   input,
