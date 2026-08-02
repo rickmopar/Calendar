@@ -1,5 +1,17 @@
 # Car Show Calendar
 
+## Canonical Code
+
+This folder is the source-of-truth Calendar app for the live GitHub Pages site:
+
+https://rickmopar.github.io/Calendar/
+
+The canonical Git remote is:
+
+https://github.com/rickmopar/Calendar.git
+
+If another Codex chat creates a separate calendar folder, compare it against this repository before publishing. The known-good v24 code includes the Assistant, Interested checkboxes, manual show entry, deadline date picker, and PDF export.
+
 Open `index.html` to view the calendar when the whole folder is together.
 
 If you want one file that opens more reliably in Chrome after downloading from Google Drive, use `car-show-calendar.html`.
