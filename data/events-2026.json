@@ -1376,25 +1376,6 @@
     "image": "https://static1.squarespace.com/static/6162287958ee4e2159a4807d/6162288958ee4e2159a48171/6a358ba612d46415f0a7b2aa/1781894205226/"
   },
   {
-    "id": "6a3599be98e20c476884185b",
-    "title": "Classic Cruisers Saturday Night Cruz In | July 11th",
-    "startDate": "2026-07-11T20:30:00.223Z",
-    "endDate": "2026-07-12T00:00:00.223Z",
-    "month": "July",
-    "weekday": "Sat",
-    "dateLabel": "Jul 11, 2026",
-    "timeLabel": "4:30 PM",
-    "type": "Cruise-in",
-    "source": "CCCHR",
-    "city": "Yorktown",
-    "venue": "Coastal Community Church,",
-    "address": "101 Village Avenue, Yorktown, VA, 23693",
-    "description": "(Weekly) Classic Cruisers Saturday Night Cruz In Presented by Classic Cruisers Car Club Saturday, July 11th | 4:30-8p Located at Coastal Community Church, 101 Village Ave., Yorktown. Mark your calendar to join us for our 1st Cruise-In. Cruz-Ins will be every Saturday from Apr 25 to Oct 24. All years and types of vehicles are welcome – If you believe it’s cool, bring it in. We are asking for a $2.00 donation per vehicle. Please consider donating more – All proceeds go to charity. Vehicles are to be parked as directed by club personnel when necessary. No bicycles, skateboards, scooters, roller blades, or anything used in a manner that could injure people or damage vehicles are allowed in the participant parking area. Please do not touch vehicles without owners’ permission. Children under 12 must be accompanied by an adult. No horseplay is allowed with vehicles at any time. (Such as burn-outs, engine revving, car hopping, loud radios or other disruptive actions). Alcoholic beverages, illegal drugs, and firearms are prohibited. There are to be NO SALES within the participant parking area EXCEPT for pre-approved items where the sale benefits charity. We are guests here. So PLEASE either take your trash with you or use the receptacles provided.",
-    "sourceUrl": "",
-    "url": "https://www.ccchr.org/events/classic-cruisers-saturday-night-cruz-in-july-11",
-    "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782327947484-R8XZO1F07IGPIHDXFWGS/Classic+Cruisers+Car+Club.png"
-  },
-  {
     "id": "6a3592e8e2fd70332eca109f",
     "title": "Boost and Brunch NN | July 12th",
     "startDate": "2026-07-12T12:30:00.614Z",
@@ -2003,26 +1984,6 @@
     "sourceUrl": "",
     "url": "https://www.ccchr.org/events/lets-talk-cars-friday-night-cruise-in-july-31",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782324253735-BYUJYAFS6DSI6WTPFJ8W/Middle+Pinisula+Classic+Cruisers.jpg"
-  },
-  {
-    "id": "aaca-local-2026-08-01-35th-annual-zooland-region-antique-car-show-1-1",
-    "title": "35th Annual Zooland Region Antique Car Show",
-    "startDate": "2026-08-01T04:00:00.000Z",
-    "endDate": "2026-08-02T03:59:59.000Z",
-    "allDay": true,
-    "month": "August",
-    "weekday": "Sat",
-    "dateLabel": "Aug 1, 2026",
-    "timeLabel": "All day",
-    "type": "Car show",
-    "source": "AACA Local",
-    "city": "Asheboro",
-    "venue": "AACA Local & Regional Calendar",
-    "address": "Asheboro",
-    "description": "&lt;p&gt;Location: Bicentennial Park, Asheboro, NC Contact: Larry Pugh, President - arrchief600@gmail.com, zoolandaaca@gmail.com Registrations 8-10:30 Award Presentation by 3:00 - 1st & 2nd place awards for all classes First 150 cars will be judged for Best of Shows and Special awards presented&lt;/p&gt;\\n",
-    "sourceUrl": "https://aaca.org/events/",
-    "url": "https://aaca.org/event/35th-annual-zooland-region-antique-car-show/",
-    "image": ""
   },
   {
     "id": "6a358adca5663a0860931af0",
@@ -3001,6 +2962,26 @@
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/7dac7c30-329e-45cc-8ebc-02820812e1c8/IMG_2705.jpeg"
   },
   {
+    "id": "traaca-2026-8-29-1",
+    "title": "TRAACA Dolphin-Watching Trip",
+    "startDate": "2026-08-29T15:00:00.000Z",
+    "endDate": "2026-08-29T16:30:00.000Z",
+    "allDay": false,
+    "month": "August",
+    "weekday": "Sat",
+    "dateLabel": "Aug 29, 2026",
+    "timeLabel": "11 AM",
+    "type": "TRAACA event",
+    "source": "TRAACA",
+    "city": "Hampton Roads",
+    "venue": "TRAACA",
+    "address": "Hampton Roads",
+    "description": "29 - TRAACA Dolphin-Watching Trip - 11 AM to about 12:30 PM. Make your reservations at 757-425-3400, then RSVP with Linda Pellerin at lpellerin2@gmail.com",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "6a3c45e9f0290f3139dbd625",
     "title": "Suffolk Hardee's Cruise In | Aug 29th",
     "startDate": "2026-08-29T17:00:00.096Z",
@@ -3515,7 +3496,7 @@
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782327947484-R8XZO1F07IGPIHDXFWGS/Classic+Cruisers+Car+Club.png"
   },
   {
-    "id": "aaca-local-2026-09-13-chesapeake-region-s-annual-autumn-harvest-collector-car-show-1-2",
+    "id": "aaca-local-2026-09-13-chesapeake-region-s-annual-autumn-harvest-collector-car-show-1-1",
     "title": "Chesapeake Region’s Annual Autumn Harvest Collector Car Show",
     "startDate": "2026-09-13T04:00:00.000Z",
     "endDate": "2026-09-14T03:59:59.000Z",
@@ -3630,7 +3611,7 @@
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "traaca-2026-9-17-1",
+    "id": "traaca-2026-9-17-2",
     "title": "TRAACA Dinner Meeting",
     "startDate": "2026-09-17T22:00:00.000Z",
     "endDate": "2026-09-18T00:00:00.000Z",
@@ -3669,7 +3650,7 @@
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782324253735-BYUJYAFS6DSI6WTPFJ8W/Middle+Pinisula+Classic+Cruisers.jpg"
   },
   {
-    "id": "aaca-local-2026-09-19-50th-edgar-rohr-memorial-car-meet-1-3",
+    "id": "aaca-local-2026-09-19-50th-edgar-rohr-memorial-car-meet-1-2",
     "title": "50th Edgar Rohr Memorial Car Meet",
     "startDate": "2026-09-19T12:00:00.000Z",
     "endDate": "2026-09-19T19:00:00.000Z",
@@ -3841,7 +3822,7 @@
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782327947484-R8XZO1F07IGPIHDXFWGS/Classic+Cruisers+Car+Club.png"
   },
   {
-    "id": "aaca-local-2026-09-20-anthracite-region-aaca-40th-annual-car-show-and-flea-market-1-4",
+    "id": "aaca-local-2026-09-20-anthracite-region-aaca-40th-annual-car-show-and-flea-market-1-3",
     "title": "Anthracite Region AACA 40th Annual Car Show and Flea Market",
     "startDate": "2026-09-20T08:00:00.000Z",
     "endDate": "2026-09-20T17:00:00.000Z",
@@ -4494,7 +4475,7 @@
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1710190301938-47XZH8M5JFGMPH30ZK45/Doumar+Cruise+In+2024.jpeg"
   },
   {
-    "id": "traaca-2026-10-15-2",
+    "id": "traaca-2026-10-15-3",
     "title": "TRAACA Chili Cookoff",
     "startDate": "2026-10-15T13:00:00.000Z",
     "endDate": "2026-10-15T13:00:00.000Z",
@@ -4894,7 +4875,7 @@
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/42ff5e1b-abd6-4195-86ee-321d21d2d84f/Last+Saturday+Cruise+in.jpg"
   },
   {
-    "id": "aaca-local-2026-11-01-tcvcc-cars-of-our-lives-cool-show-2026-1-5",
+    "id": "aaca-local-2026-11-01-tcvcc-cars-of-our-lives-cool-show-2026-1-4",
     "title": "TCVCC Cars Of Our Lives (COOL) Show 2026",
     "startDate": "2026-11-01T04:00:00.000Z",
     "endDate": "2026-11-02T04:59:59.000Z",
@@ -5066,7 +5047,7 @@
     "image": "https://static1.squarespace.com/static/6162287958ee4e2159a4807d/6162288958ee4e2159a48171/6987c827fa7754741e8d84d4/1770506412700/"
   },
   {
-    "id": "traaca-2026-11-15-3",
+    "id": "traaca-2026-11-15-4",
     "title": "TRAACA Dinner Meeting & Silent Auction",
     "startDate": "2026-11-15T23:00:00.000Z",
     "endDate": "2026-11-16T01:00:00.000Z",
@@ -5181,7 +5162,7 @@
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "traaca-2026-12-5-4",
+    "id": "traaca-2026-12-5-5",
     "title": "TRAACA Holiday Brunch",
     "startDate": "2026-12-05T16:00:00.000Z",
     "endDate": "2026-12-05T18:00:00.000Z",
