@@ -344,6 +344,15 @@ button {
   font-weight: 700;
 }
 
+.sync-form p {
+  align-self: center;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.sync-panel,
 .manual-panel {
   margin-top: 18px;
   background: var(--panel);
@@ -351,6 +360,7 @@ button {
   box-shadow: var(--shadow);
 }
 
+.sync-panel summary,
 .manual-panel summary {
   min-height: 48px;
   padding: 14px 16px;
@@ -359,6 +369,7 @@ button {
   font-weight: 900;
 }
 
+.sync-form,
 .manual-form {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1044,6 +1055,7 @@ button {
     padding: 18px;
   }
 
+  .sync-panel,
   .manual-panel {
     margin-top: 0;
     border-right: 0;

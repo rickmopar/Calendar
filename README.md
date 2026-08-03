@@ -18,6 +18,14 @@ If you want one file that opens more reliably in Chrome after downloading from G
 
 The calendar shows only events from the current date forward. The saved dataset still keeps the full 2026 source pull so the view can roll forward automatically as dates pass.
 
+## Google Sheets Sync
+
+A starter Google Sheet for Assistant sync was created here:
+
+https://docs.google.com/spreadsheets/d/1k5RiqpsSXF8u2adiPj8QGVmd9P3rUWeUYX8rKVushK8/edit
+
+The calendar includes an optional Assistant Sync panel. To enable cross-device sync, open that Sheet, choose `Extensions > Apps Script`, paste `google-apps-script/Code.gs`, deploy it as a Web App, then paste the Web App URL into the calendar with a private sync code. Full setup notes are in `google-apps-script/README.md`.
+
 ## Mobile App
 
 Open the local or hosted `index.html` page on a phone, then use the browser's "Add to Home Screen" or "Install App" option. The app includes a web app manifest and service worker so the dashboard opens in standalone mode and keeps the latest loaded calendar available offline.

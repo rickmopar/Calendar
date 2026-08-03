@@ -11,8 +11,8 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=24">
-    <link rel="stylesheet" href="styles.css?v=24">
+    <link rel="manifest" href="manifest.webmanifest?v=25">
+    <link rel="stylesheet" href="styles.css?v=25">
   </head>
   <body>
     <header class="masthead">
@@ -127,6 +127,24 @@
         <p id="assistantResponse">Ask for a city, month, or type of event.</p>
       </section>
 
+      <details class="sync-panel">
+        <summary>Assistant Sync</summary>
+        <div class="sync-form">
+          <label>
+            <span>Google Script URL</span>
+            <input id="syncUrl" type="url" placeholder="Paste Apps Script web app URL">
+          </label>
+          <label>
+            <span>Private sync code</span>
+            <input id="syncCode" type="password" autocomplete="off" placeholder="Example: rick-calendar">
+          </label>
+          <button id="saveSyncSettings" type="button">Save Settings</button>
+          <button id="loadSyncData" type="button">Load from Sheets</button>
+          <button id="saveSyncData" type="button">Save to Sheets</button>
+          <p id="syncStatus">Local only until sync is configured.</p>
+        </div>
+      </details>
+
       <details class="manual-panel">
         <summary>Add Manual Show</summary>
         <form id="manualEventForm" class="manual-form">
@@ -226,7 +244,7 @@
       </section>
     </main>
 
-    <script src="data/events-2026.js?v=24"></script>
-    <script src="app.js?v=24"></script>
+    <script src="data/events-2026.js?v=25"></script>
+    <script src="app.js?v=25"></script>
   </body>
 </html>

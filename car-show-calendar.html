@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=24">
+    <link rel="manifest" href="manifest.webmanifest?v=25">
     <style>
 :root {
   color-scheme: light;
@@ -359,6 +359,15 @@ button {
   font-weight: 700;
 }
 
+.sync-form p {
+  align-self: center;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.sync-panel,
 .manual-panel {
   margin-top: 18px;
   background: var(--panel);
@@ -366,6 +375,7 @@ button {
   box-shadow: var(--shadow);
 }
 
+.sync-panel summary,
 .manual-panel summary {
   min-height: 48px;
   padding: 14px 16px;
@@ -374,6 +384,7 @@ button {
   font-weight: 900;
 }
 
+.sync-form,
 .manual-form {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1059,6 +1070,7 @@ button {
     padding: 18px;
   }
 
+  .sync-panel,
   .manual-panel {
     margin-top: 0;
     border-right: 0;
@@ -1263,6 +1275,24 @@ button {
         <button id="assistantButton" type="button">Find Events</button>
         <p id="assistantResponse">Ask for a city, month, or type of event.</p>
       </section>
+
+      <details class="sync-panel">
+        <summary>Assistant Sync</summary>
+        <div class="sync-form">
+          <label>
+            <span>Google Script URL</span>
+            <input id="syncUrl" type="url" placeholder="Paste Apps Script web app URL">
+          </label>
+          <label>
+            <span>Private sync code</span>
+            <input id="syncCode" type="password" autocomplete="off" placeholder="Example: rick-calendar">
+          </label>
+          <button id="saveSyncSettings" type="button">Save Settings</button>
+          <button id="loadSyncData" type="button">Load from Sheets</button>
+          <button id="saveSyncData" type="button">Save to Sheets</button>
+          <p id="syncStatus">Local only until sync is configured.</p>
+        </div>
+      </details>
 
       <details class="manual-panel">
         <summary>Add Manual Show</summary>
@@ -7057,6 +7087,12 @@ const els = {
   manualAddress: document.querySelector("#manualAddress"),
   manualDeadline: document.querySelector("#manualDeadline"),
   manualDescription: document.querySelector("#manualDescription"),
+  syncUrl: document.querySelector("#syncUrl"),
+  syncCode: document.querySelector("#syncCode"),
+  saveSyncSettings: document.querySelector("#saveSyncSettings"),
+  loadSyncData: document.querySelector("#loadSyncData"),
+  saveSyncData: document.querySelector("#saveSyncData"),
+  syncStatus: document.querySelector("#syncStatus"),
   exportPdf: document.querySelector("#exportPdfButton"),
   reset: document.querySelector("#resetButton"),
   total: document.querySelector("#totalEvents"),
@@ -7087,12 +7123,24 @@ function dateKey(date, timeZone = "America/New_York") {
 const today = new Date();
 const todayKey = dateKey(today);
 const manualEventsStorageKey = "car-show-calendar-manual-events-v1";
-const events = [...allEvents, ...loadManualEvents()]
-  .sort((a, b) => a.startDate.localeCompare(b.startDate));
+const syncUrlStorageKey = "car-show-calendar-sync-url-v1";
+const syncCodeStorageKey = "car-show-calendar-sync-code-v1";
+let syncApplying = false;
+let cloudSaveTimer = null;
+let events = buildEvents();
 const interestedStorageKey = "car-show-calendar-interested-v1";
 const eventNotesStorageKey = "car-show-calendar-notes-v1";
 let interestedIds = loadInterestedIds();
 let eventNotes = loadEventNotes();
+
+function buildEvents() {
+  return [...allEvents, ...loadManualEvents()]
+    .sort((a, b) => a.startDate.localeCompare(b.startDate));
+}
+
+function reloadEventsFromStorage() {
+  events = buildEvents();
+}
 
 function isValidManualEvent(event) {
   return Boolean(
@@ -7119,6 +7167,7 @@ function saveManualEvent(event) {
   const saved = loadManualEvents();
   saved.push(event);
   localStorage.setItem(manualEventsStorageKey, JSON.stringify(saved));
+  requestCloudSave();
 }
 
 function manualDateLabel(dateValue) {
@@ -7132,14 +7181,15 @@ function manualDateLabel(dateValue) {
   });
 }
 
-function deleteManualEvent(id) {
+async function deleteManualEvent(id) {
   const saved = loadManualEvents().filter((event) => event.id !== id);
   localStorage.setItem(manualEventsStorageKey, JSON.stringify(saved));
   interestedIds.delete(id);
   delete eventNotes[id];
   saveInterestedIds();
   saveEventNotes();
-  window.location.search = "?fresh=24";
+  await saveCloudAssistantState({ silent: true });
+  window.location.search = "?fresh=25";
 }
 
 function manualDateToEventParts(dateValue, timeValue) {
@@ -7196,6 +7246,7 @@ function loadInterestedIds() {
 
 function saveInterestedIds() {
   localStorage.setItem(interestedStorageKey, JSON.stringify([...interestedIds]));
+  requestCloudSave();
 }
 
 function loadEventNotes() {
@@ -7208,10 +7259,162 @@ function loadEventNotes() {
 
 function saveEventNotes() {
   localStorage.setItem(eventNotesStorageKey, JSON.stringify(eventNotes));
+  requestCloudSave();
 }
 
 function noteForEvent(id) {
   return eventNotes[id] || "";
+}
+
+function loadSyncConfig() {
+  return {
+    url: localStorage.getItem(syncUrlStorageKey) || "",
+    code: localStorage.getItem(syncCodeStorageKey) || "",
+  };
+}
+
+function syncConfigured(config = loadSyncConfig()) {
+  return Boolean(config.url && config.code);
+}
+
+function setSyncStatus(message) {
+  if (els.syncStatus) els.syncStatus.textContent = message;
+}
+
+function populateSyncControls() {
+  const config = loadSyncConfig();
+  if (els.syncUrl) els.syncUrl.value = config.url;
+  if (els.syncCode) els.syncCode.value = config.code;
+  setSyncStatus(syncConfigured(config) ? "Sync configured. Save or load when ready." : "Local only until sync is configured.");
+}
+
+function saveSyncSettings() {
+  const url = els.syncUrl?.value.trim() || "";
+  const code = els.syncCode?.value.trim() || "";
+  localStorage.setItem(syncUrlStorageKey, url);
+  localStorage.setItem(syncCodeStorageKey, code);
+  setSyncStatus(syncConfigured({ url, code }) ? "Sync settings saved." : "Add both a Script URL and private code to sync.");
+}
+
+function assistantSyncPayload() {
+  return {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    interestedIds: [...interestedIds],
+    eventNotes,
+    manualEvents: loadManualEvents(),
+  };
+}
+
+function mergeManualEvents(remoteManualEvents) {
+  const byId = new Map(loadManualEvents().map((event) => [event.id, event]));
+  (Array.isArray(remoteManualEvents) ? remoteManualEvents : [])
+    .filter(isValidManualEvent)
+    .forEach((event) => byId.set(event.id, event));
+  localStorage.setItem(manualEventsStorageKey, JSON.stringify([...byId.values()]));
+}
+
+function applyAssistantSyncPayload(payload) {
+  if (!payload || typeof payload !== "object") return;
+
+  syncApplying = true;
+  try {
+    mergeManualEvents(payload.manualEvents);
+    interestedIds = new Set([
+      ...interestedIds,
+      ...(Array.isArray(payload.interestedIds) ? payload.interestedIds : []),
+    ]);
+    eventNotes = {
+      ...eventNotes,
+      ...(payload.eventNotes && typeof payload.eventNotes === "object" ? payload.eventNotes : {}),
+    };
+    saveInterestedIds();
+    saveEventNotes();
+    reloadEventsFromStorage();
+    rebuildFilterValues();
+    refreshFilterControls();
+    render();
+  } finally {
+    syncApplying = false;
+  }
+}
+
+function syncUrlWithParams(url, params) {
+  const parsed = new URL(url);
+  Object.entries(params).forEach(([key, value]) => parsed.searchParams.set(key, value));
+  return parsed.toString();
+}
+
+function loadCloudAssistantState() {
+  saveSyncSettings();
+  const config = loadSyncConfig();
+  if (!syncConfigured(config)) return Promise.resolve();
+
+  setSyncStatus("Loading from Google Sheets...");
+  return new Promise((resolve) => {
+    const callbackName = `calendarSync_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const script = document.createElement("script");
+    const cleanup = () => {
+      delete window[callbackName];
+      script.remove();
+    };
+
+    window[callbackName] = (response) => {
+      cleanup();
+      if (response?.ok && response.data) {
+        applyAssistantSyncPayload(response.data);
+        setSyncStatus(`Loaded from Sheets: ${new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}.`);
+      } else if (response?.ok) {
+        setSyncStatus("No saved Sheet data for this code yet.");
+      } else {
+        setSyncStatus(response?.error || "Could not load from Sheets.");
+      }
+      resolve(response);
+    };
+
+    script.onerror = () => {
+      cleanup();
+      setSyncStatus("Could not reach the Google Script URL.");
+      resolve(null);
+    };
+
+    script.src = syncUrlWithParams(config.url, {
+      action: "load",
+      code: config.code,
+      callback: callbackName,
+    });
+    document.body.appendChild(script);
+  });
+}
+
+async function saveCloudAssistantState({ silent = false } = {}) {
+  const config = loadSyncConfig();
+  if (!syncConfigured(config)) return;
+  if (!silent) setSyncStatus("Saving to Google Sheets...");
+
+  try {
+    await fetch(config.url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        code: config.code,
+        device: navigator.userAgent || "Calendar browser",
+        data: assistantSyncPayload(),
+      }),
+    });
+    setSyncStatus(`Save sent to Sheets: ${new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}.`);
+  } catch {
+    setSyncStatus("Could not save to Google Sheets.");
+  }
+}
+
+function requestCloudSave() {
+  if (syncApplying || !syncConfigured()) return;
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer = setTimeout(() => {
+    saveCloudAssistantState({ silent: true });
+  }, 900);
 }
 
 function setEventNote(id, note) {
@@ -7980,10 +8183,30 @@ function render() {
 
 renderFreshness();
 
-const monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
-const typeValues = [...unique(events.map((event) => event.type)), "Recurring"];
-const cityValues = unique(events.map((event) => event.city));
-const sourceValues = unique(events.map((event) => event.source || "CCCHR"));
+const manualTypeDefaults = ["Car show", "Cruise-in", "Meetup", "Swap meet", "Tour", "Other"];
+let monthValues = [];
+let typeValues = [];
+let cityValues = [];
+let sourceValues = [];
+
+function rebuildFilterValues() {
+  monthValues = monthOrder.filter((month) => events.some((event) => event.month === month));
+  typeValues = [...unique([...events.map((event) => event.type), ...manualTypeDefaults]), "Recurring"];
+  cityValues = unique(events.map((event) => event.city));
+  sourceValues = unique([...events.map((event) => event.source || "CCCHR"), "Manual"]);
+}
+
+function refreshFilterControls() {
+  fillTypeOptions(els.typeOptions, typeValues);
+  fillCityOptions(cityValues);
+  fillCheckboxOptions(els.sourceOptions, "source", sourceValues, { checked: true });
+  refreshMonthOptions();
+  updateTypeSummary();
+  updateCitySummary();
+  updateSourceSummary();
+}
+
+rebuildFilterValues();
 
 function activeMonthValues() {
   return monthOrder.filter((month) => events.some((event) => event.month === month && matchesDateRange(event)));
@@ -8046,6 +8269,15 @@ els.cityOptions.addEventListener("change", () => {
 els.sourceOptions.addEventListener("change", () => {
   updateSourceSummary();
   render();
+});
+
+populateSyncControls();
+
+els.saveSyncSettings?.addEventListener("click", saveSyncSettings);
+els.loadSyncData?.addEventListener("click", loadCloudAssistantState);
+els.saveSyncData?.addEventListener("click", () => {
+  saveSyncSettings();
+  saveCloudAssistantState();
 });
 
 els.reset.addEventListener("click", () => {
@@ -8165,12 +8397,13 @@ document.querySelector(".legend")?.addEventListener("click", (event) => {
 });
 
 
-els.manualForm?.addEventListener("submit", (event) => {
+els.manualForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const manualEvent = createManualEvent();
   if (!manualEvent) return;
   saveManualEvent(manualEvent);
-  window.location.search = "?fresh=24";
+  await saveCloudAssistantState({ silent: true });
+  window.location.search = "?fresh=25";
 });
 
 function exportPdfReport() {
@@ -8310,7 +8543,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=24").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=25").catch(() => {});
   });
 }
 
