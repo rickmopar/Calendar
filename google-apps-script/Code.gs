@@ -1,3 +1,4 @@
+const SPREADSHEET_ID = "1sWi7fl6_Xplq7dV1c_OI-TpbUfT4efOeS0qcL8Q5DSs";
 const SHEET_NAME = "AssistantData";
 const HEADERS = ["syncCode", "payload", "updatedAt", "device", "version"];
 
@@ -69,7 +70,9 @@ function cleanCallbackName(value) {
 }
 
 function getSheet() {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const spreadsheet = SPREADSHEET_ID
+    ? SpreadsheetApp.openById(SPREADSHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
   let sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) sheet = spreadsheet.insertSheet(SHEET_NAME);
 

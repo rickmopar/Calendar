@@ -4,16 +4,23 @@ Use this folder to connect the Calendar Assistant to Google Sheets. The calendar
 
 ## Setup
 
-1. Open the Google Sheet named `ChatGPT Calendar`. Its sync tab should be named `AssistantData`.
-2. In the Sheet, choose `Extensions > Apps Script`.
-3. Replace the starter code with the contents of `Code.gs`.
-4. Click `Save`.
-5. Click `Deploy > New deployment`.
-6. Choose type `Web app`.
-7. Set `Execute as` to `Me`.
-8. Set `Who has access` to `Anyone`.
-9. Click `Deploy`, approve access, then copy the Web app URL.
-10. Open the calendar, expand `Assistant Sync`, paste the Web app URL, enter a private sync code, and click `Save Settings`.
+Use this route if the Google Sheet does not show `Extensions > Apps Script`.
+
+1. Go to https://script.google.com/home
+2. Click `New project`.
+3. Delete the starter code.
+4. Paste the contents of `Code.gs`.
+5. Click `Save`.
+6. Click `Deploy > New deployment`.
+7. Choose type `Web app`.
+8. Set `Execute as` to `Me`.
+9. Set `Who has access` to `Anyone`.
+10. Click `Deploy`, approve access, then copy the Web app URL.
+11. Open the calendar, expand `Assistant Sync`, paste the Web app URL, enter a private sync code, and click `Save Settings`.
+
+The script points directly to this Google Sheet ID:
+
+`1sWi7fl6_Xplq7dV1c_OI-TpbUfT4efOeS0qcL8Q5DSs`
 
 ## How It Works
 
