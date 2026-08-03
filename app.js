@@ -149,7 +149,7 @@ async function deleteManualEvent(id) {
   saveInterestedIds();
   saveEventNotes();
   await saveCloudAssistantState({ silent: true });
-  window.location.search = "?fresh=27";
+  window.location.search = "?fresh=28";
 }
 
 function manualDateToEventParts(dateValue, timeValue) {
@@ -1360,7 +1360,7 @@ els.manualForm?.addEventListener("submit", async (event) => {
   if (!manualEvent) return;
   saveManualEvent(manualEvent);
   await saveCloudAssistantState({ silent: true });
-  window.location.search = "?fresh=27";
+  window.location.search = "?fresh=28";
 });
 
 function exportTableRows(items, { includeNotes = false } = {}) {
@@ -1395,16 +1395,17 @@ function exportPdfReport() {
   if (!report) return;
   report.document.write(`<!doctype html><html><head><title>Car Show Calendar Export</title>
     <style>
-      body{font-family:Arial,sans-serif;color:#111820;margin:24px}button{margin-bottom:18px;padding:8px 12px}h1{font-size:24px;margin:0 0 6px}h2{font-size:17px;margin:20px 0 8px}p{color:#555;margin:0 0 10px}.summary{font-size:12px}.divider{height:4px;background:#000;margin:22px 0 18px}.empty{border:1px solid #bbb;padding:10px;font-size:12px;color:#555}table{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto}tr{page-break-inside:avoid;page-break-after:auto}th,td{border:1px solid #ccc;padding:5px;vertical-align:top;white-space:pre-wrap}th{background:#f0f0f0;text-align:left}.assistant-table th{background:#111820;color:#fff}@media print{button{display:none}body{margin:0.35in}.divider{break-after:avoid}}
+      body{font-family:Arial,sans-serif;color:#111820;margin:24px}button{margin-bottom:18px;padding:8px 12px}h1{font-size:24px;margin:0 0 6px}h2{font-size:17px;margin:20px 0 8px}p{color:#555;margin:0 0 10px}.summary{font-size:12px}.section-bar{background:#000;color:#fff;font-size:16px;font-weight:800;letter-spacing:.04em;margin:20px 0 10px;padding:10px 12px;text-transform:uppercase}.section-note{font-size:12px;font-weight:700;color:#111820;margin:0 0 10px}.divider{height:6px;background:#000;margin:24px 0 12px}.empty{border:2px solid #111820;padding:10px;font-size:12px;color:#555}table{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto}tr{page-break-inside:avoid;page-break-after:auto}th,td{border:1px solid #ccc;padding:5px;vertical-align:top;white-space:pre-wrap}th{background:#f0f0f0;text-align:left}.assistant-table{border:2px solid #000}.assistant-table th{background:#111820;color:#fff}@media print{button{display:none}body{margin:0.35in}.divider,.section-bar{break-after:avoid}}
     </style>
     </head><body>
       <button onclick="window.print()">Print or Save as PDF</button>
       <h1>Car Show Calendar Export</h1>
       <p class="summary">Generated ${new Date().toLocaleString("en-US")}. Assistant: ${assistantItems.length} interested show${assistantItems.length === 1 ? "" : "s"}, ${assistantDeadlines} deadline${assistantDeadlines === 1 ? "" : "s"}. Full calendar: ${events.length} shows.</p>
-      <h2>Assistant</h2>
+      <div class="section-bar">Assistant / Interested Shows</div>
+      <p class="section-note">These are the shows currently checked Interested in the Assistant. They are repeated again in the full All Shows list below.</p>
       ${assistantItems.length ? `<table class="assistant-table"><thead><tr><th>Date</th><th>Event</th><th>City</th><th>Type</th><th>Source</th><th>Deadline</th><th>Venue</th><th>Notes / Details</th></tr></thead><tbody>${assistantRows}</tbody></table>` : `<div class="empty">No Interested shows are currently saved in the Assistant.</div>`}
       <div class="divider"></div>
-      <h2>All Shows</h2>
+      <div class="section-bar">All Shows</div>
       <table><thead><tr><th>Date</th><th>Event</th><th>City</th><th>Type</th><th>Source</th><th>Deadline</th><th>Venue</th><th>Details</th></tr></thead><tbody>${allRows}</tbody></table>
     </body></html>`);
   report.document.close();
@@ -1525,6 +1526,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=27").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=28").catch(() => {});
   });
 }
