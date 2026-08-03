@@ -2,10 +2,14 @@ const SPREADSHEET_ID = "1sWi7fl6_Xplq7dV1c_OI-TpbUfT4efOeS0qcL8Q5DSs";
 const SHEET_NAME = "AssistantData";
 const HEADERS = ["syncCode", "payload", "updatedAt", "device", "version"];
 
+function normalizeCode(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
 function doGet(e) {
   const params = e && e.parameter ? e.parameter : {};
   const callback = cleanCallbackName(params.callback || "");
-  const code = String(params.code || "").trim();
+  const code = normalizeCode(params.code || "");
 
   if (params.action !== "load") {
     return output({ ok: false, error: "Unknown action." }, callback);
@@ -43,7 +47,7 @@ function doPost(e) {
     return output({ ok: false, error: "Post body is not valid JSON." });
   }
 
-  const code = String(body.code || "").trim();
+  const code = normalizeCode(body.code || "");
   if (!code) {
     return output({ ok: false, error: "Missing sync code." });
   }
@@ -91,7 +95,7 @@ function findRowByCode(code) {
   if (lastRow < 2) return null;
 
   const rows = sheet.getRange(2, 1, lastRow - 1, HEADERS.length).getValues();
-  const found = rows.find((row) => String(row[0]).trim() === code);
+  const found = rows.find((row) => normalizeCode(row[0]) === code);
   if (!found) return null;
 
   return {
@@ -114,7 +118,7 @@ function upsertRow(code, payload, device, version) {
 
     if (lastRow >= 2) {
       const codes = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
-      const index = codes.findIndex((row) => String(row[0]).trim() === code);
+      const index = codes.findIndex((row) => normalizeCode(row[0]) === code);
       if (index >= 0) {
         sheet.getRange(index + 2, 1, 1, HEADERS.length).setValues([values]);
         return;

@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=25">
+    <link rel="manifest" href="manifest.webmanifest?v=26">
     <style>
 :root {
   color-scheme: light;
@@ -7189,7 +7189,7 @@ async function deleteManualEvent(id) {
   saveInterestedIds();
   saveEventNotes();
   await saveCloudAssistantState({ silent: true });
-  window.location.search = "?fresh=25";
+  window.location.search = "?fresh=26";
 }
 
 function manualDateToEventParts(dateValue, timeValue) {
@@ -7266,10 +7266,14 @@ function noteForEvent(id) {
   return eventNotes[id] || "";
 }
 
+function normalizeSyncCode(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
 function loadSyncConfig() {
   return {
     url: localStorage.getItem(syncUrlStorageKey) || "",
-    code: localStorage.getItem(syncCodeStorageKey) || "",
+    code: normalizeSyncCode(localStorage.getItem(syncCodeStorageKey) || ""),
   };
 }
 
@@ -7290,7 +7294,8 @@ function populateSyncControls() {
 
 function saveSyncSettings() {
   const url = els.syncUrl?.value.trim() || "";
-  const code = els.syncCode?.value.trim() || "";
+  const code = normalizeSyncCode(els.syncCode?.value || "");
+  if (els.syncCode) els.syncCode.value = code;
   localStorage.setItem(syncUrlStorageKey, url);
   localStorage.setItem(syncCodeStorageKey, code);
   setSyncStatus(syncConfigured({ url, code }) ? "Sync settings saved." : "Add both a Script URL and private code to sync.");
@@ -7306,12 +7311,10 @@ function assistantSyncPayload() {
   };
 }
 
-function mergeManualEvents(remoteManualEvents) {
-  const byId = new Map(loadManualEvents().map((event) => [event.id, event]));
-  (Array.isArray(remoteManualEvents) ? remoteManualEvents : [])
-    .filter(isValidManualEvent)
-    .forEach((event) => byId.set(event.id, event));
-  localStorage.setItem(manualEventsStorageKey, JSON.stringify([...byId.values()]));
+function replaceManualEvents(remoteManualEvents) {
+  const cleanEvents = (Array.isArray(remoteManualEvents) ? remoteManualEvents : [])
+    .filter(isValidManualEvent);
+  localStorage.setItem(manualEventsStorageKey, JSON.stringify(cleanEvents));
 }
 
 function applyAssistantSyncPayload(payload) {
@@ -7319,15 +7322,9 @@ function applyAssistantSyncPayload(payload) {
 
   syncApplying = true;
   try {
-    mergeManualEvents(payload.manualEvents);
-    interestedIds = new Set([
-      ...interestedIds,
-      ...(Array.isArray(payload.interestedIds) ? payload.interestedIds : []),
-    ]);
-    eventNotes = {
-      ...eventNotes,
-      ...(payload.eventNotes && typeof payload.eventNotes === "object" ? payload.eventNotes : {}),
-    };
+    replaceManualEvents(payload.manualEvents);
+    interestedIds = new Set(Array.isArray(payload.interestedIds) ? payload.interestedIds : []);
+    eventNotes = payload.eventNotes && typeof payload.eventNotes === "object" ? payload.eventNotes : {};
     saveInterestedIds();
     saveEventNotes();
     reloadEventsFromStorage();
@@ -8403,7 +8400,7 @@ els.manualForm?.addEventListener("submit", async (event) => {
   if (!manualEvent) return;
   saveManualEvent(manualEvent);
   await saveCloudAssistantState({ silent: true });
-  window.location.search = "?fresh=25";
+  window.location.search = "?fresh=26";
 });
 
 function exportPdfReport() {
@@ -8543,7 +8540,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=25").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=26").catch(() => {});
   });
 }
 

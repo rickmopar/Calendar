@@ -149,7 +149,7 @@ async function deleteManualEvent(id) {
   saveInterestedIds();
   saveEventNotes();
   await saveCloudAssistantState({ silent: true });
-  window.location.search = "?fresh=25";
+  window.location.search = "?fresh=26";
 }
 
 function manualDateToEventParts(dateValue, timeValue) {
@@ -226,10 +226,14 @@ function noteForEvent(id) {
   return eventNotes[id] || "";
 }
 
+function normalizeSyncCode(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
 function loadSyncConfig() {
   return {
     url: localStorage.getItem(syncUrlStorageKey) || "",
-    code: localStorage.getItem(syncCodeStorageKey) || "",
+    code: normalizeSyncCode(localStorage.getItem(syncCodeStorageKey) || ""),
   };
 }
 
@@ -250,7 +254,8 @@ function populateSyncControls() {
 
 function saveSyncSettings() {
   const url = els.syncUrl?.value.trim() || "";
-  const code = els.syncCode?.value.trim() || "";
+  const code = normalizeSyncCode(els.syncCode?.value || "");
+  if (els.syncCode) els.syncCode.value = code;
   localStorage.setItem(syncUrlStorageKey, url);
   localStorage.setItem(syncCodeStorageKey, code);
   setSyncStatus(syncConfigured({ url, code }) ? "Sync settings saved." : "Add both a Script URL and private code to sync.");
@@ -266,12 +271,10 @@ function assistantSyncPayload() {
   };
 }
 
-function mergeManualEvents(remoteManualEvents) {
-  const byId = new Map(loadManualEvents().map((event) => [event.id, event]));
-  (Array.isArray(remoteManualEvents) ? remoteManualEvents : [])
-    .filter(isValidManualEvent)
-    .forEach((event) => byId.set(event.id, event));
-  localStorage.setItem(manualEventsStorageKey, JSON.stringify([...byId.values()]));
+function replaceManualEvents(remoteManualEvents) {
+  const cleanEvents = (Array.isArray(remoteManualEvents) ? remoteManualEvents : [])
+    .filter(isValidManualEvent);
+  localStorage.setItem(manualEventsStorageKey, JSON.stringify(cleanEvents));
 }
 
 function applyAssistantSyncPayload(payload) {
@@ -279,15 +282,9 @@ function applyAssistantSyncPayload(payload) {
 
   syncApplying = true;
   try {
-    mergeManualEvents(payload.manualEvents);
-    interestedIds = new Set([
-      ...interestedIds,
-      ...(Array.isArray(payload.interestedIds) ? payload.interestedIds : []),
-    ]);
-    eventNotes = {
-      ...eventNotes,
-      ...(payload.eventNotes && typeof payload.eventNotes === "object" ? payload.eventNotes : {}),
-    };
+    replaceManualEvents(payload.manualEvents);
+    interestedIds = new Set(Array.isArray(payload.interestedIds) ? payload.interestedIds : []);
+    eventNotes = payload.eventNotes && typeof payload.eventNotes === "object" ? payload.eventNotes : {};
     saveInterestedIds();
     saveEventNotes();
     reloadEventsFromStorage();
@@ -1363,7 +1360,7 @@ els.manualForm?.addEventListener("submit", async (event) => {
   if (!manualEvent) return;
   saveManualEvent(manualEvent);
   await saveCloudAssistantState({ silent: true });
-  window.location.search = "?fresh=25";
+  window.location.search = "?fresh=26";
 });
 
 function exportPdfReport() {
@@ -1503,6 +1500,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=25").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=26").catch(() => {});
   });
 }
