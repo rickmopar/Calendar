@@ -149,7 +149,7 @@ async function deleteManualEvent(id) {
   saveInterestedIds();
   saveEventNotes();
   await saveCloudAssistantState({ silent: true });
-  window.location.search = "?fresh=26";
+  window.location.search = "?fresh=27";
 }
 
 function manualDateToEventParts(dateValue, timeValue) {
@@ -1360,12 +1360,16 @@ els.manualForm?.addEventListener("submit", async (event) => {
   if (!manualEvent) return;
   saveManualEvent(manualEvent);
   await saveCloudAssistantState({ silent: true });
-  window.location.search = "?fresh=26";
+  window.location.search = "?fresh=27";
 });
 
-function exportPdfReport() {
-  const rows = events.map((event) => {
+function exportTableRows(items, { includeNotes = false } = {}) {
+  return items.map((event) => {
     const deadline = deadlineForEvent(event)?.date || "";
+    const note = includeNotes ? noteForEvent(event.id) : "";
+    const details = [includeNotes && note ? `Note: ${note}` : "", event.description || ""]
+      .filter(Boolean)
+      .join("\n\n");
     return `<tr>
       <td>${escapeHtml(event.dateLabel)}</td>
       <td>${escapeHtml(event.title)}</td>
@@ -1374,14 +1378,35 @@ function exportPdfReport() {
       <td>${escapeHtml(event.source || "")}</td>
       <td>${escapeHtml(deadline)}</td>
       <td>${escapeHtml(event.venue || "")}</td>
-      <td>${escapeHtml(event.description || "")}</td>
+      <td>${escapeHtml(details)}</td>
     </tr>`;
   }).join("");
+}
+
+function exportPdfReport() {
+  const assistantItems = interestedEvents();
+  const assistantRows = exportTableRows(assistantItems, { includeNotes: true });
+  const allRows = exportTableRows(events);
+  const assistantDeadlines = assistantItems
+    .map(deadlineForEvent)
+    .filter(Boolean)
+    .length;
   const report = window.open("", "_blank");
   if (!report) return;
   report.document.write(`<!doctype html><html><head><title>Car Show Calendar Export</title>
-    <style>body{font-family:Arial,sans-serif;color:#111820}h1{font-size:22px}p{color:#555}table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #ccc;padding:5px;vertical-align:top}th{background:#f0f0f0;text-align:left}@media print{button{display:none}}</style>
-    </head><body><button onclick="window.print()">Print or Save as PDF</button><h1>Car Show Calendar Export</h1><p>${events.length} events. Generated ${new Date().toLocaleString("en-US")}.</p><table><thead><tr><th>Date</th><th>Event</th><th>City</th><th>Type</th><th>Source</th><th>Deadline</th><th>Venue</th><th>Details</th></tr></thead><tbody>${rows}</tbody></table></body></html>`);
+    <style>
+      body{font-family:Arial,sans-serif;color:#111820;margin:24px}button{margin-bottom:18px;padding:8px 12px}h1{font-size:24px;margin:0 0 6px}h2{font-size:17px;margin:20px 0 8px}p{color:#555;margin:0 0 10px}.summary{font-size:12px}.divider{height:4px;background:#000;margin:22px 0 18px}.empty{border:1px solid #bbb;padding:10px;font-size:12px;color:#555}table{width:100%;border-collapse:collapse;font-size:11px;page-break-inside:auto}tr{page-break-inside:avoid;page-break-after:auto}th,td{border:1px solid #ccc;padding:5px;vertical-align:top;white-space:pre-wrap}th{background:#f0f0f0;text-align:left}.assistant-table th{background:#111820;color:#fff}@media print{button{display:none}body{margin:0.35in}.divider{break-after:avoid}}
+    </style>
+    </head><body>
+      <button onclick="window.print()">Print or Save as PDF</button>
+      <h1>Car Show Calendar Export</h1>
+      <p class="summary">Generated ${new Date().toLocaleString("en-US")}. Assistant: ${assistantItems.length} interested show${assistantItems.length === 1 ? "" : "s"}, ${assistantDeadlines} deadline${assistantDeadlines === 1 ? "" : "s"}. Full calendar: ${events.length} shows.</p>
+      <h2>Assistant</h2>
+      ${assistantItems.length ? `<table class="assistant-table"><thead><tr><th>Date</th><th>Event</th><th>City</th><th>Type</th><th>Source</th><th>Deadline</th><th>Venue</th><th>Notes / Details</th></tr></thead><tbody>${assistantRows}</tbody></table>` : `<div class="empty">No Interested shows are currently saved in the Assistant.</div>`}
+      <div class="divider"></div>
+      <h2>All Shows</h2>
+      <table><thead><tr><th>Date</th><th>Event</th><th>City</th><th>Type</th><th>Source</th><th>Deadline</th><th>Venue</th><th>Details</th></tr></thead><tbody>${allRows}</tbody></table>
+    </body></html>`);
   report.document.close();
   report.focus();
 }
@@ -1500,6 +1525,6 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=26").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=27").catch(() => {});
   });
 }
