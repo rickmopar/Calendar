@@ -4,7 +4,7 @@ Use this folder to connect the Calendar Assistant to Google Sheets. The calendar
 
 ## Setup
 
-1. Create or open a Google Sheet named `Car Show Calendar Assistant`.
+1. Open the Google Sheet named `ChatGPT Calendar`. Its sync tab should be named `AssistantData`.
 2. In the Sheet, choose `Extensions > Apps Script`.
 3. Replace the starter code with the contents of `Code.gs`.
 4. Click `Save`.

@@ -22,7 +22,7 @@ The calendar shows only events from the current date forward. The saved dataset 
 
 A starter Google Sheet for Assistant sync was created here:
 
-https://docs.google.com/spreadsheets/d/1k5RiqpsSXF8u2adiPj8QGVmd9P3rUWeUYX8rKVushK8/edit
+https://docs.google.com/spreadsheets/d/1sWi7fl6_Xplq7dV1c_OI-TpbUfT4efOeS0qcL8Q5DSs/edit
 
 The calendar includes an optional Assistant Sync panel. To enable cross-device sync, open that Sheet, choose `Extensions > Apps Script`, paste `google-apps-script/Code.gs`, deploy it as a Web App, then paste the Web App URL into the calendar with a private sync code. Full setup notes are in `google-apps-script/README.md`.
 
