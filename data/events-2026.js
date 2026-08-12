@@ -6105,7 +6105,7 @@ window.CCCHR_METADATA = {
     2027
   ],
   "year": 2026,
-  "refreshedAt": "2026-08-11T11:05:19.775Z",
+  "refreshedAt": "2026-08-12T11:10:54.850Z",
   "totalEvents": 317,
   "sourceCounts": {
     "CCCHR": 270,
