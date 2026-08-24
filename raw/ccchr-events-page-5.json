@@ -278,15 +278,15 @@
     "categoryPagesSeoHidden": false,
     "tagPagesSeoHidden": false,
     "qrCodeEnabled": false,
-    "pagePermissionType": 1,
     "typeLabel": "events",
     "fullUrl": "/events",
     "passwordProtected": false,
-    "draft": false
+    "draft": false,
+    "pagePermissionType": 1
   },
   "shoppingCart": {
     "websiteId": "6162287958ee4e2159a4807d",
-    "created": 1787481649837,
+    "created": 1787568820466,
     "entries": [],
     "shippingLocation": {},
     "taxLineItems": [],
