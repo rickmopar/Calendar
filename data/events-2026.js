@@ -2785,26 +2785,6 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/7dac7c30-329e-45cc-8ebc-02820812e1c8/IMG_2705.jpeg"
   },
   {
-    "id": "traaca-2026-8-29-0",
-    "title": "TRAACA Dolphin-Watching Trip",
-    "startDate": "2026-08-29T15:00:00.000Z",
-    "endDate": "2026-08-29T16:30:00.000Z",
-    "allDay": false,
-    "month": "August",
-    "weekday": "Sat",
-    "dateLabel": "Aug 29, 2026",
-    "timeLabel": "11 AM",
-    "type": "TRAACA event",
-    "source": "TRAACA",
-    "city": "Hampton Roads",
-    "venue": "TRAACA",
-    "address": "Hampton Roads",
-    "description": "29 - TRAACA Dolphin-Watching Trip - 11 AM to about 12:30 PM. Make your reservations at 757-425-3400, then RSVP with Linda Pellerin at lpellerin2@gmail.com",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
     "id": "6a3c45e9f0290f3139dbd625",
     "title": "Suffolk Hardee's Cruise In | Aug 29th",
     "startDate": "2026-08-29T17:00:00.096Z",
@@ -3605,7 +3585,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "traaca-2026-9-17-1",
+    "id": "traaca-2026-9-17-0",
     "title": "TRAACA Dinner Meeting",
     "startDate": "2026-09-17T22:00:00.000Z",
     "endDate": "2026-09-18T00:00:00.000Z",
@@ -4754,7 +4734,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "traaca-2026-10-17-2",
+    "id": "traaca-2026-10-17-1",
     "title": "TRAACA Chili Cookoff",
     "startDate": "2026-10-17T13:00:00.000Z",
     "endDate": "2026-10-17T13:00:00.000Z",
@@ -5364,7 +5344,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://static1.squarespace.com/static/6162287958ee4e2159a4807d/6162288958ee4e2159a48171/6987c827fa7754741e8d84d4/1770506412700/"
   },
   {
-    "id": "traaca-2026-11-19-3",
+    "id": "traaca-2026-11-19-2",
     "title": "TRAACA Dinner Meeting & Silent Auction",
     "startDate": "2026-11-19T23:00:00.000Z",
     "endDate": "2026-11-20T01:00:00.000Z",
@@ -5479,7 +5459,7 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "traaca-2026-12-6-4",
+    "id": "traaca-2026-12-6-3",
     "title": "TRAACA Holiday Brunch",
     "startDate": "2026-12-06T16:00:00.000Z",
     "endDate": "2026-12-06T18:00:00.000Z",
@@ -5988,13 +5968,13 @@ window.CCCHR_METADATA = {
     2027
   ],
   "year": 2026,
-  "refreshedAt": "2026-08-31T17:37:53.080Z",
-  "totalEvents": 311,
+  "refreshedAt": "2026-09-01T14:54:08.382Z",
+  "totalEvents": 310,
   "sourceCounts": {
     "CCCHR": 266,
     "AACA": 25,
     "AACA Local": 4,
-    "TRAACA": 5,
+    "TRAACA": 4,
     "Carlisle": 11
   }
 };
