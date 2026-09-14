@@ -21,12 +21,12 @@
     2027
   ],
   "year": 2026,
-  "refreshedAt": "2026-09-13T14:23:54.478Z",
-  "totalEvents": 255,
+  "refreshedAt": "2026-09-14T16:22:14.816Z",
+  "totalEvents": 228,
   "sourceCounts": {
-    "CCCHR": 210,
+    "CCCHR": 184,
     "AACA": 25,
-    "AACA Local": 4,
+    "AACA Local": 3,
     "TRAACA": 5,
     "Carlisle": 11
   }
