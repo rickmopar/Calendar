@@ -4141,8 +4141,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "King of Prussia, PA",
     "description": "February 4-6, 2027 - Annual Convention/National Awards - King of Prussia, PA",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4161,8 +4161,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Melbourne, FL",
     "description": "February 18-20, 2027 - Winter Nationals - Melbourne, FL",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4201,8 +4201,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Charlotte, NC",
     "description": "April 8-10, 2027 - Annual Grand Nationals/Zenith/Southeastern Spring Nationals - Charlotte, NC",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4284,8 +4284,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Fredericksburg, VA",
     "description": "June 3-5, 2027 - Eastern Spring Nationals - Fredericksburg, VA",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4325,8 +4325,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Winchester, VA",
     "description": "June 6-11, 2027 - Founders Tour - Winchester, VA",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4387,8 +4387,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "New Ulm, MN",
     "description": "July 22-24, 2027 - Central Spring Nationals - New Ulm, MN",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4428,8 +4428,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Crystal Lake, IL",
     "description": "August 25-28, 2027 - Central Fall Nationals - Crystal Lake, IL",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4469,8 +4469,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Vernon, NY",
     "description": "September 8-11, 2027 - Special Fall Nationals - Vernon, NY",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4489,8 +4489,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Branson, MO",
     "description": "September 19-24, 2027 - AAA Glidden Tour - Branson, MO",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4551,8 +4551,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Hershey, PA",
     "description": "October 5-8, 2027 - Eastern Fall Meet - Hershey, PA",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   },
   {
@@ -4571,8 +4571,8 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "AACA National Shows and Tours",
     "address": "Swedesboro, NJ",
     "description": "October 25-29, 2027 - Eastern Divisional Tour - Swedesboro, NJ",
-    "sourceUrl": "https://aaca.org/aacanationalshowsandtourscalendar/",
-    "url": "https://aaca.org/aacanationalshowsandtourscalendar/",
+    "sourceUrl": "https://aaca.org/2027-annual-convention/",
+    "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
   }
 ];
@@ -4599,7 +4599,7 @@ window.CCCHR_METADATA = {
     2027
   ],
   "year": 2026,
-  "refreshedAt": "2026-10-12T19:48:46.903Z",
+  "refreshedAt": "2026-10-13T17:36:14.699Z",
   "totalEvents": 238,
   "sourceCounts": {
     "CCCHR": 195,
