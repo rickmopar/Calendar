@@ -290,7 +290,7 @@
   },
   "shoppingCart": {
     "websiteId": "6162287958ee4e2159a4807d",
-    "created": 1792850447483,
+    "created": 1792938196381,
     "entries": [],
     "shippingLocation": {},
     "taxLineItems": [],
@@ -599,15 +599,73 @@
   "calendarView": false,
   "pagination": {
     "nextPage": true,
-    "nextPageOffset": 1781371417190,
-    "nextPageUrl": "/events?offset=1781371417190",
+    "nextPageOffset": 1781894470838,
+    "nextPageUrl": "/events?offset=1781894470838",
     "pageSize": 30,
     "prevPage": true,
-    "prevPageOffset": 1781897198946,
-    "prevPageUrl": "/events?offset=1781897198946&reversePaginate=true"
+    "prevPageOffset": 1770506219179,
+    "prevPageUrl": "/events?offset=1770506219179&reversePaginate=true"
   },
   "upcoming": [],
   "past": [
+    {
+      "id": "6987c75f76e2eb73e7cfe766",
+      "collectionId": "6162288958ee4e2159a48171",
+      "recordType": 12,
+      "addedOn": 1770506219179,
+      "updatedOn": 1789751912561,
+      "starred": false,
+      "passthrough": false,
+      "tags": [],
+      "categories": [],
+      "workflowState": 1,
+      "publishOn": 1770506219179,
+      "authorId": "5ff615bac053a66d48c1f9c8",
+      "mediaFocalPoint": {
+        "x": 0.5,
+        "y": 0.5,
+        "source": 3
+      },
+      "urlId": "trunk-or-treat-classics-and-customs-cruise-in-oct-24",
+      "title": "Trunk or Treat &amp; Classics and Customs Cruise In | Oct. 24th",
+      "sourceUrl": "https://www.facebook.com/events/1555562588860474/",
+      "body": "<div class=\"sqs-layout sqs-grid-12 columns-12\" data-layout-label=\"Post Body\" data-type=\"item\" data-updated-on=\"1770506219183\" id=\"item-6987c75f76e2eb73e7cfe766\"><div class=\"row sqs-row\"><div class=\"col sqs-col-12 span-12\"><div class=\"sqs-block website-component-block sqs-block-website-component sqs-block-html html-block\" data-block-css=\"[&quot;https://definitions.sqspcdn.com/website-component-definition/static-assets/website.components.html/d2a1a69c-95e9-4739-b5f8-14c197d4b62d_1004/website.components.html.styles.css&quot;]\" data-block-scripts=\"[&quot;https://definitions.sqspcdn.com/website-component-definition/static-assets/website.components.html/d2a1a69c-95e9-4739-b5f8-14c197d4b62d_1004/website.components.html.visitor.js&quot;]\" data-block-type=\"1337\" data-definition-name=\"website.components.html\" data-sqsp-block=\"text\" data-website-component-id=\"22646e2c9601d23623d1\" id=\"block-22646e2c9601d23623d1\"><div class=\"sqs-block-content\"><div class=\"sqs-text-block-container\">\n  \n  <div class=\"sqs-html-content\" data-sqsp-text-block-content><h3 style=\"text-align:center;white-space:pre-wrap;\">Trunk or Treat &amp; Classics and Customs Cruise In</h3><h3 style=\"text-align:center;white-space:pre-wrap;\">Saturday, October 24th | 3p-6p</h3><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">Bring the kids and join us for this Trunk or Treat event combined with the Classics and Customs Cruise In at Landstown Commons. This is a very popular and highly successful event.</p><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">Thanks to all of our hosting clubs:<br>7 Cities Camaro Club<br>Beachcombers Corvette Club<br>Virginia Chevy Lovers<br>Rollin' with the Knights</p><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">We will have community services onsite!</p><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">Participants are encouraged to bring lots of candy for the ghouls, goblins, princesses, and heroes working the lot!</p><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">DJVinlo with DVC Entertainment will be there spinning the Halloween tunes, Sponsors and Vendors on-site, along with 757 Auto Events and Sinclair Communications.</p><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">Car entry is from 3 PM till 4 PM! $3 charitable donation at entry. BRING LOTS OF CANDY OR GOODIES! Trunk or Treat is from 4 to 6 pm and no vehicles will be permitted to come or go during that time.</p></div>\n\n\n  \n<style id=\"container-styles\">#block-22646e2c9601d23623d1 {\n    \n    \n    \n\n\n\n  }\n\n  #block-22646e2c9601d23623d1 .sqs-html-content {\n    \n    --tweak-text-block-padding: initial;\n}\n\n  #block-22646e2c9601d23623d1 {\n      mix-blend-mode: var(--tweak-text-block-blend\n  );\n      border-radius: var(--tweak-text-block-radius);\n  }\n\n  \n  \n\n\n\n  \n  \n\n  #block-22646e2c9601d23623d1 {\n    }\n\n</style>\n\n<style id=\"override-container-styles\">\n    @media screen and (max-width: 767px) {\n          \n            \n\n#block-22646e2c9601d23623d1 {\n            \n            }\n        }\n    \n  \n    @media screen and (max-width: 767px) {\n          #block-22646e2c9601d23623d1 .sqs-html-content {\n            \n            }\n        }\n    \n  @media screen and (max-width: 767px) {\n          \n          \n\n          \n          \n          \n        }</style>\n<style class=\"transform-overrides-vars\">\n  \n</style>\n\n\n\n\n</div>\n</div></div><div class=\"sqs-block website-component-block sqs-block-website-component sqs-block-button button-block\" data-block-css=\"[&quot;https://definitions.sqspcdn.com/website-component-definition/static-assets/website.components.button/e388f110-411c-4f4a-a838-d57e9dd77523_1174/website.components.button.styles.css&quot;]\" data-block-scripts=\"[&quot;https://definitions.sqspcdn.com/website-component-definition/static-assets/website.components.button/e388f110-411c-4f4a-a838-d57e9dd77523_1174/website.components.button.visitor.js&quot;]\" data-block-type=\"1337\" data-definition-name=\"website.components.button\" data-sqsp-block=\"button\" data-website-component-id=\"b22779dd78b8c30a1b8a\" id=\"block-b22779dd78b8c30a1b8a\"><div class=\"sqs-block-content\">\n\n\n\n  \n    \n    \n      \n      \n\n\n\n<div\n  class=\"sqs-block-button-container sqs-button-block-container-system_desktop sqs-block-button-container--center \"\n  data-animation-role=\"button\"\n  data-button-size=\"small\"\n  data-button-type=\"tertiary\"\n  \n>\n  <a\n    href=\"https://www.facebook.com/events/776627858318258/\"\n    class=\"sqs-block-button-element--small sqs-button-element--tertiary sqs-block-button-element\"\n    data-sqsp-button\n    target=\"_blank\"\n  >\n    More Info\n  </a>\n  \n\n\n\n</div>\n\n    \n  \n    \n    \n      \n    \n  \n\n\n<style>\n  #block-b22779dd78b8c30a1b8a {\n    --sqs-block-content-flex: 0;\n  }\n\n  \n  \n    \n      \n      \n    \n      \n      \n        \n      \n    \n  \n</style>\n<style class=\"transform-overrides-vars\">\n  \n</style>\n\n</div></div></div></div></div>",
+      "excerpt": "",
+      "location": {
+        "mapLat": 36.7751762,
+        "mapLng": -76.086326,
+        "markerLat": 36.7751762,
+        "markerLng": -76.086326,
+        "addressTitle": "Landstown Commons Shopping Center",
+        "addressLine1": "3312 Princess Anne Road",
+        "addressLine2": "Virginia Beach, VA, 23456",
+        "addressCountry": "United States"
+      },
+      "customContent": null,
+      "likeCount": 0,
+      "commentCount": 0,
+      "publicCommentCount": 0,
+      "commentState": 2,
+      "unsaved": false,
+      "fullUrl": "/events/trunk-or-treat-classics-and-customs-cruise-in-oct-24",
+      "assetUrl": "https://static1.squarespace.com/static/6162287958ee4e2159a4807d/6162288958ee4e2159a48171/6987c75f76e2eb73e7cfe766/1789751912561/",
+      "contentType": "text/html",
+      "structuredContent": {
+        "_type": "CalendarEvent",
+        "startDate": 1792868400806,
+        "endDate": 1792879200806
+      },
+      "startDate": 1792868400806,
+      "endDate": 1792879200806,
+      "items": [],
+      "pushedServices": {},
+      "pendingPushedServices": {},
+      "seoData": {
+        "seoTitle": "Trunk or Treat & Classics and Customs Cruise In | Oct. 24th",
+        "seoHidden": false
+      },
+      "recordTypeLabel": "event"
+    },
     {
       "id": "6a3597d3630e7f6f21a6ba5b",
       "collectionId": "6162288958ee4e2159a48171",
@@ -2639,65 +2697,6 @@
       "pendingPushedServices": {},
       "seoData": {
         "seoTitle": "Williamsburg Hot-Rod Hangout | Sept 12th",
-        "seoHidden": false
-      },
-      "recordTypeLabel": "event"
-    },
-    {
-      "id": "6a2d912bc3c0b05373a442d0",
-      "collectionId": "6162288958ee4e2159a48171",
-      "recordType": 12,
-      "addedOn": 1781371417190,
-      "updatedOn": 1789751937824,
-      "starred": false,
-      "passthrough": false,
-      "tags": [],
-      "categories": [],
-      "workflowState": 1,
-      "publishOn": 1781371417190,
-      "authorId": "5ff615bac053a66d48c1f9c8",
-      "mediaFocalPoint": {
-        "x": 0.5,
-        "y": 0.5,
-        "source": 3
-      },
-      "urlId": "23-annual-shine-and-show-before-the-snow-car-truck-and-motorcycle-show-sept-12",
-      "title": "23 Annual, Shine and Show Before the Snow Car Truck and Motorcycle Show | Sept. 12th",
-      "sourceUrl": "",
-      "body": "<div class=\"sqs-layout sqs-grid-12 columns-12\" data-layout-label=\"Post Body\" data-type=\"item\" data-updated-on=\"1781371417192\" id=\"item-6a2d912bc3c0b05373a442d0\"><div class=\"row sqs-row\"><div class=\"col sqs-col-12 span-12\"><div class=\"sqs-block website-component-block sqs-block-website-component sqs-block-html html-block\" data-block-css=\"[&quot;https://definitions.sqspcdn.com/website-component-definition/static-assets/website.components.html/d2a1a69c-95e9-4739-b5f8-14c197d4b62d_1004/website.components.html.styles.css&quot;]\" data-block-scripts=\"[&quot;https://definitions.sqspcdn.com/website-component-definition/static-assets/website.components.html/d2a1a69c-95e9-4739-b5f8-14c197d4b62d_1004/website.components.html.visitor.js&quot;]\" data-block-type=\"1337\" data-definition-name=\"website.components.html\" data-sqsp-block=\"text\" data-website-component-id=\"9cd6d086c97d7e50a84c\" id=\"block-9cd6d086c97d7e50a84c\"><div class=\"sqs-block-content\"><div class=\"sqs-text-block-container\">\n  \n  <div class=\"sqs-html-content\" data-sqsp-text-block-content><h3 style=\"text-align:center;white-space:pre-wrap;\">23 Annual, Shine and Show Before the Snow Car Truck and Motorcycle Show</h3><h3 style=\"text-align:center;white-space:pre-wrap;\">September 12, 2026 | 9a-3p</h3><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">{rain date September 19, 2026}</p><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">Located at Norfolk Masonic Temple, 7001 Granby Street, Norfolk, Virginia 23505</p><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">Goodie bags and dash plaques to the first 75, Peoples Choice Trophies, venders,crafters and concessions</p><p style=\"text-align:center;white-space:pre-wrap;\" class=\"\">Registration Fee (if any): $20.00 Pre-registration, $25.00 day of show</p></div>\n\n\n  \n<style id=\"container-styles\">#block-9cd6d086c97d7e50a84c {\n    \n    \n    \n\n\n\n  }\n\n  #block-9cd6d086c97d7e50a84c .sqs-html-content {\n    \n    --tweak-text-block-padding: initial;\n}\n\n  #block-9cd6d086c97d7e50a84c {\n      mix-blend-mode: var(--tweak-text-block-blend\n  );\n      border-radius: var(--tweak-text-block-radius);\n  }\n\n  \n  \n\n\n\n  \n  \n\n  #block-9cd6d086c97d7e50a84c {\n    }\n\n</style>\n\n<style id=\"override-container-styles\">\n    @media screen and (max-width: 767px) {\n          \n            \n\n#block-9cd6d086c97d7e50a84c {\n            \n            }\n        }\n    \n  \n    @media screen and (max-width: 767px) {\n          #block-9cd6d086c97d7e50a84c .sqs-html-content {\n            \n            }\n        }\n    \n  @media screen and (max-width: 767px) {\n          \n          \n\n          \n          \n          \n        }</style>\n<style class=\"transform-overrides-vars\">\n  \n</style>\n\n\n\n\n</div>\n</div></div></div></div></div>",
-      "excerpt": "",
-      "location": {
-        "mapZoom": 12,
-        "mapLat": 36.9054515,
-        "mapLng": -76.2775638,
-        "markerLat": 36.9054515,
-        "markerLng": -76.2775638,
-        "addressTitle": "Norfolk Masonic Temple",
-        "addressLine1": "7001 Granby Street",
-        "addressLine2": "Norfolk, VA, 23505",
-        "addressCountry": "United States"
-      },
-      "customContent": null,
-      "likeCount": 0,
-      "commentCount": 0,
-      "publicCommentCount": 0,
-      "commentState": 2,
-      "unsaved": false,
-      "fullUrl": "/events/23-annual-shine-and-show-before-the-snow-car-truck-and-motorcycle-show-sept-12",
-      "assetUrl": "https://static1.squarespace.com/static/6162287958ee4e2159a4807d/6162288958ee4e2159a48171/6a2d912bc3c0b05373a442d0/1789751937824/",
-      "contentType": "text/html",
-      "structuredContent": {
-        "_type": "CalendarEvent",
-        "startDate": 1789218000963,
-        "endDate": 1789239600963
-      },
-      "startDate": 1789218000963,
-      "endDate": 1789239600963,
-      "items": [],
-      "pushedServices": {},
-      "pendingPushedServices": {},
-      "seoData": {
-        "seoTitle": "23 Annual, Shine and Show Before the Snow Car Truck and Motorcycle Show | Sept. 12th",
         "seoHidden": false
       },
       "recordTypeLabel": "event"
