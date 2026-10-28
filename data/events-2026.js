@@ -3144,10 +3144,10 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Chesapeake",
     "venue": "Southern Chevrolet",
     "address": "3412 Western Branch Boulevard, Chesapeake, VA, 23321",
-    "description": "8th Annual Southern Chevrolet Custom Car Show Saturday, November 7th | 10a-3p Located at Southern Chevrolet | 3412 Western Branch Blvd, Chesapeake Join 757 Auto Events as we team up with local Chevrolet powerhouses including Southern Automotive Group and the Car Club Council of Hampton Roads to bring an awesome event to your community! $8.00 food vouchers for use at the food trucks onsite for each participant. (85 vouchers - 1st come 1st served) Proceeds Benefit Charity - Santa’s Helpers Family fun - Coloring Contest! Food truck rodeo! Vendors: Judged car show. AWARDS: | BEST IN SHOW - OVERALL | BEST IN SHOW - RUNNER UP | BEST FORD BUILD | BEST CHEVROLET BUILD | BEST GM - OTHER BULID | BEST MOPAR BUILD | BEST TRUCK/SUV BUILD | BEST OFF ROAD BUILD | BEST EUROPEAN IMPORT BUILD | BEST ASIAN IMPORT BUILD | BEST TUNER BUILD | BEST \"ORPHAN CLASS\" BUILD | 30 - OUTSTANDING BUILD AWARDS CAR CLUB COUNCIL OF HR PICK BEST PAINT | BEST ENGINE | BEST HOT ROD | KID'S CHOICE PEOPLE'S CHOICE TOP EVENT SUPPORTER 3 - COLORING CONTEST $25 entry includes $8 food voucher! 10:00 OPEN REGISTRATION | 11:00 DRIVERS MEETING/JUDGING BEGINS | 12:00 NATIONAL ANTHEM | 1:00 REGISTRATION CLOSED | 2:00 AUCTIONS AND RAFFLES END | 2:30 AWARDS AND 50/50 | 3:00 EVENT ENDS @media screen and (max-width: 767px) { } @media screen and (max-width: 767px) { } @media screen and (max-width: 767px) { }",
+    "description": "8th Annual Southern Chevrolet Custom Car Show Saturday, November 7th | 10a-3p Located at Southern Chevrolet | 3412 Western Branch Blvd, Chesapeake Join 757 Auto Events as we team up with local Chevrolet powerhouses including Southern Automotive Group and the Car Club Council of Hampton Roads to bring an awesome event to your community! $8.00 food vouchers for use at the food trucks onsite for each participant. (85 vouchers - 1st come 1st served) Proceeds Benefit Charity - Santa’s Helpers | Family fun - Coloring Contest! | Food truck rodeo! @media screen and (max-width: 767px) { } @media screen and (max-width: 767px) { } @media screen and (max-width: 767px) { } REGISTER HERE Vendors: Judged car show. AWARDS: | BEST IN SHOW - OVERALL | BEST IN SHOW - RUNNER UP | BEST FORD BUILD | BEST CHEVROLET BUILD | BEST GM - OTHER BULID | BEST MOPAR BUILD | BEST TRUCK/SUV BUILD | BEST OFF ROAD BUILD | BEST EUROPEAN IMPORT BUILD | BEST ASIAN IMPORT BUILD | BEST TUNER BUILD | BEST \"ORPHAN CLASS\" BUILD | 30 - OUTSTANDING BUILD AWARDS CAR CLUB COUNCIL OF HR PICK BEST PAINT | BEST ENGINE | BEST HOT ROD | KID'S CHOICE PEOPLE'S CHOICE TOP EVENT SUPPORTER 3 - COLORING CONTEST $25 entry includes $8 food voucher! 10:00 OPEN REGISTRATION | 11:00 DRIVERS MEETING/JUDGING BEGINS | 12:00 NATIONAL ANTHEM | 1:00 REGISTRATION CLOSED | 2:00 AUCTIONS AND RAFFLES END | 2:30 AWARDS AND 50/50 | 3:00 EVENT ENDS @media screen and (max-width: 767px) { } @media screen and (max-width: 767px) { } @media screen and (max-width: 767px) { }",
     "sourceUrl": "https://www.facebook.com/events/916264970928584/?ti=ls",
     "url": "https://www.ccchr.org/events/8th-annual-southern-chevrolet-custom-car-show-nov-7",
-    "image": "https://static1.squarespace.com/static/6162287958ee4e2159a4807d/6162288958ee4e2159a48171/6a356f350af6370eee175c79/1789751958374/"
+    "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1793205193142-UQKUUXTP9B7D2GC18ALY/southern-chevrolet-fall-car-show.jpg"
   },
   {
     "id": "6a3c47277a909604b04eca4d",
@@ -3361,6 +3361,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782334519060-86DY05KUH0UWEZ8PE3NS/Suffold+Hardees+Cruise+In.jpg"
   },
   {
+    "id": "traaca-2026-12-2-11",
+    "title": "TRAACA Chili Cookoff",
+    "startDate": "2026-12-02T14:00:00.000Z",
+    "endDate": "2026-12-02T14:00:00.000Z",
+    "allDay": true,
+    "month": "December",
+    "weekday": "Wed",
+    "dateLabel": "Dec 2, 2026",
+    "timeLabel": "All day",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Chesapeake",
+    "venue": "Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322",
+    "address": "Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322",
+    "description": "2 - TRAACA Chili Cookoff - (Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "6aadab5b9696da59cb2af464",
     "title": "Flashback 1st Fridays | December 4th",
     "startDate": "2026-12-04T22:00:00.905Z",
@@ -3418,6 +3438,46 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
+    "id": "traaca-2026-12-9-3",
+    "title": "TRAACA Installation Banquet",
+    "startDate": "2026-12-09T22:00:00.000Z",
+    "endDate": "2026-12-10T00:00:00.000Z",
+    "allDay": false,
+    "month": "December",
+    "weekday": "Wed",
+    "dateLabel": "Dec 9, 2026",
+    "timeLabel": "5 PM",
+    "type": "TRAACA event",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "9 - TRAACA Installation Banquet - 5 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
+    "id": "traaca-2026-12-13-13",
+    "title": "TRAACA HOLIDAY PARTY",
+    "startDate": "2026-12-13T15:30:00.000Z",
+    "endDate": "2026-12-13T17:30:00.000Z",
+    "allDay": false,
+    "month": "December",
+    "weekday": "Sun",
+    "dateLabel": "Dec 13, 2026",
+    "timeLabel": "10:30 AM",
+    "type": "TRAACA event",
+    "source": "TRAACA",
+    "city": "Chesapeake",
+    "venue": "Chesapeake Country Club, Norfolk, VA",
+    "address": "Chesapeake Country Club, Norfolk, VA",
+    "description": "13 - TRAACA HOLIDAY PARTY - 10:30 AM (Chesapeake Country Club, Norfolk, VA)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "traaca-2026-12-13-2",
     "title": "TRAACA Holiday Brunch",
     "startDate": "2026-12-13T16:00:00.000Z",
@@ -3438,8 +3498,8 @@ window.CCCHR_EVENTS_2026 = [
     "image": ""
   },
   {
-    "id": "traaca-2026-12-15-5",
-    "title": "TRAACA Dinner Meeting & Silent Auction",
+    "id": "traaca-2026-12-15-6",
+    "title": "TRAACA Dinner Meeting",
     "startDate": "2026-12-15T23:00:00.000Z",
     "endDate": "2026-12-16T01:00:00.000Z",
     "allDay": false,
@@ -3452,14 +3512,14 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Virginia Beach",
     "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
     "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "15 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "description": "15 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
     "sourceUrl": "https://www.traaca.com/calendar.htm",
     "url": "https://www.traaca.com/calendar.htm",
     "image": ""
   },
   {
     "id": "traaca-2026-12-15-8",
-    "title": "TRAACA Dinner Meeting & Silent Auction",
+    "title": "TRAACA Dinner Meeting",
     "startDate": "2026-12-15T23:00:00.000Z",
     "endDate": "2026-12-16T01:00:00.000Z",
     "allDay": false,
@@ -3472,7 +3532,7 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Virginia Beach",
     "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
     "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "15 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "description": "15 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
     "sourceUrl": "https://www.traaca.com/calendar.htm",
     "url": "https://www.traaca.com/calendar.htm",
     "image": ""
@@ -3499,7 +3559,7 @@ window.CCCHR_EVENTS_2026 = [
   },
   {
     "id": "traaca-2026-12-17-7",
-    "title": "TRAACA Dinner Meeting & Silent Auction",
+    "title": "TRAACA Dinner Meeting",
     "startDate": "2026-12-17T23:00:00.000Z",
     "endDate": "2026-12-18T01:00:00.000Z",
     "allDay": false,
@@ -3512,14 +3572,14 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Virginia Beach",
     "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
     "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "17 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "description": "17 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
     "sourceUrl": "https://www.traaca.com/calendar.htm",
     "url": "https://www.traaca.com/calendar.htm",
     "image": ""
   },
   {
-    "id": "traaca-2026-12-18-3",
-    "title": "TRAACA Dinner Meeting & Silent Auction",
+    "id": "traaca-2026-12-18-4",
+    "title": "TRAACA Dinner Meeting",
     "startDate": "2026-12-18T23:00:00.000Z",
     "endDate": "2026-12-19T01:00:00.000Z",
     "allDay": false,
@@ -3532,13 +3592,13 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Virginia Beach",
     "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
     "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "18 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "description": "18 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
     "sourceUrl": "https://www.traaca.com/calendar.htm",
     "url": "https://www.traaca.com/calendar.htm",
     "image": ""
   },
   {
-    "id": "traaca-2026-12-18-4",
+    "id": "traaca-2026-12-18-5",
     "title": "TRAACA Dinner Meeting",
     "startDate": "2026-12-18T23:00:00.000Z",
     "endDate": "2026-12-19T01:00:00.000Z",
@@ -3578,7 +3638,7 @@ window.CCCHR_EVENTS_2026 = [
   },
   {
     "id": "traaca-2026-12-19-9",
-    "title": "TRAACA Dinner Meeting & Silent Auction",
+    "title": "TRAACA Dinner Meeting",
     "startDate": "2026-12-19T23:00:00.000Z",
     "endDate": "2026-12-20T01:00:00.000Z",
     "allDay": false,
@@ -3591,33 +3651,13 @@ window.CCCHR_EVENTS_2026 = [
     "city": "Virginia Beach",
     "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
     "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "19 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "description": "19 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
     "sourceUrl": "https://www.traaca.com/calendar.htm",
     "url": "https://www.traaca.com/calendar.htm",
     "image": ""
   },
   {
-    "id": "traaca-2026-12-20-6",
-    "title": "TRAACA Dinner Meeting & Silent Auction",
-    "startDate": "2026-12-20T23:00:00.000Z",
-    "endDate": "2026-12-21T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Sun",
-    "dateLabel": "Dec 20, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "20 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-21-11",
+    "id": "traaca-2026-12-21-12",
     "title": "TRAACA Dinner Meeting & Silent Auction",
     "startDate": "2026-12-21T23:00:00.000Z",
     "endDate": "2026-12-22T01:00:00.000Z",
@@ -4150,13 +4190,13 @@ window.CCCHR_METADATA = {
     2027
   ],
   "year": 2026,
-  "refreshedAt": "2026-10-27T15:53:15.702Z",
-  "totalEvents": 214,
+  "refreshedAt": "2026-10-28T16:38:18.847Z",
+  "totalEvents": 216,
   "sourceCounts": {
     "CCCHR": 164,
     "AACA": 25,
     "AACA Local": 2,
-    "TRAACA": 12,
+    "TRAACA": 14,
     "Carlisle": 11
   }
 };
