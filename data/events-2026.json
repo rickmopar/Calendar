@@ -2445,7 +2445,27 @@
     "image": ""
   },
   {
-    "id": "aaca-local-2027-04-02-57th-annual-aaca-sugarloaf-mountain-region-indoor-outdoor-parts-meet-1-0",
+    "id": "aaca-local-2027-03-07-60th-annual-ontelaunee-region-indoor-outdoor-swap-meet-and-car-corral-1-0",
+    "title": "60th Annual Ontelaunee Region Indoor/Outdoor Swap Meet and Car Corral",
+    "startDate": "2027-03-07T12:00:00.000Z",
+    "endDate": "2027-03-07T19:00:00.000Z",
+    "allDay": false,
+    "month": "March",
+    "weekday": "Sun",
+    "dateLabel": "Mar 7, 2027",
+    "timeLabel": "7:00 AM",
+    "type": "Swap meet",
+    "source": "AACA Local",
+    "city": "Leesport",
+    "venue": "AACA Local & Regional Calendar",
+    "address": "Leesport",
+    "description": "&lt;p&gt;Location: Leesport Farmers Market, 312 Gernant\\'s Church Rd, Leesport, PA 19533 Held rain or shine at Leesport Farmers Market, Leesport, PA. Handicap friendly. Plenty of parking. Refreshments available. Contact: Lester Manwiller - Lhedgehog1@aol.com or 610-823-4656&lt;/p&gt;\\n",
+    "sourceUrl": "https://aaca.org/events/",
+    "url": "https://aaca.org/event/60th-annual-ontelaunee-region-indoor-outdoor-swap-meet-and-car-corral/",
+    "image": ""
+  },
+  {
+    "id": "aaca-local-2027-04-02-57th-annual-aaca-sugarloaf-mountain-region-indoor-outdoor-parts-meet-1-1",
     "title": "57th Annual AACA Sugarloaf Mountain Region Indoor/Outdoor Parts Meet",
     "startDate": "2027-04-02T04:00:00.000Z",
     "endDate": "2027-04-04T03:59:59.000Z",
