@@ -1091,7 +1091,7 @@ function renderEvents(items) {
       const tile = eventDateTile(event);
       const note = escapeHtml(noteForEvent(event.id));
       card.innerHTML = `
-        <div class="date-tile">
+        <div class="date-tile source-${sourceClass}">
           <div>
             <span>${escapeHtml(tile.top)}</span>
             <span class="day">${escapeHtml(tile.middle)}</span>
@@ -1532,7 +1532,7 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=29").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=30").catch(() => {});
   });
 }
 
