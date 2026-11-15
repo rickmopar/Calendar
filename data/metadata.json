@@ -26,8 +26,10 @@
   "sourceCounts": {
     "CCCHR": 98,
     "AACA": 25,
-    "AACA Local": 2,
     "TRAACA": 14,
-    "Carlisle": 11
-  }
+    "Carlisle": 11,
+    "AACA Local": 2
+  },
+  "correctionsAt": "2026-11-15T04:25:04.779Z",
+  "publishedAt": "2026-11-15T04:31:08.781Z"
 }

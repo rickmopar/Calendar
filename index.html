@@ -11,15 +11,17 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=28">
-    <link rel="stylesheet" href="styles.css?v=28">
+    <link rel="manifest" href="manifest.webmanifest?v=29">
+    <link rel="stylesheet" href="styles.css?v=29">
   </head>
   <body>
+    <a class="skip-link" href="#events">Skip to events</a>
+    <div class="site-bar"><a class="brand" href="#upcoming"><span class="brand-mark">C</span> Car Show Calendar</a><nav aria-label="Main navigation"><a href="#upcoming" data-view="upcoming">Upcoming</a><a href="#calendar" data-view="calendar">Calendar</a><a href="#saved" data-view="saved">My picks <span id="savedNavCount">0</span></a><a href="manage.html">Manage</a></nav></div>
     <header class="masthead">
       <div>
-        <p class="eyebrow">2026-2027 Auto Events</p>
-        <h1>Car Show Calendar</h1>
-        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, AACA Local, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
+        <p class="eyebrow">Hampton Roads &amp; beyond</p>
+        <h1>Your next great<br>day out.</h1>
+        <p class="lede">Car shows, cruise-ins, tours, and swap meets. Find an event, save your picks, and make a plan.</p>
         <div class="status-line" aria-label="Dashboard freshness">
           <span id="currentDate">Today: -</span>
           <span id="refreshDate">Last refreshed: -</span>
@@ -53,11 +55,12 @@
         </div>
       </section>
 
-      <section class="controls" aria-label="Dashboard controls">
+      <section id="events" class="controls" aria-label="Dashboard controls">
         <label>
           <span>Search</span>
           <input id="searchInput" type="search" placeholder="Event, venue, city, keyword">
         </label>
+        <details class="advanced-filters"><summary>Filter events</summary><div class="advanced-fields">
         <div class="field">
           <span>Month</span>
           <details id="monthFilter" class="multi-filter">
@@ -114,6 +117,7 @@
             <option value="type">Type</option>
           </select>
         </label>
+        </div></details>
         <button id="resetButton" type="button">Reset</button>
         <button id="exportPdfButton" type="button">Export PDF</button>
       </section>
@@ -213,6 +217,7 @@
         <div id="monthChart" class="month-chart"></div>
       </section>
 
+      <section id="calendarView" class="calendar-view" hidden><div class="calendar-toolbar"><button id="previousMonth" aria-label="Previous month">←</button><h2 id="calendarHeading"></h2><button id="nextMonth" aria-label="Next month">→</button><button id="calendarToday">This month</button></div><p class="muted">Select an event for details. Search and filters apply to this view.</p><div id="calendarGrid" class="calendar-grid"></div></section>
       <section class="dashboard-grid">
         <aside class="insights" aria-label="Planning assistant">
           <h2>Assistant</h2>
@@ -239,12 +244,14 @@
         </aside>
 
         <section aria-label="Event list">
-          <div id="eventList" class="event-list"></div>
+          <h2 id="listHeading">Upcoming events</h2><div id="eventList" class="event-list"></div>
         </section>
       </section>
     </main>
 
-    <script src="data/events-2026.js?v=28"></script>
-    <script src="app.js?v=28"></script>
+    <footer class="site-footer"><strong>Good cars. Good company.</strong><p>Dates can change. Check the organizer’s listing before you travel.</p><a href="manage.html">Manage calendar</a></footer>
+    <dialog id="eventDetails"><button id="closeDetails" class="dialog-close" aria-label="Close event details">×</button><div id="detailsBody"></div></dialog>
+    <script src="data/events-2026.js?v=29"></script>
+    <script src="app.js?v=29"></script>
   </body>
 </html>

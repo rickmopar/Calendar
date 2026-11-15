@@ -1,11 +1,11 @@
-const CACHE_NAME = "car-show-calendar-v28";
+const CACHE_NAME = "car-show-calendar-v29";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=28",
-  "./app.js?v=28",
-  "./data/events-2026.js?v=28",
-  "./manifest.webmanifest?v=28",
+  "./styles.css?v=29",
+  "./app.js?v=29",
+  "./data/events-2026.js?v=29",
+  "./manifest.webmanifest?v=29",
   "./favicon.svg",
 ];
 
@@ -28,10 +28,12 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
+  const url = new URL(event.request.url);
+  if (event.request.method !== "GET" || url.origin !== self.location.origin || /\/(?:api\/|manage\.html|manager\.js)/.test(url.pathname)) return;
 
   event.respondWith(
     fetch(event.request).then((response) => {
+      if (!response.ok) return response;
       const copy = response.clone();
       caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
       return response;

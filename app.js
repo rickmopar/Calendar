@@ -554,6 +554,7 @@ function getFilteredEvents() {
   const sources = selectedSources();
 
   const filtered = events.filter((event) => {
+    if (websiteView === "saved" && !interestedIds.has(event.id)) return false;
     const recurrence = detectRecurrence(event);
     const hasSelectedEventTypes = selectedEventTypes.length > 0;
     const matchesQuery = !query || eventText(event).includes(query);
@@ -748,7 +749,7 @@ function buildCalendarFile(event) {
   const location = [event.venue, event.address].filter(Boolean).join(", ");
   const recurrence = detectRecurrence(event);
   const recurrenceNote = recurrence ? `Recurrence detected by dashboard: ${recurrence.label}` : "";
-  const eventUrl = event.url || event.sourceUrl || "";
+  const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
   const description = [recurrenceNote, event.description, eventUrl].filter(Boolean).join("\\n\\n");
   const lines = [
     "BEGIN:VCALENDAR",
@@ -979,7 +980,7 @@ function deadlineForEvent(event) {
 function plannerItemHtml(event, { action = "" } = {}) {
   const note = noteForEvent(event.id);
   const deadline = deadlineForEvent(event);
-  const eventUrl = event.url || event.sourceUrl || "";
+  const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
   const title = escapeHtml(event.title);
   return `
     <div class="planner-item">
@@ -1018,7 +1019,7 @@ function renderDeadlinePanel() {
   els.deadlineCount.textContent = deadlines.length.toLocaleString();
   els.deadlineList.innerHTML = deadlines.length
     ? deadlines.map(({ event, note, date }) => {
-      const eventUrl = event.url || event.sourceUrl || "";
+      const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
       const title = escapeHtml(event.title);
       return `
         <div class="planner-item deadline-item">
@@ -1084,7 +1085,7 @@ function renderEvents(items) {
       const sourceClass = slug(source);
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
       const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : event.source === "Manual" ? "Manual entry" : "CCCHR listing";
-      const eventUrl = event.url || event.sourceUrl || "";
+      const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
       const titleHtml = eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${title}</a>` : title;
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
@@ -1113,6 +1114,7 @@ function renderEvents(items) {
           <div class="event-meta">${dateLine}${venue ? ` | ${venue}` : ""}</div>
           ${address ? `<div class="event-address">${address}</div>` : ""}
           ${description ? `<p class="event-description">${description}</p>` : ""}
+          <button type="button" class="details-button" data-details-id="${escapeHtml(event.id)}">View details →</button>
           <div class="event-actions">
             <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Add Recurring Event" : "Add to Calendar"}</a>
             ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${listingLabel}</a>` : ""}
@@ -1130,12 +1132,16 @@ function renderEvents(items) {
   );
 }
 
+let websiteView = "upcoming";
+let calendarCursor = new Date(today.getFullYear(), today.getMonth(), 1);
+
 function render() {
   const filtered = getFilteredEvents();
   renderStats(filtered);
   renderChart(filtered);
   renderAssistant(filtered);
   renderEvents(filtered);
+  renderWebsite(filtered);
 }
 
 renderFreshness();
@@ -1432,7 +1438,7 @@ els.list.addEventListener("change", (event) => {
   if (input.checked) interestedIds.add(input.dataset.interestId);
   else interestedIds.delete(input.dataset.interestId);
   saveInterestedIds();
-  renderAssistant(getFilteredEvents());
+  render();
 });
 
 els.list.addEventListener("input", (event) => {
@@ -1526,6 +1532,50 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=28").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=29").catch(() => {});
   });
 }
+
+function safeWebsiteUrl(value) {
+  try { const u = new URL(value); return ["https:", "http:"].includes(u.protocol) ? u.href : ""; } catch { return ""; }
+}
+function showEventDetails(id) {
+  const e = eventById(id); if (!e) return;
+  const sourceUrl = safeWebsiteUrl(e.url || e.sourceUrl);
+  const maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(e.address || e.venue || e.city);
+  document.querySelector("#detailsBody").innerHTML = `<p class="eyebrow">${escapeHtml(e.source)} · ${escapeHtml(e.type)}</p><h2>${escapeHtml(e.title)}</h2><p class="detail-date">${escapeHtml(eventDateLine(e))}</p><p><strong>${escapeHtml(e.venue || e.city)}</strong><br>${escapeHtml(e.address || "")}</p><p class="detail-description">${escapeHtml(e.description || "No further details supplied.")}</p><p class="verification-note">${e.reviewedAt ? "Reviewed " + escapeHtml(e.reviewedAt.slice(0,10)) : "Imported listing; confirm details with the organizer."}</p><div class="event-actions">${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">Organizer’s listing ↗</a>` : ""}<a href="${escapeHtml(maps)}" target="_blank" rel="noreferrer">Directions ↗</a><a href="data:text/calendar;charset=utf-8,${encodeURIComponent(buildCalendarFile(e))}" download="${escapeHtml(calendarFileName(e))}">Add to calendar</a></div>`;
+  document.querySelector("#eventDetails").showModal();
+}
+function renderWebsite(items) {
+  const count = document.querySelector("#savedNavCount"); if (!count) return;
+  count.textContent = interestedEvents().length;
+  document.querySelectorAll("[data-view]").forEach(a => { if (a.dataset.view === websiteView) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  document.querySelector("#listHeading").textContent = websiteView === "saved" ? "My picks" : "Upcoming events";
+  document.querySelector("#calendarView").hidden = websiteView !== "calendar";
+  document.querySelector(".dashboard-grid").hidden = websiteView === "calendar";
+  document.querySelector(".chart-panel").hidden = websiteView !== "calendar";
+  if (websiteView !== "calendar") return;
+  const year = calendarCursor.getFullYear(), month = calendarCursor.getMonth();
+  document.querySelector("#calendarHeading").textContent = calendarCursor.toLocaleDateString("en-US", {month:"long",year:"numeric"});
+  const grid = document.querySelector("#calendarGrid"); grid.replaceChildren();
+  for (const day of ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]) { const el=document.createElement("div");el.className="calendar-weekday";el.textContent=day;grid.append(el); }
+  const first=new Date(year,month,1).getDay(), days=new Date(year,month+1,0).getDate();
+  for(let i=0;i<first;i++){const blank=document.createElement("div");blank.className="calendar-blank";grid.append(blank);}
+  for(let d=1;d<=days;d++){
+    const key = `${year}${String(month+1).padStart(2,"0")}${String(d).padStart(2,"0")}`;
+    const cell=document.createElement("div");cell.className="calendar-day"+(key===todayKey?" is-today":"");
+    const label=document.createElement("span");label.textContent=d;cell.append(label);
+    const matching=items.filter(e=>eventDateKey(e)<=key&&eventDateKey(e,"endDate")>=key);
+    for(const e of matching){const btn=document.createElement("button");btn.type="button";btn.dataset.detailsId=e.id;btn.textContent=e.title;btn.title=e.title;cell.append(btn);}grid.append(cell);
+  }
+}
+function applyWebsiteView() {
+  const hash=location.hash.slice(1);websiteView=["upcoming","calendar","saved"].includes(hash)?hash:"upcoming";render();
+}
+window.addEventListener("hashchange",applyWebsiteView);
+document.addEventListener("click",e=>{const btn=e.target.closest("[data-details-id]");if(btn)showEventDetails(btn.dataset.detailsId);});
+document.querySelector("#closeDetails").addEventListener("click",()=>document.querySelector("#eventDetails").close());
+document.querySelector("#previousMonth").addEventListener("click",()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);render();});
+document.querySelector("#nextMonth").addEventListener("click",()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);render();});
+document.querySelector("#calendarToday").addEventListener("click",()=>{calendarCursor=new Date(today.getFullYear(),today.getMonth(),1);render();});
+applyWebsiteView();

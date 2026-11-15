@@ -49,3 +49,30 @@ python3 -m pip install --user pypdf
 ```
 
 The CCCHR Facebook events page is included as a visible source link and metadata source. Facebook does not expose public event records to this refresh script without an authenticated API or browser session, so automated event records still come from the CCCHR website feed plus AACA and Carlisle.
+
+## Website and private event management (v29)
+
+Public navigation now has Upcoming, Calendar, and My picks. Select View details or a calendar entry for directions, organizer links, and calendar download. Existing browser-local picks, notes, manual entries, and optional Sheets sync keep their storage keys.
+
+The TRAACA importer now honors explicit month/year headings. It previously attached 2027 entries to December 2026. The saved TRAACA listings have been reparsed from the existing source snapshot; this is a date correction, not a claim of a fresh source fetch.
+
+### Private manager
+
+Requires Python 3.9+ and Node.js. On the intended management host, run:
+
+```sh
+python3 server.py --setup
+python3 server.py
+```
+
+Set a manager username and a password of at least 12 characters. Open http://127.0.0.1:8770/manage.html. Accounts and persistent edits are stored in `.calendar-admin/`, excluded from Git. Back up this directory as well as `data/`. Never commit it. The server exposes only an explicit allowlist of public files; account files, source code, and management state are not served.
+
+The manager supports adding, editing, reviewing, hiding, and restoring events. Draft/review and hidden records do not appear publicly. Imported records remain public and explicitly unreviewed until checked. Marking a record reviewed requires a source link; this is a human review, not an automatic verification claim. Corrections match later imports by original source, title, and date, with the event ID retained for saved picks. Index-only ID changes do not restore hidden records. A changed source title or date may need a new review. Date/time editing uses Eastern time. Multi-day dates are preserved when the start date stays unchanged; changing the start date converts the listing to a single-day event.
+
+`data/imported-events.json` is the imported baseline. Refresh writes this baseline then applies `.calendar-admin/state.json` through `scripts/publish-managed.js`. Keep refresh and manager writes from running concurrently. To use a separate state location, set `CALENDAR_ADMIN_DATA` for the Python server and `CALENDAR_STATE` to its `state.json` for the refresh process.
+
+The management server binds to loopback. To reach it remotely, configure an **unused** Tailscale Serve HTTPS port pointing at `http://127.0.0.1:8770`, with access restricted to the calendar manager. Preserve the existing tracker on 443 and TRAACA on 8443. Do not reuse either port. Use HTTPS for remote sign-in. Add any custom hostname to `CALENDAR_ALLOWED_HOSTS`. No mini configuration has been changed by this code update.
+
+Saving updates the public files on the management host. GitHub Pages receives them only after an explicit Git deployment. Public visitors' local picks and notes are not shared with the manager. A background launch service and automatic Git publishing are not configured yet; those require verified access to the mini and a chosen deployment credential.
+
+After a source refresh or management edits, regenerate the downloadable single file with `node scripts/build-standalone.js`.

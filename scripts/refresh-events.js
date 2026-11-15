@@ -406,11 +406,11 @@ function stripTags(value) {
   return decodeHtml(value).replace(/\s+/g, " ").trim();
 }
 
-function easternOffsetHours(month, day) {
+function easternOffsetHours(month, day, eventYear = year) {
   if (month < 2 || month > 10) return 5;
   if (month > 2 && month < 10) return 4;
 
-  const firstOfMonth = new Date(Date.UTC(year, month, 1));
+  const firstOfMonth = new Date(Date.UTC(eventYear, month, 1));
   const firstSunday = 1 + ((7 - firstOfMonth.getUTCDay()) % 7);
   const transitionDay = month === 2 ? firstSunday + 7 : firstSunday;
   return month === 2
@@ -418,9 +418,9 @@ function easternOffsetHours(month, day) {
     : day < transitionDay ? 4 : 5;
 }
 
-function easternDateToIso(month, day, hour = 9, minute = 0) {
-  const offset = easternOffsetHours(month, day);
-  return new Date(Date.UTC(year, month, day, hour + offset, minute)).toISOString();
+function easternDateToIso(month, day, hour = 9, minute = 0, eventYear = year) {
+  const offset = easternOffsetHours(month, day, eventYear);
+  return new Date(Date.UTC(eventYear, month, day, hour + offset, minute)).toISOString();
 }
 
 function parseTraacaTime(text) {
@@ -460,7 +460,8 @@ function extractTraacaCity(text) {
   return "Hampton Roads";
 }
 
-function normalizeTraacaEvent(li, month, index) {
+function normalizeTraacaEvent(li, month, index, eventYear) {
+  if (!years.includes(eventYear)) return null;
   if (/color=["']?#0000FF/i.test(li)) return null;
   if (/\bNo\s+TRAACA\b/i.test(stripTags(li))) return null;
 
@@ -468,10 +469,10 @@ function normalizeTraacaEvent(li, month, index) {
   if (!range) return null;
 
   const time = parseTraacaTime(range.text);
-  const startDate = easternDateToIso(month, range.startDay, time.hour, time.minute);
+  const startDate = easternDateToIso(month, range.startDay, time.hour, time.minute, eventYear);
   const endDate = time.allDay
-    ? easternDateToIso(month, range.endDay, time.hour, time.minute)
-    : easternDateToIso(month, range.endDay, time.endHour, time.endMinute);
+    ? easternDateToIso(month, range.endDay, time.hour, time.minute, eventYear)
+    : easternDateToIso(month, range.endDay, time.endHour, time.endMinute, eventYear);
   const title = range.text.split(/\s+-\s+/)[0].replace(/\s+\(.+$/, "").trim() || "TRAACA Event";
   const description = stripTags(li);
   const city = extractTraacaCity(description);
@@ -479,7 +480,7 @@ function normalizeTraacaEvent(li, month, index) {
   const venue = venueMatch ? venueMatch[1].trim() : "TRAACA";
 
   return {
-    id: `traaca-${year}-${month + 1}-${range.startDay}-${index}`,
+    id: `traaca-${eventYear}-${month + 1}-${range.startDay}-${index}`,
     title,
     startDate,
     endDate,
@@ -505,30 +506,33 @@ function normalizeTraacaEvent(li, month, index) {
   };
 }
 
+function parseTraacaEvents(html) {
+  const events = [];
+  let currentMonth;
+  let currentYear;
+  let index = 0;
+  // The legacy page explicitly dates its current section in document.write.
+  // Never guess a year from the execution date or carry December into 2027.
+  const pageYear = html.match(/document\.write\([^;]*\+\s*(20\d{2})\s*\)/i);
+  if (pageYear) currentYear = Number(pageYear[1]);
+  const tokens = /<p\b[^>]*>\s*<b>\s*([A-Z]+)(?:\s+(20\d{2}))?\s*<\/b>\s*<\/p>|<li\b[^>]*>[\s\S]*?<\/li>/gi;
+  let match;
+  while ((match = tokens.exec(html))) {
+    if (match[1]) {
+      currentMonth = monthNumber(match[1]);
+      if (match[2]) currentYear = Number(match[2]);
+      continue;
+    }
+    const event = normalizeTraacaEvent(match[0], currentMonth, index++, currentYear);
+    if (event) events.push(event);
+  }
+  return events;
+}
+
 async function fetchTraacaEvents() {
   const html = await fetchTextWithCache(traacaSourceUrl, "traaca-calendar.html");
   fs.writeFileSync(path.join(rawDir, "traaca-calendar.html"), html);
-
-  const events = [];
-  let currentMonth;
-  let index = 0;
-  const tokenPattern = /<p><b>([A-Z]+)<\/b><\/p>|<li\b[^>]*>[\s\S]*?<\/li>/gi;
-  let match;
-
-  while ((match = tokenPattern.exec(html))) {
-    if (match[1]) {
-      currentMonth = monthNumber(match[1]);
-      continue;
-    }
-
-    const event = normalizeTraacaEvent(match[0], currentMonth, index);
-    if (event) {
-      events.push(event);
-      index += 1;
-    }
-  }
-
-  return events;
+  return parseTraacaEvents(html);
 }
 
 function extractAacaLocalCity(description) {
@@ -833,12 +837,17 @@ async function main() {
     `window.CCCHR_EVENTS_2026 = ${JSON.stringify(events, null, 2)};\nwindow.CCCHR_METADATA = ${JSON.stringify(metadata, null, 2)};\n`,
   );
 
+  fs.writeFileSync(path.join(dataDir, "imported-events.json"), JSON.stringify(events, null, 2));
+  require("./publish-managed").publish();
+
   console.log(`Refreshed ${events.length} events for ${years.join("-")}.`);
   console.log(`CCCHR: ${ccchrEvents.length}; AACA: ${aacaEvents.length}; AACA Local: ${aacaLocalEvents.length}; TRAACA: ${traacaEvents.length}; Carlisle: ${carlisleEvents.length}`);
   console.log(`Latest source refresh: ${metadata.refreshedAt}`);
 }
 
-main().catch((error) => {
+module.exports = { parseTraacaEvents };
+
+if (require.main === module) main().catch((error) => {
   console.error(error);
   process.exit(1);
 });

@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=28">
+    <link rel="manifest" href="manifest.webmanifest?v=29">
     <style>
 :root {
   color-scheme: light;
@@ -1160,15 +1160,26 @@ button {
     text-align: center;
   }
 }
+/* Website navigation and reading layout */
+:root{--paper:#f5f3ed;--ink:#172c2e;--accent:#23635c;--accent-dark:#184b46;--shadow:0 8px 24px #173c3510}
+[hidden]{display:none!important}.skip-link{position:fixed;left:16px;top:-60px;z-index:100;background:white;padding:12px}.skip-link:focus{top:8px}
+.site-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px clamp(20px,5vw,72px);background:#fffef9;border-bottom:1px solid #dcded5}.brand{display:flex;align-items:center;gap:10px;font-weight:850;text-decoration:none;white-space:nowrap}.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#23635c;color:white;font:italic bold 24px Georgia,serif}.site-bar nav{display:flex;gap:7px}.site-bar nav a{padding:9px 14px;text-decoration:none;font-size:14px;border-radius:7px}.site-bar nav a[aria-current]{background:#e5eee7;color:#174b43;font-weight:750}#savedNavCount{font-size:11px;background:#d8e7dd;padding:2px 5px;border-radius:10px}
+.masthead{min-height:300px;padding-top:40px;padding-bottom:40px;background:linear-gradient(110deg,#153a35 0%,#214b43 70%,#355f4c 100%);align-items:center}.masthead h1{font-family:Georgia,serif;font-weight:500;font-size:clamp(42px,5vw,68px);line-height:1.03;letter-spacing:-2px}.masthead .lede{max-width:540px;font-size:16px}.masthead .source-links{max-width:310px}.source-link{font-size:13px;padding:10px 13px;background:#ffffff14;border:1px solid #ffffff50}.status-line span{font-size:12px;font-weight:500;border:0;background:transparent;padding:0 12px 0 0;color:#d3dfd1}
+.stats{box-shadow:none;border:1px solid #dce0d6;border-radius:10px}.stats>div>span{color:#214e45}.controls{box-shadow:none;border:1px solid #dce0d6}.dashboard-grid{grid-template-columns:280px minmax(0,1fr);align-items:start}.event-card{box-shadow:none;border:1px solid #dce0d6;border-radius:10px;margin-bottom:16px}.event-main{min-width:0}.event-title a{color:#193e37!important}.event-title{font-size:23px;line-height:1.25}.date-tile{background:#e7eee5!important;color:#284f42!important}.event-description{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#64736c;font-size:14px}.event-note{margin-top:12px}.details-button{background:transparent;color:#23635c;padding:0;margin:0 0 12px;text-align:left}.event-actions a{color:#23635c}.sync-panel,.manual-panel{box-shadow:none}.insights{box-shadow:none;background:#fffef9}.trip-helper{box-shadow:none;background:#e7eee5}.site-footer{padding:40px 24px;text-align:center;color:#627269;font-size:13px}.site-footer strong{font:24px Georgia,serif;color:#294c3f}.site-footer p{margin:10px}.site-footer a{color:#23635c}.calendar-view{padding:24px;background:white;border:1px solid #dce0d6;border-radius:10px}.calendar-toolbar{display:flex;gap:12px;align-items:center}.calendar-toolbar h2{flex:1;margin:0;font:28px Georgia,serif}.calendar-toolbar button{padding:10px 16px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid #e0e5db;border-left:1px solid #e0e5db}.calendar-weekday{text-align:center;background:#eaf0e7;font-size:12px;font-weight:700;padding:12px}.calendar-day,.calendar-blank{min-height:130px;border-bottom:1px solid #e0e5db;border-right:1px solid #e0e5db;padding:7px}.calendar-day>span{font-size:13px}.calendar-day button{display:block;width:100%;padding:5px;background:#edf3e9;color:#244e43;font-size:11px;text-align:left;margin-top:5px;font-weight:600;overflow:hidden;text-overflow:ellipsis}.calendar-day.is-today>span{background:#23635c;color:white;border-radius:50%;padding:4px 7px}.muted{color:#64736c;font-size:13px}dialog{width:min(650px,calc(100% - 28px));max-height:85vh;border:0;padding:36px;border-radius:12px;color:#172c2e;box-shadow:0 20px 80px #0004}dialog::backdrop{background:#11282199}.dialog-close{float:right;background:#e7eee5;color:#173c35;font-size:24px;padding:0 10px}dialog h2{font:32px/1.15 Georgia,serif;margin:20px 0}.detail-date{font-weight:700}.detail-description{white-space:pre-line}.verification-note{padding:12px;background:#f3f1e7;font-size:13px}
+@media(max-width:800px){.site-bar{flex-direction:column;gap:10px;padding:14px}.site-bar nav{width:100%;justify-content:center}.site-bar nav a{padding:8px 10px}.masthead{display:block;min-height:0;padding:28px 22px}.masthead .source-links{max-width:none;justify-content:start;margin-top:22px}.masthead h1{font-size:46px}.dashboard-grid{grid-template-columns:1fr}.insights{order:2}.calendar-view{padding:12px}.calendar-day,.calendar-blank{min-height:85px;padding:3px}.calendar-day button{font-size:10px;padding:3px}.calendar-toolbar{flex-wrap:wrap;gap:7px}.calendar-toolbar h2{font-size:21px}.calendar-toolbar button{padding:8px}.event-title{font-size:20px}}
+.controls{grid-template-columns:minmax(220px,1fr) auto auto auto;align-items:end}.advanced-filters{position:relative}.advanced-filters>summary{cursor:pointer;border:1px solid #c6d0c5;border-radius:7px;padding:10px 16px;font-size:14px;font-weight:700;list-style:none}.advanced-fields{position:absolute;right:0;top:calc(100% + 10px);width:360px;max-width:85vw;z-index:30;display:grid;grid-template-columns:1fr 1fr;gap:14px;background:#fffef9;padding:20px;box-shadow:0 12px 36px #163c3530;border:1px solid #dce0d6;border-radius:10px}.chart-panel{display:none!important}.calendar-toolbar{margin-bottom:12px}.source-links .source-link{width:auto!important;flex:0 1 auto}.stats{margin-top:22px}.event-note input{font-size:13px}.event-address{overflow-wrap:anywhere}
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr!important}.stats>div{padding:16px;border-bottom:1px solid #e0e5db}.stats>div>span{font-size:25px}.stats>div>p{font-size:10px}.source-links{display:flex!important;flex-wrap:wrap!important;gap:8px!important}.masthead .source-link{font-size:11px;padding:8px 10px}.controls{grid-template-columns:1fr auto auto}.controls>label:first-child{grid-column:1/-1}.advanced-fields{left:0;right:auto}.trip-helper{display:none}.event-card{grid-template-columns:70px minmax(0,1fr)}.date-tile .day{font-size:26px}.event-topline{gap:5px}.event-topline .pill{font-size:10px}.event-actions{gap:8px}.event-actions a{font-size:12px}.event-note{display:none}}
 
 </style>
   </head>
   <body>
+    <a class="skip-link" href="#events">Skip to events</a>
+    <div class="site-bar"><a class="brand" href="#upcoming"><span class="brand-mark">C</span> Car Show Calendar</a><nav aria-label="Main navigation"><a href="#upcoming" data-view="upcoming">Upcoming</a><a href="#calendar" data-view="calendar">Calendar</a><a href="#saved" data-view="saved">My picks <span id="savedNavCount">0</span></a><a href="manage.html">Manage</a></nav></div>
     <header class="masthead">
       <div>
-        <p class="eyebrow">2026-2027 Auto Events</p>
-        <h1>Car Show Calendar</h1>
-        <p class="lede">A searchable calendar of CCCHR, Facebook, AACA, AACA Local, TRAACA, and Carlisle events, grouped by month, city, and event type.</p>
+        <p class="eyebrow">Hampton Roads &amp; beyond</p>
+        <h1>Your next great<br>day out.</h1>
+        <p class="lede">Car shows, cruise-ins, tours, and swap meets. Find an event, save your picks, and make a plan.</p>
         <div class="status-line" aria-label="Dashboard freshness">
           <span id="currentDate">Today: -</span>
           <span id="refreshDate">Last refreshed: -</span>
@@ -1202,11 +1213,12 @@ button {
         </div>
       </section>
 
-      <section class="controls" aria-label="Dashboard controls">
+      <section id="events" class="controls" aria-label="Dashboard controls">
         <label>
           <span>Search</span>
           <input id="searchInput" type="search" placeholder="Event, venue, city, keyword">
         </label>
+        <details class="advanced-filters"><summary>Filter events</summary><div class="advanced-fields">
         <div class="field">
           <span>Month</span>
           <details id="monthFilter" class="multi-filter">
@@ -1263,6 +1275,7 @@ button {
             <option value="type">Type</option>
           </select>
         </label>
+        </div></details>
         <button id="resetButton" type="button">Reset</button>
         <button id="exportPdfButton" type="button">Export PDF</button>
       </section>
@@ -1362,6 +1375,7 @@ button {
         <div id="monthChart" class="month-chart"></div>
       </section>
 
+      <section id="calendarView" class="calendar-view" hidden><div class="calendar-toolbar"><button id="previousMonth" aria-label="Previous month">←</button><h2 id="calendarHeading"></h2><button id="nextMonth" aria-label="Next month">→</button><button id="calendarToday">This month</button></div><p class="muted">Select an event for details. Search and filters apply to this view.</p><div id="calendarGrid" class="calendar-grid"></div></section>
       <section class="dashboard-grid">
         <aside class="insights" aria-label="Planning assistant">
           <h2>Assistant</h2>
@@ -1388,11 +1402,13 @@ button {
         </aside>
 
         <section aria-label="Event list">
-          <div id="eventList" class="event-list"></div>
+          <h2 id="listHeading">Upcoming events</h2><div id="eventList" class="event-list"></div>
         </section>
       </section>
     </main>
 
+    <footer class="site-footer"><strong>Good cars. Good company.</strong><p>Dates can change. Check the organizer’s listing before you travel.</p><a href="manage.html">Manage calendar</a></footer>
+    <dialog id="eventDetails"><button id="closeDetails" class="dialog-close" aria-label="Close event details">×</button><div id="detailsBody"></div></dialog>
     <script>
 window.CCCHR_EVENTS_2026 = [
   {
@@ -3445,26 +3461,6 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1782334519060-86DY05KUH0UWEZ8PE3NS/Suffold+Hardees+Cruise+In.jpg"
   },
   {
-    "id": "traaca-2026-12-2-11",
-    "title": "TRAACA Chili Cookoff",
-    "startDate": "2026-12-02T14:00:00.000Z",
-    "endDate": "2026-12-02T14:00:00.000Z",
-    "allDay": true,
-    "month": "December",
-    "weekday": "Wed",
-    "dateLabel": "Dec 2, 2026",
-    "timeLabel": "All day",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Chesapeake",
-    "venue": "Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322",
-    "address": "Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322",
-    "description": "2 - TRAACA Chili Cookoff - (Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
     "id": "6aadab5b9696da59cb2af464",
     "title": "Flashback 1st Fridays | December 4th",
     "startDate": "2026-12-04T22:00:00.905Z",
@@ -3522,46 +3518,6 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "traaca-2026-12-9-3",
-    "title": "TRAACA Installation Banquet",
-    "startDate": "2026-12-09T22:00:00.000Z",
-    "endDate": "2026-12-10T00:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Wed",
-    "dateLabel": "Dec 9, 2026",
-    "timeLabel": "5 PM",
-    "type": "TRAACA event",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "9 - TRAACA Installation Banquet - 5 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-13-13",
-    "title": "TRAACA HOLIDAY PARTY",
-    "startDate": "2026-12-13T15:30:00.000Z",
-    "endDate": "2026-12-13T17:30:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Sun",
-    "dateLabel": "Dec 13, 2026",
-    "timeLabel": "10:30 AM",
-    "type": "TRAACA event",
-    "source": "TRAACA",
-    "city": "Chesapeake",
-    "venue": "Chesapeake Country Club, Norfolk, VA",
-    "address": "Chesapeake Country Club, Norfolk, VA",
-    "description": "13 - TRAACA HOLIDAY PARTY - 10:30 AM (Chesapeake Country Club, Norfolk, VA)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
     "id": "traaca-2026-12-13-2",
     "title": "TRAACA Holiday Brunch",
     "startDate": "2026-12-13T16:00:00.000Z",
@@ -3577,126 +3533,6 @@ window.CCCHR_EVENTS_2026 = [
     "venue": "3800 Pacific Ave, Virginia Beach, VA 23451",
     "address": "3800 Pacific Ave, Virginia Beach, VA 23451",
     "description": "13 - TRAACA Holiday Brunch - 11 AM at the Princess Anne Country Club (3800 Pacific Ave, Virginia Beach, VA 23451)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-15-6",
-    "title": "TRAACA Dinner Meeting",
-    "startDate": "2026-12-15T23:00:00.000Z",
-    "endDate": "2026-12-16T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Tue",
-    "dateLabel": "Dec 15, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "15 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-15-8",
-    "title": "TRAACA Dinner Meeting",
-    "startDate": "2026-12-15T23:00:00.000Z",
-    "endDate": "2026-12-16T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Tue",
-    "dateLabel": "Dec 15, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "15 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-16-10",
-    "title": "TRAACA Dinner Meeting & Silent Auction",
-    "startDate": "2026-12-16T23:00:00.000Z",
-    "endDate": "2026-12-17T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Wed",
-    "dateLabel": "Dec 16, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "16 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-17-7",
-    "title": "TRAACA Dinner Meeting",
-    "startDate": "2026-12-17T23:00:00.000Z",
-    "endDate": "2026-12-18T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Thu",
-    "dateLabel": "Dec 17, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "17 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-18-4",
-    "title": "TRAACA Dinner Meeting",
-    "startDate": "2026-12-18T23:00:00.000Z",
-    "endDate": "2026-12-19T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Fri",
-    "dateLabel": "Dec 18, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "18 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-18-5",
-    "title": "TRAACA Dinner Meeting",
-    "startDate": "2026-12-18T23:00:00.000Z",
-    "endDate": "2026-12-19T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Fri",
-    "dateLabel": "Dec 18, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "18 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
     "sourceUrl": "https://www.traaca.com/calendar.htm",
     "url": "https://www.traaca.com/calendar.htm",
     "image": ""
@@ -3721,46 +3557,6 @@ window.CCCHR_EVENTS_2026 = [
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
   },
   {
-    "id": "traaca-2026-12-19-9",
-    "title": "TRAACA Dinner Meeting",
-    "startDate": "2026-12-19T23:00:00.000Z",
-    "endDate": "2026-12-20T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Sat",
-    "dateLabel": "Dec 19, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "19 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
-    "id": "traaca-2026-12-21-12",
-    "title": "TRAACA Dinner Meeting & Silent Auction",
-    "startDate": "2026-12-21T23:00:00.000Z",
-    "endDate": "2026-12-22T01:00:00.000Z",
-    "allDay": false,
-    "month": "December",
-    "weekday": "Mon",
-    "dateLabel": "Dec 21, 2026",
-    "timeLabel": "6 PM",
-    "type": "Meetup",
-    "source": "TRAACA",
-    "city": "Virginia Beach",
-    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
-    "description": "21 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
-    "sourceUrl": "https://www.traaca.com/calendar.htm",
-    "url": "https://www.traaca.com/calendar.htm",
-    "image": ""
-  },
-  {
     "id": "6a3c217b3bea852ef0825feb",
     "title": "Cars and Coffee Norfolk | Dec 26th",
     "startDate": "2026-12-26T14:00:00.024Z",
@@ -3778,6 +3574,26 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "https://www.facebook.com/carsandcoffeenorfolkva",
     "url": "https://www.ccchr.org/events/cars-and-coffee-norfolk-dec-26",
     "image": "https://images.squarespace-cdn.com/content/v1/6162287958ee4e2159a4807d/1700770469456-CBFHYO9IY1Q6HVBMS4CC/Car+Crazy+in+Tidewater+PArtnership+logo.jpeg"
+  },
+  {
+    "id": "traaca-2027-1-9-3",
+    "title": "TRAACA Installation Banquet",
+    "startDate": "2027-01-09T22:00:00.000Z",
+    "endDate": "2027-01-10T00:00:00.000Z",
+    "allDay": false,
+    "month": "January",
+    "weekday": "Sat",
+    "dateLabel": "Jan 9, 2027",
+    "timeLabel": "5 PM",
+    "type": "TRAACA event",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "9 - TRAACA Installation Banquet - 5 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
   },
   {
     "id": "carlisle-2027-01-15-0",
@@ -3841,6 +3657,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": ""
   },
   {
+    "id": "traaca-2027-2-18-5",
+    "title": "TRAACA Dinner Meeting",
+    "startDate": "2027-02-18T23:00:00.000Z",
+    "endDate": "2027-02-19T01:00:00.000Z",
+    "allDay": false,
+    "month": "February",
+    "weekday": "Thu",
+    "dateLabel": "Feb 18, 2027",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "18 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "aaca-local-2027-03-07-60th-annual-ontelaunee-region-indoor-outdoor-swap-meet-and-car-corral-1-0",
     "title": "60th Annual Ontelaunee Region Indoor/Outdoor Swap Meet and Car Corral",
     "startDate": "2027-03-07T12:00:00.000Z",
@@ -3858,6 +3694,26 @@ window.CCCHR_EVENTS_2026 = [
     "description": "&lt;p&gt;Location: Leesport Farmers Market, 312 Gernant\\'s Church Rd, Leesport, PA 19533 Held rain or shine at Leesport Farmers Market, Leesport, PA. Handicap friendly. Plenty of parking. Refreshments available. Contact: Lester Manwiller - Lhedgehog1@aol.com or 610-823-4656&lt;/p&gt;\\n",
     "sourceUrl": "https://aaca.org/events/",
     "url": "https://aaca.org/event/60th-annual-ontelaunee-region-indoor-outdoor-swap-meet-and-car-corral/",
+    "image": ""
+  },
+  {
+    "id": "traaca-2027-3-18-8",
+    "title": "TRAACA Dinner Meeting",
+    "startDate": "2027-03-18T22:00:00.000Z",
+    "endDate": "2027-03-19T00:00:00.000Z",
+    "allDay": false,
+    "month": "March",
+    "weekday": "Thu",
+    "dateLabel": "Mar 18, 2027",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "18 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
     "image": ""
   },
   {
@@ -3917,6 +3773,26 @@ window.CCCHR_EVENTS_2026 = [
     "description": "April 8-10, 2027 - Annual Grand Nationals/Zenith/Southeastern Spring Nationals - Charlotte, NC",
     "sourceUrl": "https://aaca.org/2027-annual-convention/",
     "url": "https://aaca.org/2027-annual-convention/",
+    "image": ""
+  },
+  {
+    "id": "traaca-2027-4-15-10",
+    "title": "TRAACA Dinner Meeting",
+    "startDate": "2027-04-15T22:00:00.000Z",
+    "endDate": "2027-04-16T00:00:00.000Z",
+    "allDay": false,
+    "month": "April",
+    "weekday": "Thu",
+    "dateLabel": "Apr 15, 2027",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "15 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
     "image": ""
   },
   {
@@ -4063,6 +3939,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": ""
   },
   {
+    "id": "traaca-2027-6-17-14",
+    "title": "TRAACA Dinner Meeting",
+    "startDate": "2027-06-17T22:00:00.000Z",
+    "endDate": "2027-06-18T00:00:00.000Z",
+    "allDay": false,
+    "month": "June",
+    "weekday": "Thu",
+    "dateLabel": "Jun 17, 2027",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "17 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "carlisle-2027-06-25-5",
     "title": "Carlisle GM Nationals",
     "startDate": "2027-06-25T00:00:00.000Z",
@@ -4105,6 +4001,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": ""
   },
   {
+    "id": "traaca-2027-7-15-15",
+    "title": "TRAACA Dinner Meeting",
+    "startDate": "2027-07-15T22:00:00.000Z",
+    "endDate": "2027-07-16T00:00:00.000Z",
+    "allDay": false,
+    "month": "July",
+    "weekday": "Thu",
+    "dateLabel": "Jul 15, 2027",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "15 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "aaca-2027-7-22-19",
     "title": "Central Spring Nationals",
     "startDate": "2027-07-22T00:00:00.000Z",
@@ -4143,6 +4059,26 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "",
     "url": "https://carlisleevents.com/events/events-detail/index?id=truck+nationals",
     "calendarUrl": "",
+    "image": ""
+  },
+  {
+    "id": "traaca-2027-8-19-17",
+    "title": "TRAACA Dinner Meeting",
+    "startDate": "2027-08-19T22:00:00.000Z",
+    "endDate": "2027-08-20T00:00:00.000Z",
+    "allDay": false,
+    "month": "August",
+    "weekday": "Thu",
+    "dateLabel": "Aug 19, 2027",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "19 - TRAACA Dinner Meeting - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
     "image": ""
   },
   {
@@ -4204,6 +4140,26 @@ window.CCCHR_EVENTS_2026 = [
     "description": "September 8-11, 2027 - Special Fall Nationals - Vernon, NY",
     "sourceUrl": "https://aaca.org/2027-annual-convention/",
     "url": "https://aaca.org/2027-annual-convention/",
+    "image": ""
+  },
+  {
+    "id": "traaca-2027-9-16-20",
+    "title": "TRAACA Dinner Meeting & Silent Auction",
+    "startDate": "2027-09-16T22:00:00.000Z",
+    "endDate": "2027-09-17T00:00:00.000Z",
+    "allDay": false,
+    "month": "September",
+    "weekday": "Thu",
+    "dateLabel": "Sep 16, 2027",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "16 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
     "image": ""
   },
   {
@@ -4269,6 +4225,26 @@ window.CCCHR_EVENTS_2026 = [
     "image": ""
   },
   {
+    "id": "traaca-2027-10-2-22",
+    "title": "TRAACA Chili Cookoff",
+    "startDate": "2027-10-02T13:00:00.000Z",
+    "endDate": "2027-10-02T13:00:00.000Z",
+    "allDay": true,
+    "month": "October",
+    "weekday": "Sat",
+    "dateLabel": "Oct 2, 2027",
+    "timeLabel": "All day",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Chesapeake",
+    "venue": "Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322",
+    "address": "Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322",
+    "description": "2 - TRAACA Chili Cookoff - (Hosted by Bruce Sedel at 2006 Saint Brides Rd. W. Chesapeake, VA 23322)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
     "id": "aaca-2027-10-5-23",
     "title": "Eastern Fall Meet",
     "startDate": "2027-10-05T00:00:00.000Z",
@@ -4307,6 +4283,46 @@ window.CCCHR_EVENTS_2026 = [
     "sourceUrl": "https://aaca.org/2027-annual-convention/",
     "url": "https://aaca.org/2027-annual-convention/",
     "image": ""
+  },
+  {
+    "id": "traaca-2027-11-21-25",
+    "title": "TRAACA Dinner Meeting & Silent Auction",
+    "startDate": "2027-11-21T23:00:00.000Z",
+    "endDate": "2027-11-22T01:00:00.000Z",
+    "allDay": false,
+    "month": "November",
+    "weekday": "Sun",
+    "dateLabel": "Nov 21, 2027",
+    "timeLabel": "6 PM",
+    "type": "Meetup",
+    "source": "TRAACA",
+    "city": "Virginia Beach",
+    "venue": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "address": "Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462",
+    "description": "21 - TRAACA Dinner Meeting & Silent Auction - 6 PM (Must RSVP with Skip Patnode) - (Holiday Inn Convention Center, 5655 Greenwich Rd, Virginia Beach, VA 23462)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
+  },
+  {
+    "id": "traaca-2027-12-13-26",
+    "title": "TRAACA HOLIDAY PARTY",
+    "startDate": "2027-12-13T15:30:00.000Z",
+    "endDate": "2027-12-13T17:30:00.000Z",
+    "allDay": false,
+    "month": "December",
+    "weekday": "Mon",
+    "dateLabel": "Dec 13, 2027",
+    "timeLabel": "10:30 AM",
+    "type": "TRAACA event",
+    "source": "TRAACA",
+    "city": "Chesapeake",
+    "venue": "Chesapeake Country Club, Norfolk, VA",
+    "address": "Chesapeake Country Club, Norfolk, VA",
+    "description": "13 - TRAACA HOLIDAY PARTY - 10:30 AM (Chesapeake Country Club, Norfolk, VA)",
+    "sourceUrl": "https://www.traaca.com/calendar.htm",
+    "url": "https://www.traaca.com/calendar.htm",
+    "image": ""
   }
 ];
 window.CCCHR_METADATA = {
@@ -4337,10 +4353,12 @@ window.CCCHR_METADATA = {
   "sourceCounts": {
     "CCCHR": 98,
     "AACA": 25,
-    "AACA Local": 2,
     "TRAACA": 14,
-    "Carlisle": 11
-  }
+    "Carlisle": 11,
+    "AACA Local": 2
+  },
+  "correctionsAt": "2026-11-15T04:25:04.779Z",
+  "publishedAt": "2026-11-15T04:31:08.781Z"
 };
 
 </script>
@@ -4901,6 +4919,7 @@ function getFilteredEvents() {
   const sources = selectedSources();
 
   const filtered = events.filter((event) => {
+    if (websiteView === "saved" && !interestedIds.has(event.id)) return false;
     const recurrence = detectRecurrence(event);
     const hasSelectedEventTypes = selectedEventTypes.length > 0;
     const matchesQuery = !query || eventText(event).includes(query);
@@ -5095,7 +5114,7 @@ function buildCalendarFile(event) {
   const location = [event.venue, event.address].filter(Boolean).join(", ");
   const recurrence = detectRecurrence(event);
   const recurrenceNote = recurrence ? `Recurrence detected by dashboard: ${recurrence.label}` : "";
-  const eventUrl = event.url || event.sourceUrl || "";
+  const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
   const description = [recurrenceNote, event.description, eventUrl].filter(Boolean).join("\\n\\n");
   const lines = [
     "BEGIN:VCALENDAR",
@@ -5326,7 +5345,7 @@ function deadlineForEvent(event) {
 function plannerItemHtml(event, { action = "" } = {}) {
   const note = noteForEvent(event.id);
   const deadline = deadlineForEvent(event);
-  const eventUrl = event.url || event.sourceUrl || "";
+  const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
   const title = escapeHtml(event.title);
   return `
     <div class="planner-item">
@@ -5365,7 +5384,7 @@ function renderDeadlinePanel() {
   els.deadlineCount.textContent = deadlines.length.toLocaleString();
   els.deadlineList.innerHTML = deadlines.length
     ? deadlines.map(({ event, note, date }) => {
-      const eventUrl = event.url || event.sourceUrl || "";
+      const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
       const title = escapeHtml(event.title);
       return `
         <div class="planner-item deadline-item">
@@ -5431,7 +5450,7 @@ function renderEvents(items) {
       const sourceClass = slug(source);
       const titleClass = `event-title event-title-${sourceClass}${facebookStandalone ? " event-title-facebook" : ""}`;
       const listingLabel = event.source === "AACA" ? "AACA listing" : event.source === "AACA Local" ? "AACA local listing" : event.source === "TRAACA" ? "TRAACA listing" : event.source === "Carlisle" ? "Carlisle listing" : event.source === "Manual" ? "Manual entry" : "CCCHR listing";
-      const eventUrl = event.url || event.sourceUrl || "";
+      const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
       const titleHtml = eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${title}</a>` : title;
       const dateLine = escapeHtml(eventDateLine(event));
       const tile = eventDateTile(event);
@@ -5460,6 +5479,7 @@ function renderEvents(items) {
           <div class="event-meta">${dateLine}${venue ? ` | ${venue}` : ""}</div>
           ${address ? `<div class="event-address">${address}</div>` : ""}
           ${description ? `<p class="event-description">${description}</p>` : ""}
+          <button type="button" class="details-button" data-details-id="${escapeHtml(event.id)}">View details →</button>
           <div class="event-actions">
             <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Add Recurring Event" : "Add to Calendar"}</a>
             ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${listingLabel}</a>` : ""}
@@ -5477,12 +5497,16 @@ function renderEvents(items) {
   );
 }
 
+let websiteView = "upcoming";
+let calendarCursor = new Date(today.getFullYear(), today.getMonth(), 1);
+
 function render() {
   const filtered = getFilteredEvents();
   renderStats(filtered);
   renderChart(filtered);
   renderAssistant(filtered);
   renderEvents(filtered);
+  renderWebsite(filtered);
 }
 
 renderFreshness();
@@ -5779,7 +5803,7 @@ els.list.addEventListener("change", (event) => {
   if (input.checked) interestedIds.add(input.dataset.interestId);
   else interestedIds.delete(input.dataset.interestId);
   saveInterestedIds();
-  renderAssistant(getFilteredEvents());
+  render();
 });
 
 els.list.addEventListener("input", (event) => {
@@ -5873,9 +5897,53 @@ render();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js?v=28").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js?v=29").catch(() => {});
   });
 }
+
+function safeWebsiteUrl(value) {
+  try { const u = new URL(value); return ["https:", "http:"].includes(u.protocol) ? u.href : ""; } catch { return ""; }
+}
+function showEventDetails(id) {
+  const e = eventById(id); if (!e) return;
+  const sourceUrl = safeWebsiteUrl(e.url || e.sourceUrl);
+  const maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(e.address || e.venue || e.city);
+  document.querySelector("#detailsBody").innerHTML = `<p class="eyebrow">${escapeHtml(e.source)} · ${escapeHtml(e.type)}</p><h2>${escapeHtml(e.title)}</h2><p class="detail-date">${escapeHtml(eventDateLine(e))}</p><p><strong>${escapeHtml(e.venue || e.city)}</strong><br>${escapeHtml(e.address || "")}</p><p class="detail-description">${escapeHtml(e.description || "No further details supplied.")}</p><p class="verification-note">${e.reviewedAt ? "Reviewed " + escapeHtml(e.reviewedAt.slice(0,10)) : "Imported listing; confirm details with the organizer."}</p><div class="event-actions">${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">Organizer’s listing ↗</a>` : ""}<a href="${escapeHtml(maps)}" target="_blank" rel="noreferrer">Directions ↗</a><a href="data:text/calendar;charset=utf-8,${encodeURIComponent(buildCalendarFile(e))}" download="${escapeHtml(calendarFileName(e))}">Add to calendar</a></div>`;
+  document.querySelector("#eventDetails").showModal();
+}
+function renderWebsite(items) {
+  const count = document.querySelector("#savedNavCount"); if (!count) return;
+  count.textContent = interestedEvents().length;
+  document.querySelectorAll("[data-view]").forEach(a => { if (a.dataset.view === websiteView) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  document.querySelector("#listHeading").textContent = websiteView === "saved" ? "My picks" : "Upcoming events";
+  document.querySelector("#calendarView").hidden = websiteView !== "calendar";
+  document.querySelector(".dashboard-grid").hidden = websiteView === "calendar";
+  document.querySelector(".chart-panel").hidden = websiteView !== "calendar";
+  if (websiteView !== "calendar") return;
+  const year = calendarCursor.getFullYear(), month = calendarCursor.getMonth();
+  document.querySelector("#calendarHeading").textContent = calendarCursor.toLocaleDateString("en-US", {month:"long",year:"numeric"});
+  const grid = document.querySelector("#calendarGrid"); grid.replaceChildren();
+  for (const day of ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]) { const el=document.createElement("div");el.className="calendar-weekday";el.textContent=day;grid.append(el); }
+  const first=new Date(year,month,1).getDay(), days=new Date(year,month+1,0).getDate();
+  for(let i=0;i<first;i++){const blank=document.createElement("div");blank.className="calendar-blank";grid.append(blank);}
+  for(let d=1;d<=days;d++){
+    const key = `${year}${String(month+1).padStart(2,"0")}${String(d).padStart(2,"0")}`;
+    const cell=document.createElement("div");cell.className="calendar-day"+(key===todayKey?" is-today":"");
+    const label=document.createElement("span");label.textContent=d;cell.append(label);
+    const matching=items.filter(e=>eventDateKey(e)<=key&&eventDateKey(e,"endDate")>=key);
+    for(const e of matching){const btn=document.createElement("button");btn.type="button";btn.dataset.detailsId=e.id;btn.textContent=e.title;btn.title=e.title;cell.append(btn);}grid.append(cell);
+  }
+}
+function applyWebsiteView() {
+  const hash=location.hash.slice(1);websiteView=["upcoming","calendar","saved"].includes(hash)?hash:"upcoming";render();
+}
+window.addEventListener("hashchange",applyWebsiteView);
+document.addEventListener("click",e=>{const btn=e.target.closest("[data-details-id]");if(btn)showEventDetails(btn.dataset.detailsId);});
+document.querySelector("#closeDetails").addEventListener("click",()=>document.querySelector("#eventDetails").close());
+document.querySelector("#previousMonth").addEventListener("click",()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);render();});
+document.querySelector("#nextMonth").addEventListener("click",()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);render();});
+document.querySelector("#calendarToday").addEventListener("click",()=>{calendarCursor=new Date(today.getFullYear(),today.getMonth(),1);render();});
+applyWebsiteView();
 
 </script>
   </body>
