@@ -795,11 +795,11 @@ function buildSelectedCalendarFile(selected) {
   ];
   for (const event of selected) {
     const item = buildCalendarFile(event, { includeRecurrence: false });
-    const match = item.match(/BEGIN:VEVENT[\\s\\S]*?END:VEVENT/);
+    const match = item.match(/BEGIN:VEVENT[\s\S]*?END:VEVENT/);
     if (match) lines.push(match[0]);
   }
   lines.push("END:VCALENDAR");
-  return lines.join("\\r\\n") + "\\r\\n";
+  return lines.join("\r\n") + "\r\n";
 }
 
 function picksForICloudChat(selected) {
@@ -816,8 +816,8 @@ function picksForICloudChat(selected) {
       "Location: " + [event.venue, event.address].filter(Boolean).join(", "),
       "Details: " + String(event.description || "").slice(0, 500),
       "Source URL: " + (safeWebsiteUrl(event.url || event.sourceUrl || "") || ""),
-    ].join("\\n")),
-  ].join("\\n\\n");
+    ].join("\n")),
+  ].join("\n\n");
 }
 
 function setMyPicksExportStatus(message) {
