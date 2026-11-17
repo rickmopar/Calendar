@@ -845,8 +845,8 @@ async function shareSelectedCalendar() {
   }
   const ics = buildSelectedCalendarFile(selected);
   const filename = "my-selected-car-shows.ics";
-  const file = new File([ics], filename, { type: "text/calendar" });
-  if (navigator.share && navigator.canShare?.({ files: [file] })) {
+  const file = typeof File === "function" ? new File([ics], filename, { type: "text/calendar" }) : null;
+  if (file && navigator.share && navigator.canShare?.({ files: [file] })) {
     try {
       await navigator.share({ files: [file], title: "My selected car events" });
       setMyPicksExportStatus("Shared " + selected.length + " selected event(s).");
