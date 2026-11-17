@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=32">
+    <link rel="manifest" href="manifest.webmanifest?v=33">
     <style>
 :root {
   color-scheme: light;
@@ -152,6 +152,24 @@ h2 {
   font-weight: 700;
   color: var(--ink);
 }
+
+.apple-bridge-setup {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  padding: 10px 12px;
+  font-size: 0.86rem;
+}
+.apple-bridge-setup summary {
+  font-weight: 800;
+  cursor: pointer;
+}
+.apple-bridge-setup p { margin: 10px 0; }
+.apple-bridge-setup ol { padding-left: 22px; margin: 12px 0; }
+.apple-bridge-setup li { margin: 0 0 9px; }
+.apple-bridge-setup code { overflow-wrap: anywhere; }
+.apple-bridge-setup a { text-decoration: underline; font-weight: 800; }
+
 
 .source-link,
 button {
@@ -1429,11 +1447,23 @@ button {
               <span id="interestedCount">0</span>
             </div>
             <div id="interestedList" class="assistant-list"></div>
-            <div class="my-picks-export" aria-label="Export only selected events">
-              <button id="sharePicksCalendar" type="button">Share selected events (.ics)</button>
-              <button id="copyPicksForChatGPT" type="button" class="secondary-action">Copy picks for Apple Calendar</button>
-              <p class="my-picks-explainer">Only checked Interested events are included. To save directly to your iCloud calendar, copy your picks and paste them into your ChatGPT conversation.</p>
+            <div class="my-picks-export" aria-label="Send interested events to Apple Calendar">
+              <button id="sendInterestedToApple" type="button">Add Interested to Apple Calendar</button>
+              <p class="my-picks-explainer">Sends only the events you checked Interested to Apple Calendar on this iPhone or iPad. One-time Apple Shortcuts setup is required.</p>
               <p id="myPicksExportStatus" role="status" aria-live="polite"></p>
+              <details class="apple-bridge-setup">
+                <summary>Set up Apple Calendar connection (one time)</summary>
+                <p>Apple does not let a website write to iCloud Calendar directly. Your own Apple Shortcuts app provides the on-device bridge, without an Apple password.</p>
+                <ol>
+                  <li>Open <a href="shortcuts://create-shortcut">Apple Shortcuts</a>, make a shortcut named exactly <strong>CCCHR Add to Apple Calendar</strong>.</li>
+                  <li>Add <strong>Get Dictionary from Input</strong> (using Shortcut Input). Then <strong>Get Dictionary Value</strong> for key <code>events</code>.</li>
+                  <li>Add <strong>Repeat with Each</strong> on that list. Within the repeat, get keys <code>title</code>, <code>start</code>, <code>end</code>, and <code>location</code> from <strong>Repeat Item</strong>.</li>
+                  <li>Convert <code>start</code> and <code>end</code> with <strong>Get Dates from Input</strong>, storing each result in its own variable.</li>
+                  <li>Inside the repeat, use <strong>Add New Event</strong>. Set title, start, end, and location from those variables; choose your iCloud calendar. Turn off <strong>Show Compose Sheet</strong> if available.</li>
+                  <li>Save the shortcut, then return here and tap <strong>Add Interested to Apple Calendar</strong>. The button passes only your checked events.</li>
+                </ol>
+                <p>To avoid duplicates, optionally place <strong>Find Calendar Events</strong> before Add New Event and skip an event when its title and start time already exist.</p>
+              </details>
             </div>
           </section>
           <section class="assistant-block" aria-label="Registration deadlines">
@@ -6299,94 +6329,70 @@ function buildCalendarFile(event, { includeRecurrence = true } = {}) {
 
 
 /**
- * Exports only explicitly checked Interested events. Source records are already
- * individual occurrences; never infer repeats in a personal picks export.
+ * Apple does not expose EventKit to websites. On iOS/macOS this launches the
+ * user's own Shortcuts automation, which writes only the Interested events to
+ * their selected Apple Calendar on-device. No account password is collected.
  */
-function buildSelectedCalendarFile(selected) {
-  const lines = [
-    "BEGIN:VCALENDAR", "VERSION:2.0",
-    "PRODID:-//CCCHR Dashboard//Selected Car Shows//EN",
-    "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:My Car Show Picks",
-  ];
-  for (const event of selected) {
-    const item = buildCalendarFile(event, { includeRecurrence: false });
-    const match = item.match(/BEGIN:VEVENT[\s\S]*?END:VEVENT/);
-    if (match) lines.push(match[0]);
-  }
-  lines.push("END:VCALENDAR");
-  return lines.join("\r\n") + "\r\n";
-}
+const interestedAppleShortcutName = "CCCHR Add to Apple Calendar";
 
-function picksForICloudChat(selected) {
-  return [
-    "Please add ONLY the following explicitly selected car events to my Apple iCloud Calendar.",
-    "Check for existing duplicate events before adding. Do not create inferred repeating events.",
-    "If needed, ask which of my iCloud calendars to use.",
-    "",
-    ...selected.map((event, index) => [
-      (index + 1) + ". " + event.title,
-      "Start UTC: " + event.startDate,
-      "End UTC: " + event.endDate,
-      "All-day: " + Boolean(event.allDay),
-      "Location: " + [event.venue, event.address].filter(Boolean).join(", "),
-      "Details: " + String(event.description || "").slice(0, 500),
-      "Source URL: " + (safeWebsiteUrl(event.url || event.sourceUrl || "") || ""),
-    ].join("\n")),
-  ].join("\n\n");
+function interestedApplePayload(selected) {
+  return {
+    version: 1,
+    events: selected.map((event) => {
+      const venue = String(event.venue || "").trim();
+      const address = String(event.address || "").trim();
+      const location = venue && address && venue.toLowerCase().replace(/[^a-z0-9]/g, "") === address.toLowerCase().replace(/[^a-z0-9]/g, "")
+        ? venue : [venue, address].filter(Boolean).join(", ");
+      return {
+        id: event.id,
+        title: event.title,
+        start: event.allDay ? String(event.startDate).slice(0, 10) : event.startDate,
+        end: event.allDay ? String(event.endDate || event.startDate).slice(0, 10) : (event.endDate || event.startDate),
+        allDay: Boolean(event.allDay),
+        location,
+        notes: [String(event.description || "").slice(0, 350), safeWebsiteUrl(event.url || event.sourceUrl || "")].filter(Boolean).join("\n"),
+      };
+    }),
+  };
 }
 
 function setMyPicksExportStatus(message) {
-  const status = document.querySelector("#myPicksExportStatus");
-  if (status) status.textContent = message;
+  const element = document.getElementById("myPicksExportStatus");
+  if (element) element.textContent = message;
 }
 
-function downloadSelectedCalendar(ics) {
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "my-selected-car-shows.ics";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 30000);
+function launchAppleShortcut(payload, useClipboard = false) {
+  const base = "shortcuts://run-shortcut?name=" + encodeURIComponent(interestedAppleShortcutName);
+  const url = useClipboard
+    ? base + "&input=clipboard"
+    : base + "&input=text&text=" + encodeURIComponent(JSON.stringify(payload));
+  // This deep link starts the shortcut only. The web app cannot see whether
+  // Apple Calendar accepted the events, so never claim they were added here.
+  setMyPicksExportStatus("Opening Apple Shortcuts. The calendar save happens in your shortcut.");
+  window.location.assign(url);
 }
 
-async function shareSelectedCalendar() {
+async function sendInterestedToAppleCalendar() {
   const selected = interestedEvents();
   if (!selected.length) {
-    setMyPicksExportStatus("Choose events by checking Interested first.");
+    setMyPicksExportStatus("First check Interested on the events you want.");
     return;
   }
-  const ics = buildSelectedCalendarFile(selected);
-  const filename = "my-selected-car-shows.ics";
-  const file = typeof File === "function" ? new File([ics], filename, { type: "text/calendar" }) : null;
-  if (file && navigator.share && navigator.canShare?.({ files: [file] })) {
-    try {
-      await navigator.share({ files: [file], title: "My selected car events" });
-      setMyPicksExportStatus("Shared " + selected.length + " selected event(s).");
-      return;
-    } catch (error) {
-      if (error.name === "AbortError") return;
-    }
-  }
-  downloadSelectedCalendar(ics);
-  setMyPicksExportStatus("Downloaded " + selected.length + " selected event(s) as an ICS file.");
-}
-
-async function copyPicksToChat() {
-  const selected = interestedEvents();
-  if (!selected.length) {
-    setMyPicksExportStatus("Choose events by checking Interested first.");
+  const payload = interestedApplePayload(selected);
+  const rawUrl = "shortcuts://run-shortcut?name=" + encodeURIComponent(interestedAppleShortcutName)
+    + "&input=text&text=" + encodeURIComponent(JSON.stringify(payload));
+  if (rawUrl.length < 12000) {
+    launchAppleShortcut(payload);
     return;
   }
-  const payload = picksForICloudChat(selected);
+  // Custom-scheme URL lengths vary by browser; for very large selections
+  // use Apple's documented clipboard input alternative after a user tap.
   try {
-    await navigator.clipboard.writeText(payload);
-    setMyPicksExportStatus("Copied " + selected.length + " selected event(s). Paste into ChatGPT to add them to iCloud.");
+    if (!navigator.clipboard?.writeText) throw new Error("Clipboard is unavailable");
+    await navigator.clipboard.writeText(JSON.stringify(payload));
+    launchAppleShortcut(payload, true);
   } catch (_) {
-    window.prompt("Copy these selected events to ChatGPT:", payload);
-    setMyPicksExportStatus("Paste the copied list into ChatGPT to add them to iCloud.");
+    setMyPicksExportStatus("This selection is too large for one link. Choose fewer Interested events, or allow clipboard access.");
   }
 }
 
@@ -6608,7 +6614,7 @@ function renderInterestedPanel() {
   const items = interestedEvents();
 
   els.interestedCount.textContent = items.length.toLocaleString();
-  for (const id of ["sharePicksCalendar", "copyPicksForChatGPT"]) {
+  for (const id of ["sendInterestedToApple"]) {
     const button = document.getElementById(id);
     if (button) button.disabled = !items.length;
   }
@@ -7064,8 +7070,7 @@ els.list.addEventListener("input", (event) => {
   renderInterestedPanel();
 });
 
-document.querySelector("#sharePicksCalendar")?.addEventListener("click", shareSelectedCalendar);
-document.querySelector("#copyPicksForChatGPT")?.addEventListener("click", copyPicksToChat);
+document.querySelector("#sendInterestedToApple")?.addEventListener("click", sendInterestedToAppleCalendar);
 
 els.interestedList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-remove-interest]");
