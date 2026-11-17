@@ -19,8 +19,6 @@ function publish(stateFile=process.env.CALENDAR_STATE || path.join(root,'.calend
  meta.sourceCounts={};for(const e of events)meta.sourceCounts[e.source]=(meta.sourceCounts[e.source]||0)+1;
  const files={'events-2026.json':JSON.stringify(events,null,2),'metadata.json':JSON.stringify(meta,null,2),'events-2026.js':`window.CCCHR_EVENTS_2026 = ${JSON.stringify(events,null,2)};\nwindow.CCCHR_METADATA = ${JSON.stringify(meta,null,2)};\n`};
  for(const [name,data] of Object.entries(files)){const target=path.join(root,'data',name);fs.writeFileSync(target+'.tmp',data);fs.renameSync(target+'.tmp',target);}
- // The public iCloud/Apple subscription feed must match the published catalogue.
- require('./build-calendar-feed').publish(events,meta);
  return events;
 }
 module.exports={mergeEvents,publish};if(require.main===module)console.log(`Published ${publish(process.argv[2]).length} events locally.`);
