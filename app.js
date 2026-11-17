@@ -745,12 +745,12 @@ function calendarFileName(event) {
     .slice(0, 90) + ".ics";
 }
 
-function buildCalendarFile(event) {
+function buildCalendarFile(event, { includeRecurrence = true } = {}) {
   const venue = String(event.venue || "").trim();
   const address = String(event.address || "").trim();
   const location = venue && address && venue.toLowerCase().replace(/[^a-z0-9]/g, "") === address.toLowerCase().replace(/[^a-z0-9]/g, "")
     ? venue : [venue, address].filter(Boolean).join(", ");
-  const recurrence = detectRecurrence(event);
+  const recurrence = includeRecurrence ? detectRecurrence(event) : null;
   const recurrenceNote = recurrence ? `Recurrence detected by dashboard: ${recurrence.label}` : "";
   const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
   const description = [recurrenceNote, event.description, eventUrl].filter(Boolean).join("\n\n");
@@ -780,6 +780,99 @@ function buildCalendarFile(event) {
   }
   lines.push("END:VEVENT", "END:VCALENDAR");
   return lines.join("\r\n");
+}
+
+
+/**
+ * Exports only explicitly checked Interested events. Source records are already
+ * individual occurrences; never infer repeats in a personal picks export.
+ */
+function buildSelectedCalendarFile(selected) {
+  const lines = [
+    "BEGIN:VCALENDAR", "VERSION:2.0",
+    "PRODID:-//CCCHR Dashboard//Selected Car Shows//EN",
+    "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:My Car Show Picks",
+  ];
+  for (const event of selected) {
+    const item = buildCalendarFile(event, { includeRecurrence: false });
+    const match = item.match(/BEGIN:VEVENT[\\s\\S]*?END:VEVENT/);
+    if (match) lines.push(match[0]);
+  }
+  lines.push("END:VCALENDAR");
+  return lines.join("\\r\\n") + "\\r\\n";
+}
+
+function picksForICloudChat(selected) {
+  return [
+    "Please add ONLY the following explicitly selected car events to my Apple iCloud Calendar.",
+    "Check for existing duplicate events before adding. Do not create inferred repeating events.",
+    "If needed, ask which of my iCloud calendars to use.",
+    "",
+    ...selected.map((event, index) => [
+      (index + 1) + ". " + event.title,
+      "Start UTC: " + event.startDate,
+      "End UTC: " + event.endDate,
+      "All-day: " + Boolean(event.allDay),
+      "Location: " + [event.venue, event.address].filter(Boolean).join(", "),
+      "Details: " + String(event.description || "").slice(0, 500),
+      "Source URL: " + (safeWebsiteUrl(event.url || event.sourceUrl || "") || ""),
+    ].join("\\n")),
+  ].join("\\n\\n");
+}
+
+function setMyPicksExportStatus(message) {
+  const status = document.querySelector("#myPicksExportStatus");
+  if (status) status.textContent = message;
+}
+
+function downloadSelectedCalendar(ics) {
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "my-selected-car-shows.ics";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+
+async function shareSelectedCalendar() {
+  const selected = interestedEvents();
+  if (!selected.length) {
+    setMyPicksExportStatus("Choose events by checking Interested first.");
+    return;
+  }
+  const ics = buildSelectedCalendarFile(selected);
+  const filename = "my-selected-car-shows.ics";
+  const file = new File([ics], filename, { type: "text/calendar" });
+  if (navigator.share && navigator.canShare?.({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: "My selected car events" });
+      setMyPicksExportStatus("Shared " + selected.length + " selected event(s).");
+      return;
+    } catch (error) {
+      if (error.name === "AbortError") return;
+    }
+  }
+  downloadSelectedCalendar(ics);
+  setMyPicksExportStatus("Downloaded " + selected.length + " selected event(s) as an ICS file.");
+}
+
+async function copyPicksToChat() {
+  const selected = interestedEvents();
+  if (!selected.length) {
+    setMyPicksExportStatus("Choose events by checking Interested first.");
+    return;
+  }
+  const payload = picksForICloudChat(selected);
+  try {
+    await navigator.clipboard.writeText(payload);
+    setMyPicksExportStatus("Copied " + selected.length + " selected event(s). Paste into ChatGPT to add them to iCloud.");
+  } catch (_) {
+    window.prompt("Copy these selected events to ChatGPT:", payload);
+    setMyPicksExportStatus("Paste the copied list into ChatGPT to add them to iCloud.");
+  }
 }
 
 function displayTimeZone(event) {
@@ -1000,6 +1093,10 @@ function renderInterestedPanel() {
   const items = interestedEvents();
 
   els.interestedCount.textContent = items.length.toLocaleString();
+  for (const id of ["sharePicksCalendar", "copyPicksForChatGPT"]) {
+    const button = document.getElementById(id);
+    if (button) button.disabled = !items.length;
+  }
   els.interestedList.innerHTML = items.length
     ? items.map((event) => plannerItemHtml(event, {
       action: `<button type="button" data-remove-interest="${escapeHtml(event.id)}">Remove</button>`,
@@ -1452,6 +1549,9 @@ els.list.addEventListener("input", (event) => {
   renderInterestedPanel();
 });
 
+document.querySelector("#sharePicksCalendar")?.addEventListener("click", shareSelectedCalendar);
+document.querySelector("#copyPicksForChatGPT")?.addEventListener("click", copyPicksToChat);
+
 els.interestedList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-remove-interest]");
   if (!button) return;
@@ -1583,15 +1683,3 @@ document.querySelector("#nextMonth").addEventListener("click",()=>{calendarCurso
 document.querySelector("#calendarToday").addEventListener("click",()=>{calendarCursor=new Date(today.getFullYear(),today.getMonth(),1);render();});
 applyWebsiteView();
 
-const calendarFeedUrl = "https://rickmopar.github.io/Calendar/calendar-subscribe.ics";
-document.querySelector("#copyCalendarFeed")?.addEventListener("click", async () => {
-  const status = document.querySelector("#calendarFeedStatus");
-  try {
-    await navigator.clipboard.writeText(calendarFeedUrl);
-    if (status) status.textContent = "Subscription link copied. Paste it into Apple Calendar → Add Subscription Calendar.";
-  } catch (_) {
-    // Browsers without Clipboard API can still select/copy the URL.
-    window.prompt("Copy this Apple Calendar subscription URL:", calendarFeedUrl);
-    if (status) status.textContent = "Paste the link into Apple Calendar → Add Subscription Calendar.";
-  }
-});
