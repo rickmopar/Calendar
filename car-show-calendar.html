@@ -11,7 +11,7 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNmNmY3ZjQiLz4KICA8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIyNSIgZmlsbD0iIzExMTgyMCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjE3IiBmaWxsPSIjMmQzNzQwIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOCIgZmlsbD0iI2Y2ZjdmNCIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjMiIGZpbGw9IiNiODMwMmYiLz4KICA8ZyBzdHJva2U9IiNmNmY3ZjQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0zMiAxNXY3Ii8+CiAgICA8cGF0aCBkPSJNMzIgNDJ2NyIvPgogICAgPHBhdGggZD0iTTE1IDMyaDciLz4KICAgIDxwYXRoIGQ9Ik00MiAzMmg3Ii8+CiAgPC9nPgogIDxnIHN0cm9rZT0iIzExMTgyMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii40NSI+CiAgICA8cGF0aCBkPSJNMTggMjJsNSA1Ii8+CiAgICA8cGF0aCBkPSJNNDYgMjJsLTUgNSIvPgogICAgPHBhdGggZD0iTTE4IDQybDUtNSIvPgogICAgPHBhdGggZD0iTTQ2IDQybC01LTUiLz4KICA8L2c+Cjwvc3ZnPgo=" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=30">
+    <link rel="manifest" href="manifest.webmanifest?v=31">
     <style>
 :root {
   color-scheme: light;
@@ -114,6 +114,52 @@ h2 {
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.86rem;
   font-weight: 800;
+}
+
+
+.apple-calendar-integration {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+  max-width: 790px;
+}
+
+.apple-subscribe-link,
+.apple-calendar-copy {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  padding: 11px 15px;
+  font: inherit;
+  font-size: 0.94rem;
+  font-weight: 800;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+}
+.apple-subscribe-link {
+  background: #fff;
+  color: #19212a;
+}
+.apple-calendar-copy {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.apple-subscribe-link:focus-visible,
+.apple-calendar-copy:focus-visible {
+  outline: 3px solid #f2c36b;
+  outline-offset: 3px;
+}
+.apple-subscribe-hint {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  width: 100%;
+}
+#calendarFeedStatus {
+  font-size: 0.86rem;
+  color: #fff;
 }
 
 .source-link,
@@ -1190,6 +1236,12 @@ button {
         <div class="status-line" aria-label="Dashboard freshness">
           <span id="currentDate">Today: -</span>
           <span id="refreshDate">Last refreshed: -</span>
+        </div>
+        <div class="apple-calendar-integration" aria-label="Apple Calendar subscription">
+          <a class="apple-subscribe-link" href="webcal://rickmopar.github.io/Calendar/calendar-subscribe.ics">Subscribe in Apple Calendar</a>
+          <button id="copyCalendarFeed" class="apple-calendar-copy" type="button">Copy subscription link</button>
+          <span class="apple-subscribe-hint">Subscribe once for automatic published updates. Read-only calendar.</span>
+          <span id="calendarFeedStatus" role="status" aria-live="polite"></span>
         </div>
       </div>
       <nav class="source-links" aria-label="Source calendars">
@@ -6218,11 +6270,14 @@ function calendarFileName(event) {
 }
 
 function buildCalendarFile(event) {
-  const location = [event.venue, event.address].filter(Boolean).join(", ");
+  const venue = String(event.venue || "").trim();
+  const address = String(event.address || "").trim();
+  const location = venue && address && venue.toLowerCase().replace(/[^a-z0-9]/g, "") === address.toLowerCase().replace(/[^a-z0-9]/g, "")
+    ? venue : [venue, address].filter(Boolean).join(", ");
   const recurrence = detectRecurrence(event);
   const recurrenceNote = recurrence ? `Recurrence detected by dashboard: ${recurrence.label}` : "";
   const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
-  const description = [recurrenceNote, event.description, eventUrl].filter(Boolean).join("\\n\\n");
+  const description = [recurrenceNote, event.description, eventUrl].filter(Boolean).join("\n\n");
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -6588,7 +6643,7 @@ function renderEvents(items) {
           ${description ? `<p class="event-description">${description}</p>` : ""}
           <button type="button" class="details-button" data-details-id="${escapeHtml(event.id)}">View details →</button>
           <div class="event-actions">
-            <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Add Recurring Event" : "Add to Calendar"}</a>
+            <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Download recurring event (.ics)" : "Download event (.ics)"}</a>
             ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${listingLabel}</a>` : ""}
             ${event.sourceUrl && event.sourceUrl !== event.url && event.sourceUrl !== event.calendarUrl ? `<a href="${event.sourceUrl}" target="_blank" rel="noreferrer">More info</a>` : ""}
             ${event.source === "Manual" ? `<button type="button" data-delete-manual="${escapeHtml(event.id)}">Remove Manual Show</button>` : ""}
@@ -7015,7 +7070,7 @@ function showEventDetails(id) {
   const e = eventById(id); if (!e) return;
   const sourceUrl = safeWebsiteUrl(e.url || e.sourceUrl);
   const maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(e.address || e.venue || e.city);
-  document.querySelector("#detailsBody").innerHTML = `<p class="eyebrow">${escapeHtml(e.source)} · ${escapeHtml(e.type)}</p><h2>${escapeHtml(e.title)}</h2><p class="detail-date">${escapeHtml(eventDateLine(e))}</p><p><strong>${escapeHtml(e.venue || e.city)}</strong><br>${escapeHtml(e.address || "")}</p><p class="detail-description">${escapeHtml(e.description || "No further details supplied.")}</p><p class="verification-note">${e.reviewedAt ? "Reviewed " + escapeHtml(e.reviewedAt.slice(0,10)) : "Imported listing; confirm details with the organizer."}</p><div class="event-actions">${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">Organizer’s listing ↗</a>` : ""}<a href="${escapeHtml(maps)}" target="_blank" rel="noreferrer">Directions ↗</a><a href="data:text/calendar;charset=utf-8,${encodeURIComponent(buildCalendarFile(e))}" download="${escapeHtml(calendarFileName(e))}">Add to calendar</a></div>`;
+  document.querySelector("#detailsBody").innerHTML = `<p class="eyebrow">${escapeHtml(e.source)} · ${escapeHtml(e.type)}</p><h2>${escapeHtml(e.title)}</h2><p class="detail-date">${escapeHtml(eventDateLine(e))}</p><p><strong>${escapeHtml(e.venue || e.city)}</strong><br>${escapeHtml(e.address || "")}</p><p class="detail-description">${escapeHtml(e.description || "No further details supplied.")}</p><p class="verification-note">${e.reviewedAt ? "Reviewed " + escapeHtml(e.reviewedAt.slice(0,10)) : "Imported listing; confirm details with the organizer."}</p><div class="event-actions">${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">Organizer’s listing ↗</a>` : ""}<a href="${escapeHtml(maps)}" target="_blank" rel="noreferrer">Directions ↗</a><a href="data:text/calendar;charset=utf-8,${encodeURIComponent(buildCalendarFile(e))}" download="${escapeHtml(calendarFileName(e))}">Download event (.ics)</a></div>`;
   document.querySelector("#eventDetails").showModal();
 }
 function renderWebsite(items) {
@@ -7051,6 +7106,19 @@ document.querySelector("#previousMonth").addEventListener("click",()=>{calendarC
 document.querySelector("#nextMonth").addEventListener("click",()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);render();});
 document.querySelector("#calendarToday").addEventListener("click",()=>{calendarCursor=new Date(today.getFullYear(),today.getMonth(),1);render();});
 applyWebsiteView();
+
+const calendarFeedUrl = "https://rickmopar.github.io/Calendar/calendar-subscribe.ics";
+document.querySelector("#copyCalendarFeed")?.addEventListener("click", async () => {
+  const status = document.querySelector("#calendarFeedStatus");
+  try {
+    await navigator.clipboard.writeText(calendarFeedUrl);
+    if (status) status.textContent = "Subscription link copied. Paste it into Apple Calendar → Add Subscription Calendar.";
+  } catch (_) {
+    // Browsers without Clipboard API can still select/copy the URL.
+    window.prompt("Copy this Apple Calendar subscription URL:", calendarFeedUrl);
+    if (status) status.textContent = "Paste the link into Apple Calendar → Add Subscription Calendar.";
+  }
+});
 
 </script>
   </body>
