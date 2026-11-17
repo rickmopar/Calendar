@@ -101,6 +101,52 @@ h2 {
   font-weight: 800;
 }
 
+
+.apple-calendar-integration {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+  max-width: 790px;
+}
+
+.apple-subscribe-link,
+.apple-calendar-copy {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  padding: 11px 15px;
+  font: inherit;
+  font-size: 0.94rem;
+  font-weight: 800;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+}
+.apple-subscribe-link {
+  background: #fff;
+  color: #19212a;
+}
+.apple-calendar-copy {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.apple-subscribe-link:focus-visible,
+.apple-calendar-copy:focus-visible {
+  outline: 3px solid #f2c36b;
+  outline-offset: 3px;
+}
+.apple-subscribe-hint {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  width: 100%;
+}
+#calendarFeedStatus {
+  font-size: 0.86rem;
+  color: #fff;
+}
+
 .source-link,
 button {
   border: 0;
