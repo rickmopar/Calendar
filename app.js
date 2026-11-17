@@ -746,11 +746,14 @@ function calendarFileName(event) {
 }
 
 function buildCalendarFile(event) {
-  const location = [event.venue, event.address].filter(Boolean).join(", ");
+  const venue = String(event.venue || "").trim();
+  const address = String(event.address || "").trim();
+  const location = venue && address && venue.toLowerCase().replace(/[^a-z0-9]/g, "") === address.toLowerCase().replace(/[^a-z0-9]/g, "")
+    ? venue : [venue, address].filter(Boolean).join(", ");
   const recurrence = detectRecurrence(event);
   const recurrenceNote = recurrence ? `Recurrence detected by dashboard: ${recurrence.label}` : "";
   const eventUrl = safeWebsiteUrl(event.url || event.sourceUrl || "");
-  const description = [recurrenceNote, event.description, eventUrl].filter(Boolean).join("\\n\\n");
+  const description = [recurrenceNote, event.description, eventUrl].filter(Boolean).join("\n\n");
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -1116,7 +1119,7 @@ function renderEvents(items) {
           ${description ? `<p class="event-description">${description}</p>` : ""}
           <button type="button" class="details-button" data-details-id="${escapeHtml(event.id)}">View details →</button>
           <div class="event-actions">
-            <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Add Recurring Event" : "Add to Calendar"}</a>
+            <a href="${calendarHref}" download="${escapeHtml(calendarFileName(event))}">${recurrence ? "Download recurring event (.ics)" : "Download event (.ics)"}</a>
             ${eventUrl ? `<a href="${escapeHtml(eventUrl)}" target="_blank" rel="noreferrer">${listingLabel}</a>` : ""}
             ${event.sourceUrl && event.sourceUrl !== event.url && event.sourceUrl !== event.calendarUrl ? `<a href="${event.sourceUrl}" target="_blank" rel="noreferrer">More info</a>` : ""}
             ${event.source === "Manual" ? `<button type="button" data-delete-manual="${escapeHtml(event.id)}">Remove Manual Show</button>` : ""}
@@ -1543,7 +1546,7 @@ function showEventDetails(id) {
   const e = eventById(id); if (!e) return;
   const sourceUrl = safeWebsiteUrl(e.url || e.sourceUrl);
   const maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(e.address || e.venue || e.city);
-  document.querySelector("#detailsBody").innerHTML = `<p class="eyebrow">${escapeHtml(e.source)} · ${escapeHtml(e.type)}</p><h2>${escapeHtml(e.title)}</h2><p class="detail-date">${escapeHtml(eventDateLine(e))}</p><p><strong>${escapeHtml(e.venue || e.city)}</strong><br>${escapeHtml(e.address || "")}</p><p class="detail-description">${escapeHtml(e.description || "No further details supplied.")}</p><p class="verification-note">${e.reviewedAt ? "Reviewed " + escapeHtml(e.reviewedAt.slice(0,10)) : "Imported listing; confirm details with the organizer."}</p><div class="event-actions">${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">Organizer’s listing ↗</a>` : ""}<a href="${escapeHtml(maps)}" target="_blank" rel="noreferrer">Directions ↗</a><a href="data:text/calendar;charset=utf-8,${encodeURIComponent(buildCalendarFile(e))}" download="${escapeHtml(calendarFileName(e))}">Add to calendar</a></div>`;
+  document.querySelector("#detailsBody").innerHTML = `<p class="eyebrow">${escapeHtml(e.source)} · ${escapeHtml(e.type)}</p><h2>${escapeHtml(e.title)}</h2><p class="detail-date">${escapeHtml(eventDateLine(e))}</p><p><strong>${escapeHtml(e.venue || e.city)}</strong><br>${escapeHtml(e.address || "")}</p><p class="detail-description">${escapeHtml(e.description || "No further details supplied.")}</p><p class="verification-note">${e.reviewedAt ? "Reviewed " + escapeHtml(e.reviewedAt.slice(0,10)) : "Imported listing; confirm details with the organizer."}</p><div class="event-actions">${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">Organizer’s listing ↗</a>` : ""}<a href="${escapeHtml(maps)}" target="_blank" rel="noreferrer">Directions ↗</a><a href="data:text/calendar;charset=utf-8,${encodeURIComponent(buildCalendarFile(e))}" download="${escapeHtml(calendarFileName(e))}">Download event (.ics)</a></div>`;
   document.querySelector("#eventDetails").showModal();
 }
 function renderWebsite(items) {
@@ -1579,3 +1582,16 @@ document.querySelector("#previousMonth").addEventListener("click",()=>{calendarC
 document.querySelector("#nextMonth").addEventListener("click",()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);render();});
 document.querySelector("#calendarToday").addEventListener("click",()=>{calendarCursor=new Date(today.getFullYear(),today.getMonth(),1);render();});
 applyWebsiteView();
+
+const calendarFeedUrl = "https://rickmopar.github.io/Calendar/calendar-subscribe.ics";
+document.querySelector("#copyCalendarFeed")?.addEventListener("click", async () => {
+  const status = document.querySelector("#calendarFeedStatus");
+  try {
+    await navigator.clipboard.writeText(calendarFeedUrl);
+    if (status) status.textContent = "Subscription link copied. Paste it into Apple Calendar → Add Subscription Calendar.";
+  } catch (_) {
+    // Browsers without Clipboard API can still select/copy the URL.
+    window.prompt("Copy this Apple Calendar subscription URL:", calendarFeedUrl);
+    if (status) status.textContent = "Paste the link into Apple Calendar → Add Subscription Calendar.";
+  }
+});
