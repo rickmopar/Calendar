@@ -11,8 +11,8 @@
     <title>Car Show Calendar</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="manifest" href="manifest.webmanifest?v=32">
-    <link rel="stylesheet" href="styles.css?v=32">
+    <link rel="manifest" href="manifest.webmanifest?v=33">
+    <link rel="stylesheet" href="styles.css?v=33">
   </head>
   <body>
     <a class="skip-link" href="#events">Skip to events</a>
@@ -227,11 +227,23 @@
               <span id="interestedCount">0</span>
             </div>
             <div id="interestedList" class="assistant-list"></div>
-            <div class="my-picks-export" aria-label="Export only selected events">
-              <button id="sharePicksCalendar" type="button">Share selected events (.ics)</button>
-              <button id="copyPicksForChatGPT" type="button" class="secondary-action">Copy picks for Apple Calendar</button>
-              <p class="my-picks-explainer">Only checked Interested events are included. To save directly to your iCloud calendar, copy your picks and paste them into your ChatGPT conversation.</p>
+            <div class="my-picks-export" aria-label="Send interested events to Apple Calendar">
+              <button id="sendInterestedToApple" type="button">Add Interested to Apple Calendar</button>
+              <p class="my-picks-explainer">Sends only the events you checked Interested to Apple Calendar on this iPhone or iPad. One-time Apple Shortcuts setup is required.</p>
               <p id="myPicksExportStatus" role="status" aria-live="polite"></p>
+              <details class="apple-bridge-setup">
+                <summary>Set up Apple Calendar connection (one time)</summary>
+                <p>Apple does not let a website write to iCloud Calendar directly. Your own Apple Shortcuts app provides the on-device bridge, without an Apple password.</p>
+                <ol>
+                  <li>Open <a href="shortcuts://create-shortcut">Apple Shortcuts</a>, make a shortcut named exactly <strong>CCCHR Add to Apple Calendar</strong>.</li>
+                  <li>Add <strong>Get Dictionary from Input</strong> (using Shortcut Input). Then <strong>Get Dictionary Value</strong> for key <code>events</code>.</li>
+                  <li>Add <strong>Repeat with Each</strong> on that list. Within the repeat, get keys <code>title</code>, <code>start</code>, <code>end</code>, and <code>location</code> from <strong>Repeat Item</strong>.</li>
+                  <li>Convert <code>start</code> and <code>end</code> with <strong>Get Dates from Input</strong>, storing each result in its own variable.</li>
+                  <li>Inside the repeat, use <strong>Add New Event</strong>. Set title, start, end, and location from those variables; choose your iCloud calendar. Turn off <strong>Show Compose Sheet</strong> if available.</li>
+                  <li>Save the shortcut, then return here and tap <strong>Add Interested to Apple Calendar</strong>. The button passes only your checked events.</li>
+                </ol>
+                <p>To avoid duplicates, optionally place <strong>Find Calendar Events</strong> before Add New Event and skip an event when its title and start time already exist.</p>
+              </details>
             </div>
           </section>
           <section class="assistant-block" aria-label="Registration deadlines">
@@ -257,7 +269,7 @@
 
     <footer class="site-footer"><strong>Good cars. Good company.</strong><p>Dates can change. Check the organizer’s listing before you travel.</p><a href="manage.html">Manage calendar</a></footer>
     <dialog id="eventDetails"><button id="closeDetails" class="dialog-close" aria-label="Close event details">×</button><div id="detailsBody"></div></dialog>
-    <script src="data/events-2026.js?v=32"></script>
-    <script src="app.js?v=32"></script>
+    <script src="data/events-2026.js?v=33"></script>
+    <script src="app.js?v=33"></script>
   </body>
 </html>
