@@ -138,6 +138,24 @@ h2 {
   color: var(--ink);
 }
 
+.apple-bridge-setup {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  padding: 10px 12px;
+  font-size: 0.86rem;
+}
+.apple-bridge-setup summary {
+  font-weight: 800;
+  cursor: pointer;
+}
+.apple-bridge-setup p { margin: 10px 0; }
+.apple-bridge-setup ol { padding-left: 22px; margin: 12px 0; }
+.apple-bridge-setup li { margin: 0 0 9px; }
+.apple-bridge-setup code { overflow-wrap: anywhere; }
+.apple-bridge-setup a { text-decoration: underline; font-weight: 800; }
+
+
 .source-link,
 button {
   border: 0;
