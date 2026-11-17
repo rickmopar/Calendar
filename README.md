@@ -18,35 +18,45 @@ If you want one file that opens more reliably in Chrome after downloading from G
 
 The calendar shows only events from the current date forward. The saved dataset still keeps the full 2026 source pull so the view can roll forward automatically as dates pass.
 
-## Apple Calendar: selected events only
+## Apple Calendar: Interested → iCloud
 
-The dashboard never automatically adds its entire 208-event catalogue to
-Apple Calendar. The old bulk subscription has been discontinued, and its
-published feed is empty so it cannot add the complete event list.
+The dashboard **does not** subscribe users to the full car show catalogue.
+The old all-events subscription has been disabled and its feed emptied.
 
-Users check **Interested** on individual events, then use the **Interested**
-panel in My Picks:
+To send selected events to Apple Calendar, check **Interested** for those
+shows, then tap **Add Interested to Apple Calendar** in the Interested section.
+The dashboard opens a local Apple Shortcut using the officially documented
+`shortcuts://run-shortcut` URL scheme and passes a JSON payload with
+**only the checked event occurrences**. Event data includes title, start/end
+time, all-day flag, location and short notes. No account credentials, other
+private events, or passwords are transmitted.
 
-- **Share selected events (.ics)** — shares/exports one calendar file containing
-  only the checked events. Uses the native mobile share sheet when the browser
-  supports file sharing, otherwise downloads `my-selected-car-shows.ics`.
-  Import behavior depends on the device. This is an export, not a live sync.
-- **Copy picks for Apple Calendar** — copies a structured list of only the
-  checked events to the clipboard. Paste it into the user's ChatGPT conversation.
-  ChatGPT can then use the user's connected iCloud Calendar to add these events
-  after checking for duplicates and confirming the destination calendar.
-  This is the reliable path to writing to iCloud with the available connection,
-  rather than exposing Apple credentials in a public GitHub Pages site.
+### One-time Apple Shortcuts setup
 
-Neither action transfers or subscribes all events. Export does not infer repeat
-rules from descriptive prose, since the catalogue contains occurrence-level
-records. The user must intentionally invoke either action. Selecting or
-deselecting Interested does not change the person's iCloud Calendar until
-they perform an import or the in-chat save.
+The browser cannot use the native EventKit calendar API. Create a Shortcut
+named exactly `CCCHR Add to Apple Calendar` in Shortcuts on the iPhone/iPad
+(or Mac):
 
-A fully automatic, account-specific sync from the GitHub Pages site to iCloud
-would require a separate authenticated service; GitHub Pages cannot directly
-perform private CalDAV writes.
+1. **Get Dictionary from Input** from Shortcut Input.
+2. **Get Dictionary Value** with key `events` (a list).
+3. **Repeat with Each** for that list.
+4. In the repeat, **Get Dictionary Value** from Repeat Item for `title`,
+   `start`, `end`, and `location`. Store each in distinct variables.
+5. Convert `start` and `end` into dates with **Get Dates from Input**,
+   and set them into **Add New Event**, along with title and location.
+6. Set **Add New Event** to write to an editable iCloud calendar, and turn
+   off the compose sheet if desired.
+7. If desired, use the `allDay` flag to distinguish all-day events and
+   **Find Calendar Events** before creation to avoid creating duplicates.
+
+Once installed, one tap in the web app launches the on-device Shortcut.
+This is a bridge into the user's own Apple Calendar, **not** a direct web
+API call. The website cannot verify that iCloud actually saved the events.
+The user must approve any Calendar access requested by Shortcuts.
+
+Large selections fall back to Apple's `input=clipboard` shortcut scheme
+with a browser clipboard permission. There is no automatic continuous sync.
+Deselecting Interested does not delete previously added iCloud events.
 
 ## Google Sheets Sync
 
