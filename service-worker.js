@@ -1,4 +1,4 @@
-const CACHE_NAME = "car-show-calendar-v32";
+const CACHE_NAME = "car-show-calendar-v33";
 const APP_SHELL = [
   "./",
   "./index.html",
