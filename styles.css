@@ -102,49 +102,40 @@ h2 {
 }
 
 
-.apple-calendar-integration {
+.my-picks-export {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
-  max-width: 790px;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: 14px;
 }
-
-.apple-subscribe-link,
-.apple-calendar-copy {
-  display: inline-block;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 8px;
-  padding: 11px 15px;
+.my-picks-export button {
+  padding: 10px 12px;
   font: inherit;
-  font-size: 0.94rem;
+  font-size: 0.88rem;
   font-weight: 800;
-  line-height: 1.4;
-  text-decoration: none;
-  cursor: pointer;
+  border-radius: 8px;
+  text-align: left;
 }
-.apple-subscribe-link {
-  background: #fff;
-  color: #19212a;
+.my-picks-export button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
-.apple-calendar-copy {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+.my-picks-export .secondary-action {
+  background: var(--ink);
+  color: white;
 }
-.apple-subscribe-link:focus-visible,
-.apple-calendar-copy:focus-visible {
-  outline: 3px solid #f2c36b;
-  outline-offset: 3px;
+.my-picks-explainer,
+#myPicksExportStatus {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  margin: 0;
 }
-.apple-subscribe-hint {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.85rem;
-  width: 100%;
-}
-#calendarFeedStatus {
-  font-size: 0.86rem;
-  color: #fff;
+#myPicksExportStatus {
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .source-link,
