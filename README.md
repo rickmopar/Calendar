@@ -18,6 +18,40 @@ If you want one file that opens more reliably in Chrome after downloading from G
 
 The calendar shows only events from the current date forward. The saved dataset still keeps the full 2026 source pull so the view can roll forward automatically as dates pass.
 
+## Apple Calendar integration
+
+The public dashboard has a **Subscribe in Apple Calendar** button. This uses a
+real, read-only iCalendar subscription (not the one-off event downloads).
+
+- One-tap Apple subscription: `webcal://rickmopar.github.io/Calendar/calendar-subscribe.ics`
+- HTTPS feed address: `https://rickmopar.github.io/Calendar/calendar-subscribe.ics`
+- On iPhone/iPad, if the button does not open Calendar, use **Copy subscription
+  link**, then Calendar → Calendars → Add Calendar → Add Subscription Calendar,
+  paste the link, select **iCloud** as the account, and save.
+- A subscription contains *all published events*, not just locally saved
+  "Interested" events. It updates on Apple's subscription refresh schedule,
+  not immediately. Subscribers cannot edit subscribed events.
+- One-off **Download event (.ics)** links remain available, but are not a
+  direct iCloud write. Directly adding selected events into a writable iCloud
+  calendar requires a private authenticated backend, which a public GitHub
+  Pages site cannot securely provide by itself.
+
+The subscription file is generated from `data/events-2026.json` and the
+published metadata by `scripts/build-calendar-feed.js`. The
+`scripts/publish-managed.js` path regenerates it after both source refreshes
+and local manager edits. As with the dashboard data, changes only reach Apple
+subscribers **after the updated feed is deployed to GitHub Pages**. Do not
+create inferred RRULEs from event descriptions: the dataset already includes
+individual instances of recurring events, and inferred rules create duplicate
+entries. The existing feed uses stable event IDs so Apple Calendar can match
+event updates without making duplicates.
+
+To rebuild the feed without refreshing source events:
+
+```sh
+node scripts/build-calendar-feed.js
+```
+
 ## Google Sheets Sync
 
 A starter Google Sheet for Assistant sync was created here:
