@@ -18,39 +18,35 @@ If you want one file that opens more reliably in Chrome after downloading from G
 
 The calendar shows only events from the current date forward. The saved dataset still keeps the full 2026 source pull so the view can roll forward automatically as dates pass.
 
-## Apple Calendar integration
+## Apple Calendar: selected events only
 
-The public dashboard has a **Subscribe in Apple Calendar** button. This uses a
-real, read-only iCalendar subscription (not the one-off event downloads).
+The dashboard never automatically adds its entire 208-event catalogue to
+Apple Calendar. The old bulk subscription has been discontinued, and its
+published feed is empty so it cannot add the complete event list.
 
-- One-tap Apple subscription: `webcal://rickmopar.github.io/Calendar/calendar-subscribe.ics`
-- HTTPS feed address: `https://rickmopar.github.io/Calendar/calendar-subscribe.ics`
-- On iPhone/iPad, if the button does not open Calendar, use **Copy subscription
-  link**, then Calendar → Calendars → Add Calendar → Add Subscription Calendar,
-  paste the link, select **iCloud** as the account, and save.
-- A subscription contains *all published events*, not just locally saved
-  "Interested" events. It updates on Apple's subscription refresh schedule,
-  not immediately. Subscribers cannot edit subscribed events.
-- One-off **Download event (.ics)** links remain available, but are not a
-  direct iCloud write. Directly adding selected events into a writable iCloud
-  calendar requires a private authenticated backend, which a public GitHub
-  Pages site cannot securely provide by itself.
+Users check **Interested** on individual events, then use the **Interested**
+panel in My Picks:
 
-The subscription file is generated from `data/events-2026.json` and the
-published metadata by `scripts/build-calendar-feed.js`. The
-`scripts/publish-managed.js` path regenerates it after both source refreshes
-and local manager edits. As with the dashboard data, changes only reach Apple
-subscribers **after the updated feed is deployed to GitHub Pages**. Do not
-create inferred RRULEs from event descriptions: the dataset already includes
-individual instances of recurring events, and inferred rules create duplicate
-entries. The existing feed uses stable event IDs so Apple Calendar can match
-event updates without making duplicates.
+- **Share selected events (.ics)** — shares/exports one calendar file containing
+  only the checked events. Uses the native mobile share sheet when the browser
+  supports file sharing, otherwise downloads `my-selected-car-shows.ics`.
+  Import behavior depends on the device. This is an export, not a live sync.
+- **Copy picks for Apple Calendar** — copies a structured list of only the
+  checked events to the clipboard. Paste it into the user's ChatGPT conversation.
+  ChatGPT can then use the user's connected iCloud Calendar to add these events
+  after checking for duplicates and confirming the destination calendar.
+  This is the reliable path to writing to iCloud with the available connection,
+  rather than exposing Apple credentials in a public GitHub Pages site.
 
-To rebuild the feed without refreshing source events:
+Neither action transfers or subscribes all events. Export does not infer repeat
+rules from descriptive prose, since the catalogue contains occurrence-level
+records. The user must intentionally invoke either action. Selecting or
+deselecting Interested does not change the person's iCloud Calendar until
+they perform an import or the in-chat save.
 
-```sh
-node scripts/build-calendar-feed.js
-```
+A fully automatic, account-specific sync from the GitHub Pages site to iCloud
+would require a separate authenticated service; GitHub Pages cannot directly
+perform private CalDAV writes.
 
 ## Google Sheets Sync
 
