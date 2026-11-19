@@ -4037,7 +4037,7 @@ window.CCCHR_METADATA = {
     2027
   ],
   "year": 2026,
-  "refreshedAt": "2026-11-18T18:51:40.542Z",
+  "refreshedAt": "2026-11-19T18:59:26.014Z",
   "totalEvents": 208,
   "sourceCounts": {
     "CCCHR": 157,
@@ -4046,5 +4046,5 @@ window.CCCHR_METADATA = {
     "Carlisle": 11,
     "AACA Local": 2
   },
-  "publishedAt": "2026-11-18T18:51:40.549Z"
+  "publishedAt": "2026-11-19T18:59:26.024Z"
 };
